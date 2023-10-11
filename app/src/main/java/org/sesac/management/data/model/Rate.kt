@@ -1,3 +1,5 @@
 package org.sesac.management.data.model
 
-data class Rate()
+data class Rate(
+    val money: Float,
+)

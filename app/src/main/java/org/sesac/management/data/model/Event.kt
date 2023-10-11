@@ -1,3 +1,5 @@
 package org.sesac.management.data.model
 
-data class Event()
+data class Event(
+    val event : String,
+)
