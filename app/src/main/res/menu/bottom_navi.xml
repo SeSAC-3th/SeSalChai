@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottomnavi_home"
+        android:title="홈" />
+
+    <item
+        android:id="@+id/artistFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottomnavi_artist"
+        android:title="아티스트" />
+
+    <item
+        android:id="@+id/eventFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottomnavi_event"
+        android:title="행사" />
+
+    <item
+        android:id="@+id/rateFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottomnavi_rate"
+        android:title="평가" />
+</menu>
