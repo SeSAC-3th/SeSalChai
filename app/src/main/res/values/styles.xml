@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 32dp -->
+    <style name="TextHeadLine4" parent="TextAppearance.MaterialComponents.Headline4">
+
+        <item name="android:textSize">32dp</item>
+    </style>
+    <!-- 24dp -->
+    <style name="TextHeadLine5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">24dp</item>
+    </style>
+    <!-- 16dp -->
+    <style name="TextBody1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <!-- 11dp -->
+    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11dp</item>
+    </style>
+</resources>
