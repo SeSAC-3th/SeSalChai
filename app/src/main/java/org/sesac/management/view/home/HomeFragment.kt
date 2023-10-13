@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.databinding.FragmentHomeBinding
+import org.sesac.management.util.extension.setCoroutineFlowClickAction
 import org.sesac.management.view.artist.ArtistDetailFragment
 import org.sesac.management.view.artist.ArtistEnrollFragment
 import org.sesac.management.view.notice.NoticeFragment
@@ -32,6 +35,10 @@ class HomeFragment : Fragment() {
                 .add(binding.homeLayout.id, NoticeFragment())
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
+        }
+        var a = 1
+        binding.test.setCoroutineFlowClickAction(1000, CoroutineScope(Dispatchers.Default)){
+            binding.test2.text = "${a++}"
         }
     }
 }
