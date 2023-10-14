@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        name="heading1"
+        android:fontStyle="normal"
+        size="32sp"
+        android:fontWeight="400"
+        android:font="@font/jejugothic" />
+    <font
+        name="body1"
+        android:fontStyle="normal"
+        android:fontWeight="500"
+        size="16sp"
+        android:font="@font/jejugothic" />
+    <font
+        name="label1"
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        size="12sp"
+        android:font="@font/jejugothic" />
+</font-family>
