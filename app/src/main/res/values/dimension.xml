@@ -2,4 +2,9 @@
 <resources>
     <dimen name="horizontal_margin">16dp</dimen>
     <dimen name="vertical_margin">8dp</dimen>
+
+    <!-- Artist Detail viewPager2 Margin -->
+    <dimen name="pageMargin">10dp</dimen>
+    <dimen name="pageWidth">200dp</dimen>
+
 </resources>
