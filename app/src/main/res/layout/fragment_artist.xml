@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/artist_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
     tools:context=".view.artist.ArtistFragment">
+    <!-- chip (그룹명 순, 데뷔일 순 정렬) -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/vertical_margin">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_groupSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipStrokeWidth="2dp"
+            app:chipStrokeColor="@color/primary1"
+            app:chipBackgroundColor="@color/primary4"
+            android:textColor="@color/primary1"
+            android:text="Chip 1"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_debutSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipStrokeWidth="2dp"
+            app:chipStrokeColor="@color/primary1"
+            app:chipBackgroundColor="@color/primary5"
+            android:textColor="@color/white"
+            android:text="Chip 2"/>
+    </com.google.android.material.chip.ChipGroup>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- artist recyclerview -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_artist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chip_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
