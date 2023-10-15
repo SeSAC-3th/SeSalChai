@@ -9,5 +9,7 @@
     <!--Event Detail Fragment ToolBar Title-->
     <string name="event_detail_toolbar_text">이벤트</string>
 
-
+    <!-- Home Frag Text -->
+    <string name="title_home_comp_name">SeSAC Ent</string>
+    <string name="title_home_comp_info">(주) 세살차이 신진혁</string>
 </resources>
