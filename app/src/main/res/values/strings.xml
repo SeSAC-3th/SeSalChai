@@ -12,4 +12,11 @@
     <!-- Home Frag Text -->
     <string name="title_home_comp_name">SeSAC Ent</string>
     <string name="title_home_comp_info">(주) 세살차이 신진혁</string>
+    <string name="home_artist">대표 아티스트</string>
+    <string name="home_notice">공지사항</string>
+    <string name="home_comp_info">회사 소개</string>
+    <string name="home_artist_text">그룹명</string>
+    <string name="home_notice_date">2023-10-13</string>
+    <string name="home_notice_title">대표님께</string>
+    <string name="home_notice_content">대표님 잘생겼어요~~~~~~❤️</string>
 </resources>
