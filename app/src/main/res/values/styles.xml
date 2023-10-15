@@ -18,4 +18,13 @@
     <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11dp</item>
     </style>
+
+
+    <style name="content_textView_style">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">@dimen/content_title_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/content_title_margin_top</item>
+
+    </style>
 </resources>

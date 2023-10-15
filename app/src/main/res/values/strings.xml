@@ -2,4 +2,12 @@
     <string name="app_name">Idol Manage</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Floating eventFragment ActionButton description-->
+    <string name="event_floating_action_button_description">이벤트 등록</string>
+
+    <!--Event Detail Fragment ToolBar Title-->
+    <string name="event_detail_toolbar_text">이벤트</string>
+
+
 </resources>
