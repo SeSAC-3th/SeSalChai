@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -19,16 +20,15 @@ import org.sesac.management.databinding.FragmentRateBinding
 
 class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::inflate) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        _binding = FragmentRateBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    /* events 임시 데이터 */
+    private val events = mutableListOf<String>(
+        "새싹1기",
+        "새싹2기",
+        "새싹3기",
+        "새싹4기"
+    )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         binding.chipRateAverage.setOnClickListener {
 
         }
@@ -113,6 +113,16 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
             this.data = data //차트의 데이터를 data로 설정해줌.
             setFitBars(true)
             invalidate()
+        }
+
+        val manager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL, false
+        )
+
+        with(binding.recyclerRateRanking) {
+            layoutManager = manager
+            adapter = RateAdapter(events)
         }
     }
 

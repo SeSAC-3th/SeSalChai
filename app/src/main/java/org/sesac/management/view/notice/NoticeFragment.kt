@@ -14,7 +14,6 @@ import org.sesac.management.view.artist.ArtistEnrollFragment
 
 class NoticeFragment : Fragment() {
     private lateinit var binding: FragmentNoticeBinding
-    lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +26,6 @@ class NoticeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        backpress()
         binding.detail.setOnClickListener {
             childFragmentManager
                 .beginTransaction()
@@ -44,16 +42,4 @@ class NoticeFragment : Fragment() {
         }
     }
 
-    fun backpress() {
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (parentFragmentManager.backStackEntryCount > 0) {
-                    parentFragmentManager.popBackStackImmediate(null, 0)
-                } else {
-                    requireActivity().finish()
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-    }
 }
