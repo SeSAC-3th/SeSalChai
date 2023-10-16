@@ -46,14 +46,23 @@ dependencies {
     // CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    //ViewPager2
+    // ViewPager2
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
     // SplashScreen
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 
-    //cardView
+    // CardView
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // MPAndroidChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // RxBinding
+    implementation("com.jakewharton.rxbinding4:rxbinding-material:4.0.0")
+
+    // FlowBinding
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-material:1.2.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
