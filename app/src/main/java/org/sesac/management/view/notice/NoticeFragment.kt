@@ -31,10 +31,13 @@ class NoticeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding){
-            with(rvEvent){
+        with(binding) {
+            with(toolbarNotice) {
+                tvTitle.text = "공지사항"
+            }
+            with(rvEvent) {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-                adapter = ArtistRecyclerAdapter(artistList)
+                adapter = NoticetRecyclerAdapter(artistList)
             }
         }
 //        binding.detail.setOnClickListener {

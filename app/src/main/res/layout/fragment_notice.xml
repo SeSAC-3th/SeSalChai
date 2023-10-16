@@ -13,15 +13,6 @@
         android:id="@+id/toolbar_notice"
         layout="@layout/layout_toolbar" />
 
-    <TextView
-        android:id="@+id/tv_notice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="noticedetail"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_notice" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_event"
@@ -31,6 +22,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_notice" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar_notice" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_notife_enroll_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/floating_action_button_margin_end"
+        android:layout_marginBottom="@dimen/floating_action_button_margin_bottom"
+        android:backgroundTint="@color/primary2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_add_24"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.tvHomeCompName.text = resources.getString(R.string.title_home_comp_name)
         binding.tvHomeCompInfo.text = resources.getString(R.string.title_home_comp_info)
         binding.includedLayoutHomeNotice.ivNoticeNavigate.setOnClickListener {
+            binding.appbarHome.visibility = View.GONE
             childFragmentManager
                 .beginTransaction()
                 .replace(binding.homeLayout.id, NoticeFragment())
