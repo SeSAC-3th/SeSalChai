@@ -7,22 +7,22 @@
     android:background="@color/white">
 
     <include
-        android:id="@+id/scheduleEnrollToolbar"
+        android:id="@+id/tv_schedule_enroll"
         layout="@layout/layout_toolbar" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/scheduleImageView"
+        android:id="@+id/iv_schedule"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toBottomOf="@id/scheduleEnrollToolbar"
-        app:layout_constraintBottom_toTopOf="@id/imageGuideLine"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_schedule_enroll"
+        app:layout_constraintBottom_toTopOf="@id/gl_iv_schedule_bottom"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/imageGuideLine"
+        android:id="@+id/gl_iv_schedule_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -42,17 +42,130 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="행사명을 입력해주세요"
+        app:boxStrokeColor="@color/primary1"
+        app:circularflow_radiusInDP="20dp"
+        app:helperText="Supporting text"
+        app:helperTextTextColor="@color/primary1"
+        app:hintTextColor="@color/primary1"
+        app:layout_constraintTop_toBottomOf="@id/gl_iv_schedule_bottom"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_schedule_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToOutline="true"
+            app:strokeColor="@color/primary1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_input_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="행사명을 입력해주세요"
+        app:boxStrokeColor="@color/primary1"
+        app:circularflow_radiusInDP="20dp"
+        app:helperText="Supporting text"
+        app:helperTextTextColor="@color/primary1"
+        app:hintTextColor="@color/primary1"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_title"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_schedule_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToOutline="true"
+            app:strokeColor="@color/primary1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_input_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="행사명을 입력해주세요"
+        app:boxStrokeColor="@color/primary1"
+        app:circularflow_radiusInDP="20dp"
+        app:helperText="Supporting text"
+        app:helperTextTextColor="@color/primary1"
+        app:hintTextColor="@color/primary1"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_date"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_schedule_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToOutline="true"
+            app:strokeColor="@color/primary1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_input_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="행사명을 입력해주세요"
+        app:boxStrokeColor="@color/primary1"
+        app:circularflow_radiusInDP="20dp"
+        app:helperText="Supporting text"
+        app:helperTextTextColor="@color/primary1"
+        app:hintTextColor="@color/primary1"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_place">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_schedule_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToOutline="true"
+            app:strokeColor="@color/primary1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_join_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/content_textView_style"
+        android:text="참여 아티스트"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_description"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tv_join_artist"
+        app:layout_constraintTop_toTopOf="@id/tv_join_artist"
+        app:layout_constraintBottom_toBottomOf="@id/tv_join_artist"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/black"/>
+
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancelButton"
+        android:id="@+id/btn_cancel"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/centerVerticalGuideLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/buttonGuideLine" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveButton"
+        android:id="@+id/btn_save"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"

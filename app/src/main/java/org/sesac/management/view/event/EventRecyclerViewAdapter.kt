@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.model.ArtistThumbnail
+import org.sesac.management.databinding.ItemEventDetailArtistBinding
 import org.sesac.management.databinding.ItemHomeArtistBinding
 
-class EventRecyclerViewAdapter(val artistList: MutableList<ArtistThumbnail>) :
+class EventRecyclerViewAdapter(val artistList: List<ArtistThumbnail>) :
     RecyclerView.Adapter<EventRecyclerViewAdapter.EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
-            ItemHomeArtistBinding.inflate(
+            ItemEventDetailArtistBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -24,12 +25,12 @@ class EventRecyclerViewAdapter(val artistList: MutableList<ArtistThumbnail>) :
         holder.bind(artist)
     }
 
-
-    inner class EventViewHolder(private val binding: ItemHomeArtistBinding) :
+    inner class EventViewHolder(private val binding: ItemEventDetailArtistBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ArtistThumbnail) {
             with(binding) {
-                binding.mcvArtistImage.setImageResource(R.drawable.girls_generation_all)
+                ivThumbnail.setImageResource(item.thumbnail)
+                tvArtistName.text=item.title
             }
         }
     }
