@@ -19,12 +19,24 @@
         <item name="android:textSize">11dp</item>
     </style>
 
-
     <style name="content_textView_style">
         <item name="android:textSize">@dimen/content_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginStart">@dimen/content_title_margin_start</item>
         <item name="android:layout_marginTop">@dimen/content_title_margin_top</item>
+    </style>
 
+    <!-- TextInputLayoutStyle -->
+    <style name="CustomTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">32dp</item>
+        <item name="boxCornerRadiusBottomStart">32dp</item>
+        <item name="boxCornerRadiusTopEnd">32dp</item>
+        <item name="boxCornerRadiusTopStart">32dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeColor">@color/primary2</item>
+        <item name="boxStrokeErrorColor">@color/error</item>
+        <item name="hintTextColor">@color/text_hint</item>
+        <item name="errorTextColor">@color/error</item>
+        <item name="errorEnabled">true</item>
     </style>
 </resources>
