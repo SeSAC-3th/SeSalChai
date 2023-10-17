@@ -47,4 +47,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_artist_enroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/floating_action_button_margin_end"
+        android:layout_marginBottom="@dimen/floating_action_button_margin_bottom"
+        android:backgroundTint="@color/primary2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_add_24"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
