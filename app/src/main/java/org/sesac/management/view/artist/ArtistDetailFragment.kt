@@ -22,8 +22,7 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
         R.drawable.ic_launcher_background
     )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         with(binding) {
 
             /* toolbar 아이콘, 텍스트 설정 */

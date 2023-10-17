@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentArtistBinding
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
@@ -17,8 +21,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         binding.chipGroupSort.setOnClickListener {
             childFragmentManager
                 .beginTransaction()
@@ -32,6 +35,10 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 .add(binding.artistLayout.id, ArtistEnrollFragment())
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
+        }
+        with(binding.rvArtist){
+            layoutManager = GridLayoutManager(activity, 2)
+            adapter = ArtistRecyclerAdapter(artistList)
         }
     }
 

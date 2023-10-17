@@ -14,38 +14,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08"/>
+        app:layout_constraintGuide_percent="0.08" />
 
     <include
         android:id="@+id/eventSearchEditText"
         layout="@layout/layout_search"
-        android:layout_height="0dp"
         android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/horizontal_margin"
         android:layout_marginEnd="@dimen/horizontal_margin"
-        app:layout_constraintTop_toBottomOf="@id/searchViewTopGuideLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/searchViewBottomGuideLine"
-         />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchViewTopGuideLine" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/searchViewBottomGuideLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16"/>
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eventListRecyclerView"
+        android:id="@+id/rv_event"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchViewBottomGuideLine"
-        tools:listitem="@layout/item_artist_event"/>
+        app:layout_constraintTop_toBottomOf="@id/searchViewBottomGuideLine" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -59,7 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_24"
-        app:tint="@color/white"
-        />
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

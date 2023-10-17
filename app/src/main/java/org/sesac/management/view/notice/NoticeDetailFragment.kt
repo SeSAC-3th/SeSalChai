@@ -7,33 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import org.sesac.management.R
+import org.sesac.management.base.BaseFragment
+import org.sesac.management.databinding.FragmentHomeBinding
+import org.sesac.management.databinding.FragmentNoticeDetailBinding
 
-class NoticeDetailFragment : Fragment() {
+class NoticeDetailFragment() :
+    BaseFragment<FragmentNoticeDetailBinding>(FragmentNoticeDetailBinding::inflate) {
     // 뒤로가기 버튼을 눌렀을 때를 위한 callback 변수
-    lateinit var callback: OnBackPressedCallback
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notice_detail, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        backpress()
-    }
-
-    fun backpress() {
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (parentFragmentManager.backStackEntryCount > 0) {
-                    parentFragmentManager.popBackStackImmediate(null, 0)
-                } else {
-                    requireActivity().finish()
-                }
-            }
+    override fun onViewCreated() {
+        with(binding) {
+            toolbarNoticeDetail.tvTitle.text = "공지사항"
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
+
 }

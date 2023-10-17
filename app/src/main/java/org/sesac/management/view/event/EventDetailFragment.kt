@@ -22,8 +22,7 @@ class EventDetailFragment
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         with(binding) {
             eventToolbar.tvTitle.text=getString(R.string.event_detail_toolbar_text)
         }
