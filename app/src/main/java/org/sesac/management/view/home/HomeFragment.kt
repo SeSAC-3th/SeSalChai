@@ -15,7 +15,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.appbarHome.visibility = View.GONE
             childFragmentManager
                 .beginTransaction()
-                .replace(binding.homeLayout.id, NoticeFragment())
+                .add(binding.homeLayout.id, NoticeFragment())
+                .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
     }

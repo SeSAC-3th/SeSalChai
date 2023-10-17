@@ -25,6 +25,7 @@ class ArtistRecyclerAdapter(private val items: List<ArtistThumbnail>,private val
 
                         fragmentManager.beginTransaction()
                             .add(fragmentContainer, fragment)
+                            .addToBackStack(null)
                             .commit()
                     }
                 }

@@ -27,6 +27,7 @@ class NoticetRecyclerAdapter(
 
                     fragmentManager.beginTransaction()
                         .add(fragmentContainer, fragment)
+                        .addToBackStack(null)
                         .commit()
                 }
             }
