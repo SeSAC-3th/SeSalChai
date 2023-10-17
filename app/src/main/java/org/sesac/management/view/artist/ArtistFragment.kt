@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentArtistBinding
@@ -36,9 +37,14 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
-        with(binding.rvArtist){
+        with(binding.rvArtist) {
             layoutManager = GridLayoutManager(activity, 2)
-            adapter = ArtistRecyclerAdapter(artistList)
+            adapter = ArtistRecyclerAdapter(
+                artistList,
+                childFragmentManager,
+                ArtistDetailFragment(),
+                R.id.artist_layout
+            )
         }
     }
 
