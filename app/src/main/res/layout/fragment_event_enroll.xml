@@ -17,6 +17,7 @@
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintTop_toBottomOf="@id/scheduleEnrollToolbar"
         app:layout_constraintBottom_toTopOf="@id/imageGuideLine"/>
 
@@ -26,26 +27,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="219dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/scheduleNameInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imageGuideLine"
-        android:layout_marginTop="@dimen/vertical_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/scheduleNameTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToOutline="true"/>
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/buttonGuideLine"
