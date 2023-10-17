@@ -22,14 +22,6 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
         R.drawable.ic_launcher_background
     )
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        _binding = FragmentArtistDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
@@ -40,12 +32,9 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
             layoutToolbar.ivHamburger.setImageResource(R.drawable.baseline_menu_24)
 
             layoutToolbar.ivBack.setOnClickListener {
-                childFragmentManager
-                    .beginTransaction()
-                    .add(artistDetailLayout.id, ArtistFragment())
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss()
+
             }
+
 //            layoutToolbar.ivHamburger.setOnClickListener {
 //                childFragmentManager
 //                    .beginTransaction()

@@ -18,4 +18,6 @@ class ArtistEnrollFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_artist_enroll, container, false)
     }
 
+
+
 }
