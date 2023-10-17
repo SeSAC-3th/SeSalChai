@@ -26,20 +26,17 @@ class NoticeFragment: BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding:
             }
             with(rvEvent) {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-                adapter = NoticetRecyclerAdapter(artistList)
+                adapter = NoticetRecyclerAdapter(artistList,childFragmentManager,
+                    NoticeDetailFragment(),
+                    R.id.notice_layout)
             }
-//            binding.detail.setOnClickListener {
-//                childFragmentManager
-//                    .beginTransaction()
-//                    .add(binding.noticeLayout.id, NoticeDetailFragment())
-//                    .addToBackStack(null)
-//                    .commitAllowingStateLoss()
-//            }
+
             with(btnNoticeEnrollNavigation){
                 setOnClickListener {
                     childFragmentManager
                         .beginTransaction()
                         .add(binding.noticeLayout.id, NoticeEnrollFragment())
+                        .addToBackStack(null)
                         .commitAllowingStateLoss()
                 }
             }
