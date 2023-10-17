@@ -21,8 +21,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         binding.chipGroupSort.setOnClickListener {
             childFragmentManager
                 .beginTransaction()

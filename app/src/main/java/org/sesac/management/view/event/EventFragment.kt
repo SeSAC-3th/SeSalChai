@@ -23,8 +23,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
 
         with(binding.rvEvent){
             layoutManager = GridLayoutManager(activity, 2)

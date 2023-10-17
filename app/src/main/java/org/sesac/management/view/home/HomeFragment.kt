@@ -8,8 +8,7 @@ import org.sesac.management.databinding.FragmentHomeBinding
 import org.sesac.management.view.notice.NoticeFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         binding.tvHomeCompName.text = resources.getString(R.string.title_home_comp_name)
         binding.tvHomeCompInfo.text = resources.getString(R.string.title_home_comp_info)
         binding.includedLayoutHomeNotice.ivNoticeNavigate.setOnClickListener {

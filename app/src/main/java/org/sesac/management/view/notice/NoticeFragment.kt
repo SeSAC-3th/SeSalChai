@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
@@ -20,8 +19,7 @@ import org.sesac.management.view.artist.ArtistRecyclerAdapter
 
 class NoticeFragment: BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated() {
         with(binding) {
             with(toolbarNotice) {
                 tvTitle.text = "공지사항"
@@ -30,6 +28,13 @@ class NoticeFragment: BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding:
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
                 adapter = NoticetRecyclerAdapter(artistList)
             }
+//            binding.detail.setOnClickListener {
+//                childFragmentManager
+//                    .beginTransaction()
+//                    .add(binding.noticeLayout.id, NoticeDetailFragment())
+//                    .addToBackStack(null)
+//                    .commitAllowingStateLoss()
+//            }
             with(btnNoticeEnrollNavigation){
                 setOnClickListener {
                     childFragmentManager
@@ -40,4 +45,7 @@ class NoticeFragment: BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding:
             }
         }
     }
+
+
+
 }
