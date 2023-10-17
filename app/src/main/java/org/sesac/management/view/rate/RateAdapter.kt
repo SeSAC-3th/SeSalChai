@@ -17,7 +17,6 @@ class RateAdapter(
         val binding =
             ItemRateRankingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RateViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: RateViewHolder, position: Int) {

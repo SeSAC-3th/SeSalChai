@@ -1,10 +1,7 @@
 package org.sesac.management.view.rate
 
 import android.graphics.Color
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.AxisBase
@@ -17,6 +14,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentRateBinding
+import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 
 class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::inflate) {
 
@@ -28,39 +26,44 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
         "새싹4기"
     )
 
+    val entries = arrayListOf<BarEntry>(
+        BarEntry(1.2f, 20.0f),
+        BarEntry(2.2f, 70.0f),
+        BarEntry(3.2f, 30.0f),
+        BarEntry(4.2f, 90.0f),
+        BarEntry(5.2f, 70.0f),
+        BarEntry(6.2f, 30.0f),
+        BarEntry(7.2f, 90.0f)
+    )
+
     override fun onViewCreated() {
-        binding.chipRateAverage.setOnClickListener {
+        binding.chipRateAverage.setOnAvoidDuplicateClick {
+            Toast.makeText(requireContext(), "Rx", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.chipRateIncome.setOnAvoidDuplicateClickFlow {
+            Toast.makeText(requireContext(), "flow", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.chipRatePopularity.setOnAvoidDuplicateClick {
 
         }
 
-        binding.chipRateIncome.setOnClickListener {
+        binding.chipRateSing.setOnAvoidDuplicateClick {
 
         }
 
-        binding.chipRatePopularity.setOnClickListener {
+        binding.chipRateDance.setOnAvoidDuplicateClick {
 
         }
 
-        binding.chipRateSing.setOnClickListener {
+        binding.chipRatePerformance.setOnAvoidDuplicateClick {
 
         }
-
-        binding.chipRateDance.setOnClickListener {
-
+        binding.test.setOnFinishInput {
+            binding.test2.text = it
         }
 
-        binding.chipRatePerformance.setOnClickListener {
-
-        }
-
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1.2f, 20.0f))
-        entries.add(BarEntry(2.2f, 70.0f))
-        entries.add(BarEntry(3.2f, 30.0f))
-        entries.add(BarEntry(4.2f, 90.0f))
-        entries.add(BarEntry(5.2f, 70.0f))
-        entries.add(BarEntry(6.2f, 30.0f))
-        entries.add(BarEntry(7.2f, 90.0f))
 
         binding.barChartRateCompare.run {
             description.isEnabled = true
@@ -100,8 +103,16 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
         set.colors
 
         set.setColors(
-            Color.parseColor("#FFF78B"), Color.parseColor("#FFD38C"), Color.parseColor("#8DEBFF"),
-            Color.parseColor("#FF8E9C"), Color.parseColor("#C5FF8C")
+            Color.parseColor("#FFF78B"),
+            Color.parseColor("#FFD38C"),
+            Color.parseColor("#8DEBFF"),
+            Color.parseColor("#FF8E9C"),
+            Color.parseColor("#C5FF8C"),
+//            R.color.rateBar1,
+//            R.color.rateBar2,
+//            R.color.rateBar3,
+//            R.color.rateBar4,
+//            R.color.rateBar5
         )
 
 
