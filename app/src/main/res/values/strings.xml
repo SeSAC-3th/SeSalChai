@@ -19,4 +19,7 @@
     <string name="home_notice_date">2023-10-13</string>
     <string name="home_notice_title">대표님께</string>
     <string name="home_notice_content">대표님 잘생겼어요~~~~~~❤️</string>
+
+    <!-- TextInputLayout -->
+    <string name="hint_text_input">힌트</string>
 </resources>
