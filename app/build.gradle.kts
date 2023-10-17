@@ -33,7 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -47,7 +47,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // ViewPager2
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     // SplashScreen
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
@@ -59,10 +59,27 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // RxBinding
+    implementation("com.jakewharton.rxbinding4:rxbinding:4.0.0")
     implementation("com.jakewharton.rxbinding4:rxbinding-material:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-core:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-appcompat:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-leanback:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-recyclerview:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-slidingpanelayout:4.0.0")
+    implementation("com.jakewharton.rxbinding4:rxbinding-viewpager2:4.0.0")
 
     // FlowBinding
-    implementation("io.github.reactivecircus.flowbinding:flowbinding-material:1.2.0")
+    val flowbinding_version = "1.2.0"
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-android:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-material:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-activity:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-appcompat:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-core:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-lifecycle:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-navigation:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-preference:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-recyclerview:${flowbinding_version}")
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-viewpager2:${flowbinding_version}")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
