@@ -1,7 +1,9 @@
 package org.sesac.management.util.extension
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
@@ -16,12 +18,14 @@ import reactivecircus.flowbinding.android.view.clicks
 import reactivecircus.flowbinding.android.widget.afterTextChanges
 
 /**
- * @author 진혁
  * Set on finish input flow, textview 입력 완성 후 이벤트 처리 메서드
+ *
  * flow의 debounce() 안에 sleep 타임은 1초로 설정되어 있음, 1초 뒤에야 현재의 text를 반환 받을 수 있다.
+ *
  * flowBinding으로 구현
  * @param actionInMainThread
  * @receiver
+ * @author 진혁
  */
 fun TextView.setOnFinishInputFlow(actionInMainThread: (completedText: String) -> Unit) {
     this.afterTextChanges()
@@ -35,9 +39,11 @@ fun TextView.setOnFinishInputFlow(actionInMainThread: (completedText: String) ->
 
 /**
  * Set on avoid duplicate click, view에 대한 중복 클릭 방지 이벤트 처리 메서드
+ *
  * throttleFrist() 안에 sleep 타임은 0.3초로 설정되어 있음, 0.3초간 클릭 못함
  * @param actionInMainThread
  * @receiver
+ * @author 진혁
  */
 fun View.setOnAvoidDuplicateClickFlow(actionInMainThread: () -> Unit) {
     this.clicks()
@@ -59,4 +65,21 @@ private fun <T> Flow<T>.throttleFirst(intervalTime: Long): Flow<T> = flow {
             emit(upStream)
         }
     }
+}
+
+/**
+ * add fragment, fragment 추가 메서드
+ *
+ * binding.layout.changeFragment(this, XXXFragment())
+ *
+ * @param from : 현재 fragment
+ * @param to : 추가하고 싶은 fragment
+ * @author 진혁
+ */
+fun ViewGroup.changeFragment(from: Fragment, to: Fragment) {
+    from.childFragmentManager
+        .beginTransaction()
+        .add(this.id, to)
+        .addToBackStack(null)
+        .commitAllowingStateLoss()
 }

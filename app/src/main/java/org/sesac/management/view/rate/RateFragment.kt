@@ -1,7 +1,6 @@
 package org.sesac.management.view.rate
 
 import android.graphics.Color
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.AxisBase
@@ -14,7 +13,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentRateBinding
+import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
+import org.sesac.management.view.artist.ArtistDetailFragment
 
 class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::inflate) {
 
@@ -37,12 +38,15 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
     )
 
     override fun onViewCreated() {
-        binding.chipRateAverage.setOnAvoidDuplicateClick {
-            Toast.makeText(requireContext(), "Rx", Toast.LENGTH_SHORT).show()
+        with(binding){
+            setToolbarMenu(layoutRateToolbar, "평가")
+
+            chipRateAverage.setOnAvoidDuplicateClick {
+                binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
+            }
         }
 
         binding.chipRateIncome.setOnAvoidDuplicateClickFlow {
-            Toast.makeText(requireContext(), "flow", Toast.LENGTH_SHORT).show()
         }
 
         binding.chipRatePopularity.setOnAvoidDuplicateClick {

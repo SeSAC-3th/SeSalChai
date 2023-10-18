@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
 import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.viewpager2.pageSelections
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,6 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.sesac.management.R
+import org.sesac.management.databinding.LayoutToolbarBinding
 import org.sesac.management.util.common.CLICK_INTERVAL_TIME
 import org.sesac.management.util.common.FragmentInflate
 import org.sesac.management.util.common.INPUT_COMPLETE_TIME
@@ -32,7 +36,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     var _binding: VB? = null
     val binding get() = _binding!!
 
-//    private lateinit var backPressCallback: OnBackPressedCallback // 뒤로 가기 이벤트 콜백
+    //    private lateinit var backPressCallback: OnBackPressedCallback // 뒤로 가기 이벤트 콜백
     protected open fun savedInstanceStateOnCreateView() {} // 필요하면 재정의
     protected open fun savedInstanceStateOnViewCreated() {} // 필요하면 재정의
     protected open fun onCreateView() {} // 필요하면 재정의
@@ -66,12 +70,16 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     /**
-     * @author 진혁
      * Init back press callback, 뒤로가기 이벤트 초기화 메서드
+     *
      * : 해당 fragment를 소유하고 있는 부모 fragment의 stack에 fragment가 있다면 그것을 pop한다.
+     *
      * -> 현재 fragment로 전환할 때 addToBackStack으로 부모 fragment의 stack에 현재 fragment를 넣었다면 무조건 현재 fragment가 pop된다.
+     *
      * 만약 addToBackStack을 하지 않았다면 현재 fragment에서 뒤로가기가 작동하지 않는다.
+     *
      * 부모 fragment의 stack이 비었다면 그것은 Activity에 붙어 있는 가장 첫번째 fragment이므로 앱을 종료한다.
+     * @author 진혁
      */
     private fun initBackPressCallback() {
         // FlowBinding의 backPresses 확장함수를 활용하는 방법
@@ -98,14 +106,16 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     /**
-     * @author 진혁
      * On avoid duplicate click, view에 대한 중복 클릭 방지 이벤트 처리 메서드
+     *
      * throttleFrist() 안에 sleep 타임은 0.3초로 설정되어 있음, 0.3초간 클릭 못함
+     *
      * @param actionInMainThread : main 쓰레드에서 처리될 이벤트
      * @receiver 모든 view
+     * @author 진혁
      */
     fun View.setOnAvoidDuplicateClick(actionInMainThread: () -> Unit) {
-        compositeDisposable //
+        compositeDisposable
             .add(
                 this.clicks()
                     .observeOn(Schedulers.io()) // 이후 chain의 메서드들은 쓰레드 io 영역에서 처리
@@ -122,12 +132,14 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     /**
-     * @author 진혁
      * Set on finish input, textview 입력 완성 후 이벤트 처리 메서드
+     *
      * Rx의 debounce() 안에 sleep 타임은 1초로 설정되어 있음, 1초 뒤에야 현재의 text를 반환 받을 수 있다.
+     *
      * RxBinding으로 구현
      * @param actionInMainThread : main 쓰레드에서 처리될 이벤트
      * @receiver 모든 textview
+     * @author 진혁
      */
     fun TextView.setOnFinishInput(actionInMainThread: (completedText: String) -> Unit) {
         compositeDisposable
@@ -146,5 +158,54 @@ abstract class BaseFragment<VB : ViewBinding>(
             )
     }
 
+    fun ViewPager2.OnPageChangeCallback(actionInMainThread: () -> Unit) {
+        compositeDisposable
+            .add(
+                this.pageSelections()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            actionInMainThread()
+                        }, {
+                            Log.e(RXERROR, it.toString())
+                        }
+                    )
+            )
+    }
 
+    /**
+     * Set toolbar menu, toolbar 세팅 메서드
+     *
+     * setToolbarMenu(binding.toolbar, "제목") // 제목만
+     *
+     * setToolbarMenu(binding.toolbar, "제목", true) // 제목, back버튼
+     *
+     * setToolbarMenu(binding.toolbar, "제목", true){ 햄버거 클릭 이벤트 } // 제목, back버튼, hamburger버튼
+     *
+     * @param toolbar 해당 fragment에 포함된 toolbarlayout의 id
+     * @param title toolbar의 제목
+     * @param backBT  back 키 유무
+     * @param hamburgerListener hamburger 버튼 클릭 이벤트
+     * @author 진혁
+     */
+    fun setToolbarMenu(
+        toolbar: LayoutToolbarBinding, // 툴바 레이아웃 id
+        title: String, // 툴바 제목
+        backBT: Boolean = false, // true 안해주면, 기본 false
+        hamburgerListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
+    ) {
+        with(toolbar) {
+            tvTitle.text = title // 툴바 제목은 무조건
+            if (backBT) ivBack.setImageResource(R.drawable.baseline_arrow_back_24) // backBT이 있을 경우
+            ivBack.setOnAvoidDuplicateClick { // backBT 클릭 이벤트
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+            if (hamburgerListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
+                ivHamburger.setImageResource(R.drawable.baseline_menu_24) // hamburger 버튼이 있다.
+                ivHamburger.setOnAvoidDuplicateClick { // hamburger 클릭 이벤트
+                    hamburgerListener()
+                }
+            }
+        }
+    }
 }
