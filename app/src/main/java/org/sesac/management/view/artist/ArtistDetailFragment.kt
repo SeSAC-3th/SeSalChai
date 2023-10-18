@@ -1,9 +1,5 @@
 package org.sesac.management.view.artist
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
@@ -24,22 +20,29 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
 
     override fun onViewCreated() {
         with(binding) {
-
             /* toolbar 아이콘, 텍스트 설정 */
-            layoutToolbar.ivBack.setImageResource(R.drawable.baseline_arrow_back_24)
-            layoutToolbar.tvTitle.text = "아티스트"
-            layoutToolbar.ivHamburger.setImageResource(R.drawable.baseline_menu_24)
-
-            layoutToolbar.ivBack.setOnClickListener {
-
+            with(layoutToolbar) {
+                ivBack.setImageResource(R.drawable.baseline_arrow_back_24)
+                tvTitle.text = "아티스트"
+                ivHamburger.setImageResource(R.drawable.baseline_menu_24)
+                /* 뒤로가기 */
+                ivBack.setOnClickListener {
+                    parentFragmentManager.popBackStack()
+                }
+                /* Bottom Sheet show*/
+                ivChart.setOnClickListener {
+                    val rateBottomSheet = RateBottomSheet()
+                    activity?.let { rateBottomSheet.show(it.supportFragmentManager, "dialog") }
+                }
             }
-
+//
 //            layoutToolbar.ivHamburger.setOnClickListener {
 //                childFragmentManager
 //                    .beginTransaction()
 //                    .addToBackStack(null)
 //                    .commitAllowingStateLoss()
 //            }
+
 
             /* viewPager2 */
             viewPager = vpSchedule
@@ -51,7 +54,8 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
                     position: Int,
                     positionOffset: Float,
                     positionOffsetPixels: Int
-                ) { }
+                ) {
+                }
 
                 //사용자가 스크롤 했을때 position 수정
                 override fun onPageSelected(position: Int) {
@@ -59,7 +63,7 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
                     bannerPosition = position
                 }
 
-                override fun onPageScrollStateChanged(state: Int) { }
+                override fun onPageScrollStateChanged(state: Int) {}
             })
         }
     }
@@ -76,7 +80,7 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
         viewPager.setPageTransformer { page, position ->
             page.translationX = position * -offsetPx
         }
-        
+
         adapter = ArtistEventViewPagerAdapter(events).apply {
             notifyDataSetChanged()
         }
