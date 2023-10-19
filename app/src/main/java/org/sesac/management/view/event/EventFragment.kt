@@ -26,7 +26,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
     }
 
     override fun onViewCreated() {
-
         with(binding.rvEvent){
             layoutManager = GridLayoutManager(activity, 2)
             adapter = ArtistRecyclerAdapter(
@@ -35,5 +34,13 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 R.id.event_layout
             )
         }
+
+        binding.btnEventEnroll.setOnClickListener {
+            childFragmentManager.beginTransaction()
+                .add(R.id.event_layout,EventEnrollFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
     }
 }

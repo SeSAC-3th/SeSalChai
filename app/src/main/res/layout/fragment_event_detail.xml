@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_detail_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +34,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="이벤트 명" />
+                android:text="이벤트 명" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/eventTimeTextView"
@@ -42,7 +44,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="@id/eventTitleTextView"
                 app:layout_constraintTop_toBottomOf="@id/eventTitleTextView"
-                tools:text="일시 : " />
+                android:text="일시 : " />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/eventPlaceTextView"
@@ -52,7 +54,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="@id/eventTitleTextView"
                 app:layout_constraintTop_toBottomOf="@id/eventTimeTextView"
-                tools:text="장소 : " />
+                android:text="장소 : " />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/eventImageView"
@@ -72,7 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@id/eventImageView"
                 app:layout_constraintStart_toStartOf="@id/eventTimeTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="설명 : "
+                android:text="설명 : "
                 android:maxLines="2"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="참여 아티스트"
+        android:text="참여 아티스트"
         style="@style/content_textView_style"
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintTop_toBottomOf="@id/scheduleDetailCardView"

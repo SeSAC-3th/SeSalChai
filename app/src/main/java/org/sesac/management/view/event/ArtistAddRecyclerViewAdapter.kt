@@ -8,7 +8,6 @@ import org.sesac.management.databinding.ItemEventEnrollAddArtistBinding
 
 class ArtistAddRecyclerViewAdapter(val artists: List<ArtistThumbnail>) :
     RecyclerView.Adapter<ArtistAddRecyclerViewAdapter.ArtistViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         return ArtistViewHolder(
             ItemEventEnrollAddArtistBinding.inflate(
@@ -29,7 +28,9 @@ class ArtistAddRecyclerViewAdapter(val artists: List<ArtistThumbnail>) :
     inner class ArtistViewHolder(private val binding: ItemEventEnrollAddArtistBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ArtistThumbnail) {
-
+            with(binding) {
+                tvArtistName.text=item.title
+            }
         }
     }
 }
