@@ -20,8 +20,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
         }
+
         val editText = binding.includedLayoutTextinput.tilEt
         addTextWatcherToTextInputEditText(editText)
+
         with(binding.includedLayoutTextinput){
             tilLayout.hint=resources.getString(R.string.app_name)
             tilLayout.isCounterEnabled = true
