@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun afterTextChange(s: Editable?) {
         if (s.toString().isEmpty()) {
-            binding.includedLayoutTextinput.tilLayout.error = "공백은 허용하지 않습니다."
+            binding.includedLayoutTextinput.tilLayout.error = "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
         }
     }
 }

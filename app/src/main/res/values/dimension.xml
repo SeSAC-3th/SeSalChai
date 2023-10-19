@@ -15,5 +15,4 @@
     <dimen name="content_text_size">24sp</dimen>
     <dimen name="content_title_margin_start">30dp</dimen>
     <dimen name="content_title_margin_top">16dp</dimen>
-
 </resources>
