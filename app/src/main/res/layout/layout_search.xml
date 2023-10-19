@@ -16,6 +16,7 @@
         android:background="@null"
         android:drawableEnd="@drawable/baseline_search_24"
         android:paddingEnd="16dp"
+        android:paddingStart="16dp"
         android:textSize="30sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
