@@ -222,6 +222,10 @@ abstract class BaseFragment<VB : ViewBinding>(
      * addTextWatcherToTextInputEditText(editText)
      * 와 같이 선언 후 필요한 함수를 상황에 따라 사용 가능
      */
+    /**
+     * 주의!!!!
+     * TextInputLayout이 여러개일 경우 아래 함수 override 시 바로 상단에 어느 Layout에 대한 함수인지 필수로 추가할 것!!!!
+     */
     protected open fun beforeTextChange(s: CharSequence?) {}
     protected open fun onTextChange(s: CharSequence?) {}
     protected open fun afterTextChange(s: Editable?) {}
