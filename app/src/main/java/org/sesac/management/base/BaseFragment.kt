@@ -212,6 +212,16 @@ abstract class BaseFragment<VB : ViewBinding>(
         }
     }
 
+    /** @author 우빈
+     * TextWatcher를 상속받은 textWatcher 생성
+     * 필수로 재정의 해줘야 하는 멤버 함수(beforeTextChanged, onTextChanged, afterTextChanged)를 미리 정의
+     * 각각의 함수 안에 각 Fragment에서 override 해서 사용할 함수들을 미리 선언
+     *
+     * 각 Fragment에서 사용 시 onViewCreated에서
+     * val editText = binding.includedLayoutTextinput.tilEt
+     * addTextWatcherToTextInputEditText(editText)
+     * 와 같이 선언 후 필요한 함수를 상황에 따라 사용 가능
+     */
     protected open fun beforeTextChange(s: CharSequence?) {}
     protected open fun onTextChange(s: CharSequence?) {}
     protected open fun afterTextChange(s: Editable?) {}
@@ -230,7 +240,25 @@ abstract class BaseFragment<VB : ViewBinding>(
         }
     }
 
+    /** @author 우빈
+     * 각 Fragment마다 아래와 같은 함수 실행해서 EditText에 TextWatcher를 추가해 줄 것
+     */
     protected fun addTextWatcherToTextInputEditText(textInputEditText: TextInputEditText) {
         textInputEditText.addTextChangedListener(textWatcher)
     }
+
+    /** @author 우빈
+     * 사용법 ( withBinding(binding.includedLayoutTextinput) )
+     * 1. 힌트를 설정할 때: tilLayout.hint = "힌트 입력"
+     * 2. 비밀번호 설정할 떄
+     *      tilLayout.isEndIconVisible = true
+     *      tilLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+     * 3. 에러 메세지 표시: tilLayout.error = "에러 메세지 입력"
+     * 4. 글자 수 제한할 때
+     *      tilLayout.isCounterEnabled = true
+     *      tilLayout.counterMaxLength = 10     // 10글자 제한. 우측 하단에 [현재 글자수]/[가능한 Max 글자수] 표시됨
+     * 5. TextInputEditText 앞에 아이콘이나 이미지 추가할 때: tilLayout.startIconDrawable = resources.getDrawable(R.drawable.baseline_menu_24)
+     * 6. EditText의 MaxLine 지정할 때: tilEt.maxLines = 2
+     * 7. 하단에 사용자 입력 전 기본적인 안내 (ex. 정규식) 작성할 때: tilLayout.helperText="하단 메세지"
+     */
 }
