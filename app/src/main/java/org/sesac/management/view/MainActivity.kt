@@ -1,7 +1,7 @@
 package org.sesac.management.view
 
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -16,8 +16,6 @@ import org.sesac.management.view.artist.ArtistFragment
 import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.home.HomeFragment
 import org.sesac.management.view.rate.RateFragment
-
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -42,21 +40,26 @@ class MainActivity : AppCompatActivity() {
                 .add(binding.secondFramelayout.id, HomeFragment(), HOME)
                 .commitAllowingStateLoss()
             currentFragmentTag = HOME // 현재 보고 있는 fragmet의 Tag
+            Toast.makeText(this, currentFragmentTag.toString(),Toast.LENGTH_SHORT).show()
+
         }
 
         clickBottomNavigationView()
     }
 
     // 화면을 회전해도 새로운 fragment를 생산하지 않고 현재 보고 있는 fragment를 불러오기 위해 tag를 저장한다.
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         outState.putString(CUURRENTFRAGMENTTAG, currentFragmentTag)
     }
 
     /**
      * Click bottom navigation view, 하단 바 버튼 클릭 이벤트 메서드
+     *
      * 하단 바를 클릭하면, 해당 fragment의 tag로 FragmentManager의 stack을 확인해본다.
+     *
      * 있으면 그 fragment를 show, 없으면 그 fragment를 add, 현재 보고 있는 화면은 hide
+     * @author 진혁
      */
     private fun clickBottomNavigationView(){
         binding.secondBottomNavigationView.setOnItemSelectedListener {
@@ -82,13 +85,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * @author 진혁
      * Change fragment, fragment 전환 메서드
+     *
      * FragmentManager에 bottomNavigationView를 통해 fragment를 전환할 때 해당 fragment와 tag를 저장하고,
+     *
      * 다시 그 fragment로 전환할 때 새롭게 replace하는 것이 아니라 FragmentManager에 해당 fragment의 tag가 저장되어 있는지 확인하고, 있으면 그것을 show 해준다.
      *
      * @param tag : 전환할 fragment의 tag
      * @param fragment : 전환할 fragment
+     * @author 진혁
      */
     private fun changeFragment(tag: String, fragment: Fragment) {
         // supportFragmentManager에 "first"라는 Tag로 저장된 fragment 있는지 확인
