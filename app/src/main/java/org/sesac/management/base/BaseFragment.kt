@@ -176,29 +176,27 @@ abstract class BaseFragment<VB : ViewBinding>(
     /**
      * Set toolbar menu, toolbar 세팅 메서드
      *
-     * setToolbarMenu(binding.toolbar, "제목") // 제목만
+     * LayoutToolbarBinding.setToolbarMenu(binding.toolbar, "제목") // 제목만
      *
-     * setToolbarMenu(binding.toolbar, "제목", true) // 제목, back버튼
+     * LayoutToolbarBinding.setToolbarMenu(binding.toolbar, "제목", true) // 제목, back버튼
      *
-     * setToolbarMenu(binding.toolbar, "제목", true){ 햄버거 클릭 이벤트 } // 제목, back버튼, hamburger버튼
+     * LayoutToolbarBinding.setToolbarMenu(binding.toolbar, "제목", true){ 햄버거 클릭 이벤트 } // 제목, back버튼, hamburger버튼
      *
-     * @param toolbar 해당 fragment에 포함된 toolbarlayout의 id
      * @param title toolbar의 제목
      * @param backBT  back 키 유무
      * @param hamburgerListener hamburger 버튼 클릭 이벤트
      * @author 진혁
      */
-    fun setToolbarMenu(
-        toolbar: LayoutToolbarBinding, // 툴바 레이아웃 id
+    fun LayoutToolbarBinding.setToolbarMenu(
         title: String, // 툴바 제목
         backBT: Boolean = false, // true 안해주면, 기본 false
         hamburgerListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
     ) {
-        with(toolbar) {
+        with(this) {
             tvTitle.text = title // 툴바 제목은 무조건
             if (backBT) ivBack.setImageResource(R.drawable.baseline_arrow_back_24) // backBT이 있을 경우
             ivBack.setOnAvoidDuplicateClick { // backBT 클릭 이벤트
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                backPress()
             }
             if (hamburgerListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
                 ivHamburger.setImageResource(R.drawable.baseline_menu_24) // hamburger 버튼이 있다.
@@ -207,5 +205,8 @@ abstract class BaseFragment<VB : ViewBinding>(
                 }
             }
         }
+    }
+    fun backPress() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 }

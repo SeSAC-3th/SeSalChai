@@ -1,6 +1,7 @@
 package org.sesac.management.view.rate
 
 import android.graphics.Color
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.AxisBase
@@ -38,8 +39,8 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
     )
 
     override fun onViewCreated() {
-        with(binding){
-            setToolbarMenu(layoutRateToolbar, "평가")
+        with(binding) {
+            layoutRateToolbar.setToolbarMenu("평가", true)
 
             chipRateAverage.setOnAvoidDuplicateClick {
                 binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
@@ -137,7 +138,10 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
 
         with(binding.recyclerRateRanking) {
             layoutManager = manager
-            adapter = RateAdapter(events)
+            adapter = RateAdapter(events) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
+            }
         }
     }
 

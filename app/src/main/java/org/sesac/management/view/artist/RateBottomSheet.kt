@@ -13,7 +13,7 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentRateBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
@@ -22,7 +22,7 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-        
+
             with(btnSave) {
             }
         }

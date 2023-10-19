@@ -1,7 +1,6 @@
 package org.sesac.management.view
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import org.sesac.management.view.artist.ArtistFragment
 import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.home.HomeFragment
 import org.sesac.management.view.rate.RateFragment
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
                 .add(binding.secondFramelayout.id, HomeFragment(), HOME)
                 .commitAllowingStateLoss()
             currentFragmentTag = HOME // 현재 보고 있는 fragmet의 Tag
-            Toast.makeText(this, currentFragmentTag.toString(),Toast.LENGTH_SHORT).show()
-
         }
 
         clickBottomNavigationView()
@@ -61,7 +59,7 @@ class MainActivity : AppCompatActivity() {
      * 있으면 그 fragment를 show, 없으면 그 fragment를 add, 현재 보고 있는 화면은 hide
      * @author 진혁
      */
-    private fun clickBottomNavigationView(){
+    private fun clickBottomNavigationView() {
         binding.secondBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> { // 첫 번째 fragment

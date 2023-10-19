@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
     android:background="@color/white">
 
     <include
@@ -14,9 +15,9 @@
         android:id="@+id/scheduleDetailCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintBottom_toTopOf="@id/eventArtistTitleTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/eventToolbar">
 
@@ -58,23 +59,22 @@
                 android:id="@+id/eventImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/eventPlaceTextView"
                 app:layout_constraintBottom_toTopOf="@id/eventDescriptionTextView"
-                app:srcCompat="@drawable/ic_launcher_background"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/eventPlaceTextView"
+                app:srcCompat="@drawable/ic_launcher_background" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/eventDescriptionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/vertical_margin"
-                app:layout_constraintTop_toBottomOf="@id/eventImageView"
-                app:layout_constraintStart_toStartOf="@id/eventTimeTextView"
+                android:maxLines="2"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="설명 : "
-                android:maxLines="2"/>
-
+                app:layout_constraintStart_toStartOf="@id/eventTimeTextView"
+                app:layout_constraintTop_toBottomOf="@id/eventImageView"
+                tools:text="설명 : " />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,27 +84,23 @@
 
     <TextView
         android:id="@+id/eventArtistTitleTextView"
+        style="@style/content_textView_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="참여 아티스트"
-        style="@style/content_textView_style"
         android:layout_marginTop="@dimen/vertical_margin"
-        app:layout_constraintTop_toBottomOf="@id/scheduleDetailCardView"
         app:layout_constraintBottom_toBottomOf="@id/artistViewPager2"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scheduleDetailCardView"
+        tools:text="참여 아티스트" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/artistViewPager2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/eventArtistTitleTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventArtistTitleTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
