@@ -43,7 +43,7 @@
          app:layout_constraintTop_toTopOf="@id/tv_artist"/>
 
      <!-- 아티스트 정보 (아티스트명, 데뷔일, 인원수) -->
-     <TextView
+     <com.google.android.material.textview.MaterialTextView
          android:id="@+id/tv_artist"
          android:layout_width="120dp"
          android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
          android:text="아티스트명 \n 데뷔날짜 \n 인원 수"/>
 
      <!-- MPAndroidChart -->
-     <ImageView
+     <com.google.android.material.imageview.ShapeableImageView
          android:id="@+id/iv_chart"
          android:layout_width="150dp"
          android:layout_height="120dp"
@@ -67,7 +67,7 @@
          android:src="@drawable/ic_launcher_background"/>
 
      <!-- Title (멤버) -->
-     <TextView
+     <com.google.android.material.textview.MaterialTextView
          android:id="@+id/tv_title_member"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
          android:text="멤버"/>
 
      <!-- 멤버 Body -->
-     <TextView
+     <com.google.android.material.textview.MaterialTextView
          android:id="@+id/tv_member"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
          android:text="함우빈 21살 보컬 (리더) \n 최종혁 21살 댄서 \n 김민서 21살 기타 \n 서혜원 21살 드럼 \n 신진혁 18살 대표"/>
 
      <!-- Title (행사 정보) -->
-     <TextView
+     <com.google.android.material.textview.MaterialTextView
          android:id="@+id/tv_title_schedule"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"

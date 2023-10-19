@@ -25,7 +25,7 @@ class EventDetailFragment
         // Inflate the layout for this fragment
         _binding = FragmentEventDetailBinding.inflate(inflater, container, false)
         with(binding) {
-            eventToolbar.apply {
+            tbEvent.apply {
                 ivBack.setImageResource(R.drawable.baseline_arrow_back_24)
                 ivHamburger.setImageResource(R.drawable.baseline_menu_24)
                 tvTitle.text="이벤트"
@@ -36,7 +36,7 @@ class EventDetailFragment
 
     override fun onViewCreated() {
         with(binding) {
-            eventToolbar.ivBack.setOnClickListener {
+            tbEvent.ivBack.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }
             rvArtist.apply {

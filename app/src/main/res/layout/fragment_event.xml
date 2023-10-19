@@ -10,7 +10,7 @@
     tools:context=".view.event.EventFragment">
 
     <include
-        android:id="@+id/eventSearchEditText"
+        android:id="@+id/edt_event_search"
         layout="@layout/layout_search"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/searchViewBottomGuideLine"
+        android:id="@+id/guide_search_edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchViewBottomGuideLine" />
+        app:layout_constraintTop_toBottomOf="@id/guide_search_edt" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
