@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_detail_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
@@ -9,7 +10,7 @@
 
     <include
         android:id="@+id/eventToolbar"
-        layout="@layout/layout_toolbar" />
+        layout="@layout/layout_toolbar"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/scheduleDetailCardView"
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="이벤트 명" />
+                android:text="이벤트 명" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/eventTimeTextView"
@@ -43,7 +44,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="@id/eventTitleTextView"
                 app:layout_constraintTop_toBottomOf="@id/eventTitleTextView"
-                tools:text="일시 : " />
+                android:text="일시 : " />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/eventPlaceTextView"
@@ -53,7 +54,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="@id/eventTitleTextView"
                 app:layout_constraintTop_toBottomOf="@id/eventTimeTextView"
-                tools:text="장소 : " />
+                android:text="장소 : " />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/eventImageView"
@@ -76,7 +77,6 @@
                 app:layout_constraintTop_toBottomOf="@id/eventImageView"
                 tools:text="설명 : " />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -93,14 +93,13 @@
         app:layout_constraintTop_toBottomOf="@id/scheduleDetailCardView"
         tools:text="참여 아티스트" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/artistViewPager2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_artist"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/eventArtistTitleTextView" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

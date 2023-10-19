@@ -20,5 +20,13 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 R.id.event_layout
             )
         }
+
+        binding.btnEventEnroll.setOnClickListener {
+            childFragmentManager.beginTransaction()
+                .add(R.id.event_layout,EventEnrollFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }
+
     }
 }

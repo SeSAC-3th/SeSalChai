@@ -9,6 +9,13 @@ class EventEnrollFragment :
     override fun onViewCreated() {
         with(binding) {
             scheduleEnrollToolbar.setToolbarMenu("행사 등록", true)
+            
+            ivAdd.setOnClickListener {
+                childFragmentManager.beginTransaction()
+                    .add(R.id.event_enroll_layout, ArtistAddDialogFragment())
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
+            }
         }
     }
 

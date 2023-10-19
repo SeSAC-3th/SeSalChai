@@ -1,7 +1,9 @@
 package org.sesac.management.view.event
 
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentEventDetailBinding
+
 
 
 class EventDetailFragment
@@ -12,5 +14,17 @@ class EventDetailFragment
             eventToolbar.setToolbarMenu("행사 상세", true)
         }
     }
+    inner class SpaceItemDecoration(private val space : Int) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            outRect.left=space
+            outRect.right=space
+        }
+    }
+
 
 }
