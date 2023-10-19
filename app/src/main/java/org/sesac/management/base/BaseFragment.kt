@@ -1,6 +1,8 @@
 package org.sesac.management.base
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.textfield.TextInputEditText
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.viewpager2.pageSelections
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -207,5 +210,27 @@ abstract class BaseFragment<VB : ViewBinding>(
                 }
             }
         }
+    }
+
+    protected open fun beforeTextChange(s: CharSequence?) {}
+    protected open fun onTextChange(s: CharSequence?) {}
+    protected open fun afterTextChange(s: Editable?) {}
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            beforeTextChange(s)
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            onTextChange(s)
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            afterTextChange(s)
+        }
+    }
+
+    protected fun addTextWatcherToTextInputEditText(textInputEditText: TextInputEditText) {
+        textInputEditText.addTextChangedListener(textWatcher)
     }
 }

@@ -1,6 +1,6 @@
 package org.sesac.management.view.home
 
-import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
@@ -18,6 +18,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 .add(binding.homeLayout.id, NoticeFragment())
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
+        }
+        val editText = binding.includedLayoutTextinput.tilEt
+        addTextWatcherToTextInputEditText(editText)
+    }
+
+    override fun afterTextChange(s: Editable?) {
+        if (s.toString().isEmpty()){
+            binding.includedLayoutTextinput.tilLayout.error = "공백은 허용하지 않습니다."
         }
     }
 }

@@ -87,6 +87,7 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/included_layout_textinput"
                 layout="@layout/layout_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
