@@ -17,9 +17,12 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
             with(rvEvent) {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
                 adapter = NoticetRecyclerAdapter(
-                    artistList, childFragmentManager,
-                    NoticeDetailFragment(),
-                    R.id.notice_layout
+                    artistList,
+                    onClick = {
+                        binding.noticeLayout.changeFragment(
+                            this@NoticeFragment,NoticeDetailFragment()
+                        )
+                    }
                 )
             }
 
@@ -28,5 +31,6 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
             }
         }
     }
+
 
 }
