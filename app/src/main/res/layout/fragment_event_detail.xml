@@ -58,8 +58,8 @@
                 android:id="@+id/iv_event"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/eventDescriptionTextView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_place"
                 app:layout_constraintBottom_toTopOf="@id/tv_event_description"
                 app:srcCompat="@drawable/ic_launcher_background"/>
@@ -72,12 +72,9 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_event"
                 app:layout_constraintStart_toStartOf="@id/tv_event_time"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/eventTimeTextView"
-                app:layout_constraintTop_toBottomOf="@id/eventImageView"
                 tools:text="설명 : " />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -85,9 +82,12 @@
         android:id="@+id/tv_event_artist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/content_textView_style"
         android:layout_marginTop="@dimen/vertical_margin"
-        app:layout_constraintTop_toBottomOf="@id/card_schedule_detail"
-        app:layout_constraintBottom_toBottomOf="@id/rv_artist"
+        android:text="참여아티스트"
+        app:layout_constraintTop_toBottomOf="@id/tv_event_artist_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -97,7 +97,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_event_artist_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventArtistTitleTextView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

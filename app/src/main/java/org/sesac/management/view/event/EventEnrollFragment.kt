@@ -1,5 +1,6 @@
 package org.sesac.management.view.event
 
+import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 
@@ -8,7 +9,7 @@ class EventEnrollFragment :
 
     override fun onViewCreated() {
         with(binding) {
-            scheduleEnrollToolbar.setToolbarMenu("행사 등록", true)
+            tbScheduleEnroll.setToolbarMenu("행사 등록", true)
             
             ivAdd.setOnClickListener {
                 childFragmentManager.beginTransaction()

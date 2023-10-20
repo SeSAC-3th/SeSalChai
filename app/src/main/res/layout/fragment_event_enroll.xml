@@ -8,7 +8,7 @@
     android:background="@color/white">
 
     <include
-        android:id="@+id/tv_schedule_enroll"
+        android:id="@+id/tb_schedule_enroll"
         layout="@layout/layout_toolbar" />
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toBottomOf="@id/tv_schedule_enroll"
+        app:layout_constraintTop_toBottomOf="@id/tb_schedule_enroll"
         app:layout_constraintBottom_toTopOf="@id/gl_iv_schedule_bottom"/>
 
     <androidx.constraintlayout.widget.Guideline
