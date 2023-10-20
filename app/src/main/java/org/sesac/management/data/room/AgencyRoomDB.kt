@@ -5,16 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.sesac.management.data.room.artist.Artist
-import org.sesac.management.data.room.company.Company
-import org.sesac.management.data.room.event.Event
-import org.sesac.management.data.room.notice.Notice
-import org.sesac.management.data.room.notice.NoticeDAO
-import org.sesac.management.data.room.rate.Rate
 import org.sesac.management.data.util.CustomConverter
 
 /**
@@ -22,12 +12,12 @@ import org.sesac.management.data.util.CustomConverter
  * @author kimwest00
  */
 @Database(
-    entities = [Artist::class, Company::class, Event::class, Notice::class, Rate::class],
+    entities = [Artist::class, Company::class, Event::class, Notice::class, Rate::class, Manager::class],
+//    entities = [Notice::class],
     version = 1
 )
 @TypeConverters(CustomConverter::class)
 abstract class AgencyRoomDB : RoomDatabase() {
-    abstract fun generateDAO(): ArtistDAO
     abstract fun generateNoticeDAO(): NoticeDAO
 
     companion object {
@@ -35,18 +25,18 @@ abstract class AgencyRoomDB : RoomDatabase() {
         private var instance: AgencyRoomDB? = null
 
         fun getInstance(context: Context): AgencyRoomDB {
-                return instance ?: synchronized(this) {
-                    instance ?: buildDatabase(context).also {
-                        instance = it
-                    }
+            return instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also {
+                    instance = it
                 }
+            }
         }
 
-         fun buildDatabase(context: Context): AgencyRoomDB {
+        fun buildDatabase(context: Context): AgencyRoomDB {
             return Room.databaseBuilder(
                 context.applicationContext,
-                AgencyRoomDB::class.java, "sesalchai_database.db")
-                .build()
+                AgencyRoomDB::class.java, "sesalchai_database.db"
+            ).build()
         }
     }
 }

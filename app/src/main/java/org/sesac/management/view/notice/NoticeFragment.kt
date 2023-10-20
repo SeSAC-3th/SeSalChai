@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
-import org.sesac.management.data.room.notice.Notice
+import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.FragmentNoticeBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
