@@ -1,7 +1,12 @@
 package org.sesac.management.view
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.widget.Toast
+import android.os.PersistableBundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -16,6 +21,7 @@ import org.sesac.management.view.artist.ArtistFragment
 import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.home.HomeFragment
 import org.sesac.management.view.rate.RateFragment
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -40,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 .add(binding.secondFramelayout.id, HomeFragment(), HOME)
                 .commitAllowingStateLoss()
             currentFragmentTag = HOME // 현재 보고 있는 fragmet의 Tag
-            Toast.makeText(this, currentFragmentTag.toString(),Toast.LENGTH_SHORT).show()
-
         }
 
         clickBottomNavigationView()
@@ -61,7 +65,7 @@ class MainActivity : AppCompatActivity() {
      * 있으면 그 fragment를 show, 없으면 그 fragment를 add, 현재 보고 있는 화면은 hide
      * @author 진혁
      */
-    private fun clickBottomNavigationView(){
+    private fun clickBottomNavigationView() {
         binding.secondBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> { // 첫 번째 fragment
@@ -115,5 +119,25 @@ class MainActivity : AppCompatActivity() {
         }
         // currentFragmentTag에 '현재 fragment Tag' "first"를 저장한다.
         currentFragmentTag = tag
+    }
+
+    /**
+     * 키보드 위 빈 공간을 터치하면 키보드가 사라지도록 한다
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val focusView: View? = currentFocus
+        if (focusView != null) {
+            val rect = Rect()
+            focusView.getGlobalVisibleRect(rect)
+            val x = ev.x.toInt()
+            val y = ev.y.toInt()
+            if (!rect.contains(x, y)) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(focusView.windowToken, 0)
+                focusView.clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }

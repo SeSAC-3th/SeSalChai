@@ -5,15 +5,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import org.sesac.management.R
 import org.sesac.management.data.model.ArtistThumbnail
-import org.sesac.management.databinding.ItemArtistEventBinding
-import org.sesac.management.databinding.ItemCommonItemBinding
 import org.sesac.management.databinding.ItemNoticeBinding
 
 class NoticetRecyclerAdapter(
     private val items: List<ArtistThumbnail>, private val fragmentManager: FragmentManager,
-    private val fragemnt: Fragment, private val fragmentContainer: Int
+    private val fragemnt: Fragment, private val fragmentContainer: Int,
 ) :
     RecyclerView.Adapter<NoticetRecyclerAdapter.NoticetInfo>() {
     inner class NoticetInfo(val itemBinding: ItemNoticeBinding) :
@@ -36,7 +33,7 @@ class NoticetRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): NoticetRecyclerAdapter.NoticetInfo {
         val binding =
             ItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)

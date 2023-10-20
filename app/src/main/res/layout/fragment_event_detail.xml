@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/event_detail_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
     android:background="@color/white">
 
     <include
@@ -18,14 +18,12 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/tv_event_artist_title"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tb_event">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_event_title"
@@ -60,7 +58,7 @@
                 android:id="@+id/iv_event"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/eventDescriptionTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_place"
                 app:layout_constraintBottom_toTopOf="@id/tv_event_description"
@@ -74,8 +72,9 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_event"
                 app:layout_constraintStart_toStartOf="@id/tv_event_time"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="설명 : "
-                android:maxLines="2"/>
+                app:layout_constraintStart_toStartOf="@id/eventTimeTextView"
+                app:layout_constraintTop_toBottomOf="@id/eventImageView"
+                tools:text="설명 : " />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,9 +85,6 @@
         android:id="@+id/tv_event_artist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="참여 아티스트"
-        style="@style/content_textView_style"
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintTop_toBottomOf="@id/card_schedule_detail"
         app:layout_constraintBottom_toBottomOf="@id/rv_artist"
@@ -101,9 +97,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_event_artist_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventArtistTitleTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
