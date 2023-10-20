@@ -3,12 +3,12 @@ package org.sesac.management.data.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import org.jetbrains.annotations.NotNull
 import org.sesac.management.data.util.CustomConverter
 import java.util.Date
-
 
 
 @Entity(tableName = "company")
@@ -48,6 +48,7 @@ data class Notice(
     @ColumnInfo(name = "notice_id")
     val noticeId: Int = 0,
 )
+
 @Entity(tableName = "event")
 data class Event(
     val name: String,
@@ -60,10 +61,14 @@ data class Event(
     var imgUri: String,
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "event_id")
     val eventId: Int = 0,
 )
 
-@Entity(tableName = "artist")
+@Entity(
+    tableName = "artist",
+    indices = [Index(value = ["rate_id"], unique = true)]
+)
 data class Artist(
 
     val name: String,
@@ -74,9 +79,8 @@ data class Artist(
     var debutDay: Date,
     var type: ArtistType,
 
-    @NotNull
     @ColumnInfo(name = "rate_id")
-    var rateId: Int,
+    var rateId: Int?,
     @ColumnInfo(name = "img_uri")
     var imgUri: String,
 
@@ -95,14 +99,14 @@ enum class ArtistType {
 
 @Entity(
     tableName = "rate",
-//    foreignKeys = [
-//        ForeignKey(
-//            entity = Artist::class,
-//            parentColumns = ["rate_id"],
-//            childColumns = ["rate_id"],
-//            onDelete = ForeignKey.CASCADE
-//        )
-//    ]
+    foreignKeys = [
+        ForeignKey(
+            entity = Artist::class,
+            parentColumns = ["rate_id"],
+            childColumns = ["rate_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class Rate(
 
