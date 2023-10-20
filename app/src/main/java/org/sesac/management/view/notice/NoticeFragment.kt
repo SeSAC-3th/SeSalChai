@@ -5,14 +5,15 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentNoticeBinding
+import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 
 class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
 
     override fun onViewCreated() {
         with(binding) {
-            with(toolbarNotice) {
-                tvTitle.text = "공지사항"
-            }
+            toolbarNotice.setToolbarMenu("공지사항", true)
+
             with(rvEvent) {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
                 adapter = NoticetRecyclerAdapter(
@@ -22,17 +23,10 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
                 )
             }
 
-            with(btnNoticeEnrollNavigation) {
-                setOnClickListener {
-                    childFragmentManager
-                        .beginTransaction()
-                        .add(binding.noticeLayout.id, NoticeEnrollFragment())
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss()
-                }
+            btnNoticeEnrollNavigation.setOnAvoidDuplicateClickFlow {
+                noticeLayout.changeFragment(this@NoticeFragment, NoticeEnrollFragment())
             }
         }
     }
-
 
 }

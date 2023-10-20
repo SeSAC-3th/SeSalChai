@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/artist_layout"
@@ -14,28 +13,30 @@
         android:id="@+id/chip_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/vertical_margin">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_groupSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipStrokeWidth="2dp"
-            app:chipStrokeColor="@color/primary1"
-            app:chipBackgroundColor="@color/primary4"
+            android:text="Chip 1"
             android:textColor="@color/primary1"
-            android:text="Chip 1"/>
+            app:chipBackgroundColor="@color/primary4"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
+
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_debutSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipStrokeWidth="2dp"
-            app:chipStrokeColor="@color/primary1"
-            app:chipBackgroundColor="@color/primary5"
+            android:text="Chip 2"
             android:textColor="@color/white"
-            android:text="Chip 2"/>
+            app:chipBackgroundColor="@color/primary5"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
     </com.google.android.material.chip.ChipGroup>
 
     <!-- artist recyclerview -->
@@ -43,9 +44,9 @@
         android:id="@+id/rv_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/chip_group"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/chip_group" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_artist_enroll"
@@ -54,8 +55,10 @@
         android:layout_marginEnd="@dimen/floating_action_button_margin_end"
         android:layout_marginBottom="@dimen/floating_action_button_margin_bottom"
         android:backgroundTint="@color/primary2"
+        app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_24"
         app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,8 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 
-class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
+class ArtistDetailFragment :
+    BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
 
@@ -20,29 +21,13 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
 
     override fun onViewCreated() {
         with(binding) {
-            /* toolbar 아이콘, 텍스트 설정 */
-            with(layoutToolbar) {
-                ivBack.setImageResource(R.drawable.baseline_arrow_back_24)
-                tvTitle.text = "아티스트"
-                ivHamburger.setImageResource(R.drawable.baseline_menu_24)
-                /* 뒤로가기 */
-                ivBack.setOnClickListener {
-                    parentFragmentManager.popBackStack()
-                }
-                /* Bottom Sheet show*/
-                ivChart.setOnClickListener {
-                    val rateBottomSheet = RateBottomSheet()
-                    activity?.let { rateBottomSheet.show(it.supportFragmentManager, "dialog") }
-                }
-            }
-//
-//            layoutToolbar.ivHamburger.setOnClickListener {
-//                childFragmentManager
-//                    .beginTransaction()
-//                    .addToBackStack(null)
-//                    .commitAllowingStateLoss()
-//            }
+            layoutToolbar.setToolbarMenu("아티스트 상세", true)
 
+            /* Bottom Sheet show*/
+            ivChart.setOnAvoidDuplicateClick {
+                val rateBottomSheet = RateBottomSheet()
+                activity?.let { rateBottomSheet.show(it.supportFragmentManager, "dialog") }
+            }
 
             /* viewPager2 */
             viewPager = vpSchedule
@@ -53,7 +38,7 @@ class ArtistDetailFragment : BaseFragment<FragmentArtistDetailBinding>(FragmentA
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                 }
 
