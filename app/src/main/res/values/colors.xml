@@ -15,4 +15,7 @@
     <color name="rateBar3">#8DEBFF</color>
     <color name="rateBar4">#FF8E9C</color>
     <color name="rateBar5">#C5FF8C</color>
+
+    <color name="error">#FF2828</color>
+    <color name="text_hint">#818181</color>
 </resources>

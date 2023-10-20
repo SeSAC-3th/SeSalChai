@@ -1,6 +1,12 @@
 package org.sesac.management.view
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.widget.Toast
+import android.os.PersistableBundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -113,5 +119,25 @@ class MainActivity : AppCompatActivity() {
         }
         // currentFragmentTag에 '현재 fragment Tag' "first"를 저장한다.
         currentFragmentTag = tag
+    }
+
+    /**
+     * 키보드 위 빈 공간을 터치하면 키보드가 사라지도록 한다
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        val focusView: View? = currentFocus
+        if (focusView != null) {
+            val rect = Rect()
+            focusView.getGlobalVisibleRect(rect)
+            val x = ev.x.toInt()
+            val y = ev.y.toInt()
+            if (!rect.contains(x, y)) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(focusView.windowToken, 0)
+                focusView.clearFocus()
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
