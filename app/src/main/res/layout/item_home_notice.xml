@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_notice_date"
         style="@style/TextBody1"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintStart_toEndOf="@id/img_circle"
         app:layout_constraintTop_toTopOf="@id/img_circle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_notice_title"
         style="@style/TextBody1"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toEndOf="@id/tv_notice_date"
         app:layout_constraintTop_toTopOf="@id/img_circle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_notice_content"
         style="@style/TextBody1"
         android:layout_width="wrap_content"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tool="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/home_notice"
         style="@style/TextBody1"
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/iv_notice_navigate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
