@@ -24,6 +24,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val editText = binding.includedLayoutTextinput.tilEt
         addTextWatcherToTextInputEditText(editText)
 
+        val editText2 = binding.includedLayoutTextinputPassword.tilEt
+        addTextWatcherToTextInputEditText(editText2)
+
         with(binding.includedLayoutTextinput){
             tilLayout.hint=resources.getString(R.string.app_name)
             tilLayout.isCounterEnabled = true
