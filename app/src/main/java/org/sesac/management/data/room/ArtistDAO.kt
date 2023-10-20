@@ -1,4 +1,8 @@
 package org.sesac.management.data.room
 
-class ArtistDao {
+import androidx.room.Dao
+
+@Dao
+interface ArtistDAO {
+
 }

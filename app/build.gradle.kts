@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -80,6 +81,11 @@ dependencies {
     implementation("io.github.reactivecircus.flowbinding:flowbinding-preference:${flowbinding_version}")
     implementation("io.github.reactivecircus.flowbinding:flowbinding-recyclerview:${flowbinding_version}")
     implementation("io.github.reactivecircus.flowbinding:flowbinding-viewpager2:${flowbinding_version}")
+
+
+    // Room DB
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.3.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

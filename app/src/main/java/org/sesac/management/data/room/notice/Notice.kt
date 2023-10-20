@@ -1,30 +1,19 @@
-package org.sesac.management.data.model
+package org.sesac.management.data.room.notice
 
-import org.sesac.management.R
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import org.sesac.management.data.util.CustomConverter
 import java.util.Date
 
+@Entity(tableName = "notice")
 data class Notice(
     // primary key
-    var noticeId: Int,
+    @PrimaryKey(autoGenerate = true)
+    var noticeId: Int = 1,
     val title: String,
     val content: String,
+    @TypeConverters(CustomConverter::class)
     val createdAt : Date,
 )
 
-val noticeList = listOf(
-    ArtistThumbnail(
-        thumbnail = R.drawable.twice_chaeyeong,
-        title = "공지1",
-        content = "23.08.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_all,
-        title = "공지2",
-        content = "23.12.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_hyoyeon,
-        title = "공지3",
-        content = "23.11.08"
-    ),
-)

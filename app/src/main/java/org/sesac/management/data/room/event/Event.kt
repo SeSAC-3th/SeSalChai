@@ -1,32 +1,21 @@
-package org.sesac.management.data.model
+package org.sesac.management.data.room.event
 
-import org.sesac.management.R
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import org.sesac.management.data.util.CustomConverter
 import java.util.Date
 
+@Entity(tableName = "event")
 data class Event(
     // primary key
-    var eventId: Int,
+    @PrimaryKey(autoGenerate = true)
+    var eventId: Int = 1,
     val name: String,
     val place: String,
+    @TypeConverters(CustomConverter::class)
     val date: Date,
     val description: String,
     val imgUri: String,
 )
 
-val eventList = listOf(
-    ArtistThumbnail(
-        thumbnail = R.drawable.twice_chaeyeong,
-        title = "행사1",
-        content = "23.08.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_all,
-        title = "행사2",
-        content = "23.12.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_hyoyeon,
-        title = "행사3",
-        content = "23.11.08"
-    ),
-)
