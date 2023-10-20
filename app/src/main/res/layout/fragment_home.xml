@@ -87,6 +87,15 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/included_layout_textinput"
+                layout="@layout/layout_textinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"/>
+          
+            <include
+                android:id="@+id/included_layout_textinput_password"
                 layout="@layout/layout_textinput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
