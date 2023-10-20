@@ -3,12 +3,16 @@ package org.sesac.management.data.model
 import org.sesac.management.R
 import java.util.Date
 
+
 data class Artist(
+    // primary key
+    var artistId: Int,
     val name: String,
-    val memberList: String,
-    val festivalName: String,
+    val memberInfo: String,
     val debutDay: Date,
-    val form: String,
+    val type: ArtistType,
+    val rateId: Int,
+    val imgUri : String,
 )
 
 data class ArtistThumbnail(

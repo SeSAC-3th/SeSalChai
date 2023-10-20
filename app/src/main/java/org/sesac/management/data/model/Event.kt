@@ -1,9 +1,16 @@
 package org.sesac.management.data.model
 
 import org.sesac.management.R
+import java.util.Date
 
 data class Event(
-    val event : String,
+    // primary key
+    var eventId: Int,
+    val name: String,
+    val place: String,
+    val date: Date,
+    val description: String,
+    val imgUri: String,
 )
 
 val eventList = listOf(
