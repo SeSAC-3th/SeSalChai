@@ -11,7 +11,16 @@ import org.sesac.management.data.util.CustomConverter
 import java.util.Date
 
 
-@Entity(tableName = "company")
+@Entity(
+    tableName = "company", foreignKeys = [
+        ForeignKey(
+            entity = Notice::class,
+            parentColumns = ["notice_id"],
+            childColumns = ["notice_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class Company(
 
     var chief: String,
@@ -28,13 +37,7 @@ data class Company(
 
 @Entity(
     tableName = "notice",
-//    foreignKeys = [
-//        ForeignKey(
-//            entity = Company::class,
-//            parentColumns = ["notice_id"],
-//            childColumns = ["notice_id"]
-//        )
-//    ]
+    indices = [Index(value = ["notice_id"], unique = true)],
 )
 data class Notice(
 
@@ -49,7 +52,9 @@ data class Notice(
     val noticeId: Int = 0,
 )
 
-@Entity(tableName = "event")
+@Entity(
+    tableName = "event", indices = [Index(value = ["event_id"], unique = true)],
+)
 data class Event(
     val name: String,
     var place: String,
@@ -67,7 +72,15 @@ data class Event(
 
 @Entity(
     tableName = "artist",
-    indices = [Index(value = ["rate_id"], unique = true)]
+    indices = [Index(value = ["artist_id"], unique = true)],
+    foreignKeys = [
+        ForeignKey(
+            entity = Rate::class,
+            parentColumns = ["rate_id"],
+            childColumns = ["rate_id"],
+            onDelete = ForeignKey.CASCADE
+        ),
+    ]
 )
 data class Artist(
 
@@ -99,14 +112,7 @@ enum class ArtistType {
 
 @Entity(
     tableName = "rate",
-    foreignKeys = [
-        ForeignKey(
-            entity = Artist::class,
-            parentColumns = ["rate_id"],
-            childColumns = ["rate_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+    indices = [Index(value = ["rate_id"], unique = true)],
 )
 data class Rate(
 
@@ -122,7 +128,22 @@ data class Rate(
     var rateId: Int,
 )
 
-@Entity(tableName = "manager")
+@Entity(
+    tableName = "manager",
+    foreignKeys = [
+        ForeignKey(
+            entity = Artist::class,
+            parentColumns = ["artist_id"],
+            childColumns = ["artist_id"],
+            onDelete = ForeignKey.CASCADE
+        ), ForeignKey(
+            entity = Event::class,
+            parentColumns = ["event_id"],
+            childColumns = ["event_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class Manager(
     @ColumnInfo(name = "artist_id")
     val artistId: Int,

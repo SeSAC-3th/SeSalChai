@@ -12,6 +12,7 @@ interface NoticeDAO {
      */
     @Insert
     fun insertNotice(vararg notice: Notice) : List<Long>
+    //Artist 객체에 Rate 객체 id 업데이트
 
     /**
      * R: notice table에 있는 모든 객체를 return하는 함수
