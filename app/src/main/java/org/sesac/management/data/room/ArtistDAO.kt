@@ -35,26 +35,7 @@ interface ArtistDAO {
         linkRateToArtist(rateId.toInt(), artistId) // 이전에 정의한 linkRateToArtist 메서드입니다.
     }
 
-    /**
-     * eventId로 ManagerList 반환하는 함수
-     * [getArtistFromEvent]에서 사용
-     */
-    @Query("""SELECT * FROM manager WHERE event_id==manager.event_id""")
-    fun searchAllArtistToEvent(eventId: Int): List<Manager>
-
-    /**
-     * R: eventId로 참여중인 artist 반환하기
-     */
-    @Transaction
-    suspend fun getArtistFromEvent(eventId: Int): MutableList<Artist> {
-        var managerList: List<Manager> = searchAllArtistToEvent(eventId)
-        var tmpArtistList: MutableList<Artist> = mutableListOf()
-        managerList.forEach { manager ->
-            var artist: Artist = getSearchArtistById(manager.artistId)
-            tmpArtistList.add(artist)
-        }
-        return tmpArtistList
-    }
+    // TODO: artist에 포함된 event List 반환하기
 
     /**
      * R: artist table에 있는 모든 객체를 return하는 함수
@@ -78,6 +59,12 @@ interface ArtistDAO {
     fun getSearchArtistById(artistId: Int): Artist
 
     /**
+     * R: event table에 있는 모든 객체를 return하는 함수
+     * @return all notice
+     */
+    @Query("SELECT * FROM artist WHERE type=:type")
+    fun getArtistByType(type: ArtistType): List<Artist>
+    /**
      * R:  Rate 모든객체 반환하기
      * @return List<Rate>
      */
@@ -90,6 +77,34 @@ interface ArtistDAO {
      */
     @Query("""SELECT * FROM rate WHERE rate_id=:rateId""")
     fun getRate(rateId: Int): Rate
+
+    /**
+     * eventId로 ManagerList 반환하는 함수
+     * [getArtistFromEvent]에서 사용
+     */
+    @Query("""SELECT * FROM manager WHERE artist_id==manager.artist_id""")
+    fun searchAllEventByArtist(artistId: Int): List<Manager>
+
+    /**
+     * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
+     * @return event
+     */
+    @Query("""SELECT * FROM event WHERE event_id=:eventId""")
+    fun getSearchByEventID(eventId: Int): Event
+
+    /**
+     * R: eventId로 참여중인 artist 반환하기
+     */
+    @Transaction
+    suspend fun getEventsFromArtist(artistId: Int): MutableList<Event> {
+        var managerList: List<Manager> = searchAllEventByArtist(artistId)
+        var tmpEventList: MutableList<Event> = mutableListOf()
+        managerList.forEach { manager ->
+            var artist: Event = getSearchByEventID(manager.eventId)
+            tmpEventList.add(artist)
+        }
+        return tmpEventList
+    }
 
     /**
      * U: Artist 객체를 기존 속성을 복사하여, 객체르 만들고 변경하고자 하는 속성만 수정한후,

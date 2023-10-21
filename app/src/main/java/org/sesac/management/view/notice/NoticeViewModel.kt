@@ -7,6 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
+import org.sesac.management.data.room.ArtistDAO
+import org.sesac.management.data.room.EventDAO
+import org.sesac.management.data.room.ManagerDAO
 import org.sesac.management.data.room.Notice
 import org.sesac.management.data.room.NoticeDAO
 import org.sesac.management.data.util.NOTICE_LOG
@@ -14,6 +17,7 @@ import java.util.Date
 
 class NoticeViewModel(application: Application) : AndroidViewModel(application) {
     private var noticeDAO: NoticeDAO
+
     private val coroutineIOScope = CoroutineScope(Dispatchers.IO)
 
     init {
@@ -24,7 +28,6 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
             noticeDAO.getAllNotice().forEach {
                 Log.d(NOTICE_LOG, it.toString())
             }
-            Log.d(NOTICE_LOG,noticeDAO.getNoticeById(1).toString())
         }
     }
 

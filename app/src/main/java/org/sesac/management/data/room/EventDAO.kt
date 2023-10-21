@@ -21,11 +21,18 @@ interface EventDAO {
     fun getAllEvent(): List<Event>
 
     /**
+     * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
+     * @return event
+     */
+    @Query("""SELECT * FROM event WHERE event_id=:eventId""")
+    fun getSearchByEventID(eventId: Int): Event
+    /**
      * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
      * @return event
      */
     @Query("""SELECT * FROM event WHERE name=:eventName""")
     fun getSearchEvent(eventName: String): Event
+
 
     /**
      * U: Event 객체를 기존 속성을 복사하여, 객체르 만들고 변경하고자 하는 속성만 수정한후,
