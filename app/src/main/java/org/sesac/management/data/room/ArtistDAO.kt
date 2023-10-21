@@ -1,6 +1,5 @@
 package org.sesac.management.data.room
 
-import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
@@ -77,6 +76,13 @@ interface ArtistDAO {
      */
     @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")
     fun getSearchArtistById(artistId: Int): Artist
+
+    /**
+     * R:  Rate 모든객체 반환하기
+     * @return List<Rate>
+     */
+    @Query("""SELECT * FROM rate """)
+    fun getAllRate(): List<Rate>
 
     /**
      * R:  rateId로 Rate 객체 반환하기
