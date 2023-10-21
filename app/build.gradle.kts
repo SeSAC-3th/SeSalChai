@@ -72,7 +72,6 @@ dependencies {
     implementation("com.jakewharton.rxbinding4:rxbinding-recyclerview:4.0.0")
     implementation("com.jakewharton.rxbinding4:rxbinding-slidingpanelayout:4.0.0")
     implementation("com.jakewharton.rxbinding4:rxbinding-viewpager2:4.0.0")
-    implementation("androidx.room:room-common:2.6.0")
 
     // FlowBinding
     val flowbinding_version = "1.2.0"
