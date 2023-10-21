@@ -26,6 +26,4 @@ interface NoticeDAO {
      */
     @Query("""SELECT * FROM notice WHERE notice_id=:noticeId""")
     fun getNoticeById(noticeId:Int) : Notice
-
-
 }
