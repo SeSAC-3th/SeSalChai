@@ -1,10 +1,12 @@
 package org.sesac.management.data.room
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 
+@Dao
 interface ArtistDAO {
 
     /**
@@ -64,6 +66,7 @@ interface ArtistDAO {
      */
     @Query("SELECT * FROM artist WHERE type=:type")
     fun getArtistByType(type: ArtistType): List<Artist>
+
     /**
      * R:  Rate 모든객체 반환하기
      * @return List<Rate>
@@ -82,7 +85,7 @@ interface ArtistDAO {
      * eventId로 ManagerList 반환하는 함수
      * [getArtistFromEvent]에서 사용
      */
-    @Query("""SELECT * FROM manager WHERE artist_id==manager.artist_id""")
+    @Query("""SELECT * FROM manager WHERE :artistId==manager.artist_id""")
     fun searchAllEventByArtist(artistId: Int): List<Manager>
 
     /**
@@ -112,7 +115,7 @@ interface ArtistDAO {
      * @return artist
      */
     @Update
-    fun updateArtist(artist: Artist):Artist
+    fun updateArtist(artist: Artist)
 
     /**
      * D: artist table에 있는 객체중, 해당하는 id의 객체를 삭제한다
@@ -124,13 +127,13 @@ interface ArtistDAO {
      * D: artist table에 있는 객체중, 해당하는 id의 객체를 삭제한다
      */
     @Query("""DELETE FROM manager WHERE artist_id=:artistId""")
-    fun deletArtistAtArtist(artistId: Int)
+    fun deleteArtistAtArtist(artistId: Int)
 
     /**
      * D: rate table에 있는 객체중, 해당하는 id의 객체를 삭제한다
      */
     @Query("""DELETE FROM rate WHERE rate_id=:rateId""")
-    fun deletRate(rateId: Int)
+    fun deleteRate(rateId: Int)
 
     /**
      * D: artist 객체를 삭제할때 관련된 객체들도 삭제하는 함수
@@ -139,9 +142,9 @@ interface ArtistDAO {
     @Transaction
     suspend fun deleteArtistWithEvent(artist: Artist) {
         deleteArtist(artist.artistId)
-        deletArtistAtArtist(artist.artistId)
+        deleteArtistAtArtist(artist.artistId)
         if (artist.rateId != null) {
-            deletRate(artist.rateId!!)
+            deleteRate(artist.rateId!!)
         }
     }
 

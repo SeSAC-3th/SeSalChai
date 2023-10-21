@@ -40,6 +40,10 @@ android {
 }
 
 dependencies {
+    // Room DB
+    implementation("androidx.room:room-runtime:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
+
     // Jetpack Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
@@ -81,12 +85,7 @@ dependencies {
     implementation("io.github.reactivecircus.flowbinding:flowbinding-preference:${flowbinding_version}")
     implementation("io.github.reactivecircus.flowbinding:flowbinding-recyclerview:${flowbinding_version}")
     implementation("io.github.reactivecircus.flowbinding:flowbinding-viewpager2:${flowbinding_version}")
-
-
-    // Room DB
-    implementation("androidx.room:room-runtime:2.5.0")
-    kapt("androidx.room:room-compiler:2.5.0")
-
+    
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
