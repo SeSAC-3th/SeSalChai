@@ -1,10 +1,11 @@
 package org.sesac.management.view.event
 
 import androidx.recyclerview.widget.GridLayoutManager
-import org.sesac.management.R
+import com.jakewharton.rxbinding4.view.changeEvents
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.eventList
 import org.sesac.management.databinding.FragmentEventBinding
+import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.artist.ArtistRecyclerAdapter
 
 
@@ -15,18 +16,11 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
         with(binding.rvEvent) {
             layoutManager = GridLayoutManager(activity, 2)
             adapter = ArtistRecyclerAdapter(
-                eventList, childFragmentManager,
-                EventDetailFragment(),
-                R.id.event_layout
+                eventList,
+                onClick = {
+                    binding.eventLayout.changeFragment(this@EventFragment, EventDetailFragment())
+                }
             )
         }
-
-        binding.btnEventEnroll.setOnClickListener {
-            childFragmentManager.beginTransaction()
-                .add(R.id.event_layout,EventEnrollFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        }
-
     }
 }

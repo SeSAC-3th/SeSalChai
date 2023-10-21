@@ -21,20 +21,22 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             chipDebutSort.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
-
             /* Floating Button : 아티스트 등록 */
             btnArtistEnroll.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
-
             /* Artist RecyclerView */
             with(rvArtist) {
                 layoutManager = GridLayoutManager(activity, 2)
                 adapter = ArtistRecyclerAdapter(
                     artistList,
-                    childFragmentManager,
-                    ArtistDetailFragment(),
-                    R.id.artist_layout
+                    onClick={
+                        childFragmentManager
+                            .beginTransaction()
+                            .add(binding.artistLayout.id, ArtistDetailFragment())
+                            .addToBackStack(null)
+                            .commitAllowingStateLoss()
+                    }
                 )
             }
         }
