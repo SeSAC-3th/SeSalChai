@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
@@ -303,5 +304,9 @@ abstract class BaseFragment<VB : ViewBinding>(
             textInputLayout.editText?.removeTextChangedListener(textWatcher)
         }
         textInputLayouts.clear()
+    }
+
+    fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }
