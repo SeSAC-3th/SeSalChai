@@ -31,11 +31,13 @@
     <string name="artist_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
     <string name="artist_member">멤버 (솔로면 아티스트 이름을 입력해주세요.)</string>
     <string name="artist_member_helper">,로 구분하여 작성해주세요.</string>
+    <string name="none">없음</string>
     <string name="singer">가수</string>
     <string name="actor">배우</string>
     <string name="comedian">코미디언</string>
     <string name="model">모델</string>
     <string-array name="artist_types">
+        <item>@string/none</item>
         <item>@string/singer</item>
         <item>@string/actor</item>
         <item>@string/comedian</item>
@@ -47,4 +49,7 @@
 
     <string name="artist_error_name_empty">그룹명을 입력해주세요.</string>
     <string name="artist_error_member_empty">멤버를 입력해주세요.</string>
+
+    <string name="artist_enroll_error">아티스트 정보를 모두 입력해주세요.</string>
+    <string name="artist_enroll_success">등록되었습니다.</string>
 </resources>

@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,60 @@ class ArtistEnrollFragment :
     private var insert = emptyList<Long>()
 
     override fun onViewCreated() {
+        initView()
+        initTextWatcher()
+        observeData()
+    }
+
+    private fun enrollArtist() {
+        debutDate = binding.layoutInputDebut.tilEt.text.toString().split('-')
+        groupName = binding.layoutInputName.tilEt.text.toString()
+        memberListString = binding.layoutInputMember.tilEt.text.toString()
+        artistType = when (binding.spinnerArtistType.selectedItem.toString()) {
+            resources.getString(R.string.singer) -> ArtistType.SINGER
+            resources.getString(R.string.actor) -> ArtistType.ACTOR
+            resources.getString(R.string.comedian) -> ArtistType.COMEDIAN
+            resources.getString(R.string.model) -> ArtistType.MODEL
+            else -> ArtistType.NONE
+        }
+
+        if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.insertArtist(
+                    Artist(
+                        groupName,
+                        memberListString,
+                        Date(),
+                        artistType,
+                        null,
+                        "",
+                        0
+                    )
+                )
+            }
+            showToastMessage(resources.getString(R.string.artist_enroll_success))
+            parentFragmentManager.popBackStack()
+        } else {
+            showToastMessage(resources.getString(R.string.artist_enroll_error))
+        }
+    }
+
+    private fun checkValidationAndEnroll(
+        debutDate: List<String>,
+        groupName: String,
+        memberListString: String,
+        artistType: ArtistType
+    ): Boolean {
+        return !(debutDate.isEmpty() || groupName.isEmpty() || memberListString.isEmpty() || artistType == ArtistType.NONE)
+    }
+
+    private fun observeData() {
+        viewModel.insertArtist.observe(viewLifecycleOwner) {
+            insert = it
+        }
+    }
+
+    private fun initView() {
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
             layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_title), true)
@@ -45,61 +100,27 @@ class ArtistEnrollFragment :
                 R.array.artist_types,
                 android.R.layout.simple_list_item_1
             )
-
-            val textInputLayoutDebut = layoutInputDebut.tilLayout
-            val textInputLayoutName = layoutInputName.tilLayout
-
-            addTextInputLayoutWithTextWatcher(textInputLayoutDebut, debutTextWatcher)
-            addTextInputLayoutWithTextWatcher(textInputLayoutName, nameTextWatcher)
-
             /* 취소 버튼 */
-            with(btnCancel) {
-//                parentFragmentManager.popBackStack()
+            btnCancel.setOnClickListener {
+                parentFragmentManager.popBackStack()
             }
 
             /* 저장 버튼 */
             btnSave.setOnClickListener {
                 enrollArtist()
-                parentFragmentManager.popBackStack()
             }
         }
-        observeData()
     }
 
-    private fun enrollArtist() {
-        debutDate = binding.layoutInputDebut.tilEt.text.toString().split('-')
-        groupName = binding.layoutInputName.tilEt.text.toString()
-        memberListString = binding.layoutInputMember.tilEt.text.toString()
-        artistType = when (binding.spinnerArtistType.selectedItem.toString()) {
-            resources.getString(R.string.singer) -> ArtistType.SINGER
-            resources.getString(R.string.actor) -> ArtistType.ACTOR
-            resources.getString(R.string.comedian) -> ArtistType.COMEDIAN
-            resources.getString(R.string.model) -> ArtistType.MODEL
-            else -> ArtistType.NONE
-        }
-        Log.d("데뷔일", Date().toString())
-        Log.d("그룹명", groupName)
-        Log.d("멤버 리스트", memberListString)
-        Log.d("아티스트 타입", artistType.toString())
+    private fun initTextWatcher() {
+        with(binding) {
+            val textInputLayoutDebut = layoutInputDebut.tilLayout
+            val textInputLayoutName = layoutInputName.tilLayout
+            val textInputLayoutMember = layoutInputMember.tilLayout
 
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.insertArtist(
-                Artist(
-                    groupName,
-                    memberListString,
-                    Date(),
-                    artistType,
-                    null,
-                    "",
-                    0
-                )
-            )
-        }
-    }
-
-    private fun observeData() {
-        viewModel.insertArtist.observe(viewLifecycleOwner) {
-            insert = it
+            addTextInputLayoutWithTextWatcher(textInputLayoutDebut, debutTextWatcher)
+            addTextInputLayoutWithTextWatcher(textInputLayoutName, nameTextWatcher)
+            addTextInputLayoutWithTextWatcher(textInputLayoutMember, memberTextWatcher)
         }
     }
 
@@ -137,5 +158,25 @@ class ArtistEnrollFragment :
                     resources.getString(R.string.artist_error_name_empty)
             }
         }
+    }
+
+    private val memberTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            val inputText = s.toString()
+            if (inputText.isEmpty()) {
+                binding.layoutInputMember.tilLayout.error =
+                    resources.getString(R.string.artist_error_member_empty)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeTextWatcherFromTextInputLayout(debutTextWatcher)
+        removeTextWatcherFromTextInputLayout(nameTextWatcher)
     }
 }
