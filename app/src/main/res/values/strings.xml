@@ -31,10 +31,20 @@
     <string name="artist_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
     <string name="artist_member">멤버 (솔로면 아티스트 이름을 입력해주세요.)</string>
     <string name="artist_member_helper">,로 구분하여 작성해주세요.</string>
+    <string name="singer">가수</string>
+    <string name="actor">배우</string>
+    <string name="comedian">코미디언</string>
+    <string name="model">모델</string>
     <string-array name="artist_types">
-        <item>가수</item>
-        <item>배우</item>
-        <item>코미디언</item>
-        <item>모델</item>
+        <item>@string/singer</item>
+        <item>@string/actor</item>
+        <item>@string/comedian</item>
+        <item>@string/model</item>
     </string-array>
+
+    <string name="artist_error_debut_empty">데뷔일을 입력해주세요.</string>
+    <string name="artist_error_debut_not_valid">데뷔일 형식이 맞지 않습니다.</string>
+
+    <string name="artist_error_name_empty">그룹명을 입력해주세요.</string>
+    <string name="artist_error_member_empty">멤버를 입력해주세요.</string>
 </resources>

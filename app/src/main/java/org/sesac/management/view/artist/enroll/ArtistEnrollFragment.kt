@@ -1,8 +1,13 @@
 package org.sesac.management.view.artist.enroll
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.room.Artist
@@ -13,6 +18,12 @@ import java.util.Date
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
     private val viewModel: ArtistEnrollViewModel by viewModels()
+
+    private var debutDate = emptyList<String>()
+    private var groupName = ""
+    private var memberListString = ""
+    private lateinit var artistType: ArtistType
+    private var insert = emptyList<Long>()
 
     override fun onViewCreated() {
         with(binding) {
@@ -35,6 +46,12 @@ class ArtistEnrollFragment :
                 android.R.layout.simple_list_item_1
             )
 
+            val textInputLayoutDebut = layoutInputDebut.tilLayout
+            val textInputLayoutName = layoutInputName.tilLayout
+
+            addTextInputLayoutWithTextWatcher(textInputLayoutDebut, debutTextWatcher)
+            addTextInputLayoutWithTextWatcher(textInputLayoutName, nameTextWatcher)
+
             /* 취소 버튼 */
             with(btnCancel) {
 //                parentFragmentManager.popBackStack()
@@ -43,33 +60,82 @@ class ArtistEnrollFragment :
             /* 저장 버튼 */
             btnSave.setOnClickListener {
                 enrollArtist()
+                parentFragmentManager.popBackStack()
+            }
+        }
+        observeData()
+    }
+
+    private fun enrollArtist() {
+        debutDate = binding.layoutInputDebut.tilEt.text.toString().split('-')
+        groupName = binding.layoutInputName.tilEt.text.toString()
+        memberListString = binding.layoutInputMember.tilEt.text.toString()
+        artistType = when (binding.spinnerArtistType.selectedItem.toString()) {
+            resources.getString(R.string.singer) -> ArtistType.SINGER
+            resources.getString(R.string.actor) -> ArtistType.ACTOR
+            resources.getString(R.string.comedian) -> ArtistType.COMEDIAN
+            resources.getString(R.string.model) -> ArtistType.MODEL
+            else -> ArtistType.NONE
+        }
+        Log.d("데뷔일", Date().toString())
+        Log.d("그룹명", groupName)
+        Log.d("멤버 리스트", memberListString)
+        Log.d("아티스트 타입", artistType.toString())
+
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.insertArtist(
+                Artist(
+                    groupName,
+                    memberListString,
+                    Date(),
+                    artistType,
+                    null,
+                    "",
+                    0
+                )
+            )
+        }
+    }
+
+    private fun observeData() {
+        viewModel.insertArtist.observe(viewLifecycleOwner) {
+            insert = it
+        }
+    }
+
+    private val debutTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            val inputText = s.toString()
+            val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            if (inputText.isEmpty()) {
+                binding.layoutInputDebut.tilLayout.error =
+                    resources.getString(R.string.artist_error_debut_empty)
+            } else {
+                if (inputText.matches(Regex(dateRegex))) {
+                    binding.layoutInputDebut.tilLayout.error = null
+                } else {
+                    binding.layoutInputDebut.tilLayout.error =
+                        resources.getString(R.string.artist_error_debut_not_valid)
+                }
             }
         }
     }
 
-    private fun enrollArtist() {
-        val debutDate = binding.layoutInputDebut.tilEt.text.toString().split('-')
-        val groupName = binding.layoutInputName.tilEt.text.toString()
-        val memberListString = binding.layoutInputMember.tilEt.toString()
-        val artistType = when (binding.spinnerArtistType.selectedItem.toString()) {
-            "가수" -> ArtistType.SINGER
-            "배우" -> ArtistType.ACTOR
-            "코미디언" -> ArtistType.COMEDIAN
-            "모델" -> ArtistType.MODEL
-            else -> ArtistType.NONE
-        }
+    private val nameTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        Log.d("asdf", debutDate.toString())
-        viewModel.insertArtist(
-            Artist(
-                groupName,
-                memberListString,
-                Date(debutDate[0].toInt(), debutDate[1].toInt(), debutDate[2].toInt()),
-                artistType,
-                null,
-                "",
-                0
-            )
-        )
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            val inputText = s.toString()
+            if (inputText.isEmpty()) {
+                binding.layoutInputName.tilLayout.error =
+                    resources.getString(R.string.artist_error_name_empty)
+            }
+        }
     }
 }
