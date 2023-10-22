@@ -8,8 +8,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
+import org.sesac.management.data.room.Artist
+import org.sesac.management.data.room.ArtistType
 import org.sesac.management.data.room.Event
 import org.sesac.management.data.room.EventDAO
+import org.sesac.management.data.room.Manager
 import java.util.Date
 
 class EventViewModel(application: Application) : AndroidViewModel(application) {
@@ -41,18 +44,32 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
                     imgUri = "이미지 URI"
                 )
             )
+            insertManager(
+                Manager(1, 11)
+            )
             eventDAO.getAllEvent().forEach {
                 Log.d(TAG, "getAllEvent : $it ")
             }
-//            getSearchByEventID(1)
-//            getSearchEvent("새싹뱅크")
+            getSearchByEventID(1)
+            getSearchEvent("새싹뱅크")
 //            deleteEvent(3)
 //            getSearchByEventID(3)
         }
     }
 
+    /* C : 임시 이벤트 등록 메서드 */
     fun insertEvent(event: Event) {
         repository.insertEvent(event)
+    }
+
+    /* C : 임시 매니저 등록 메서드 */
+    fun insertManager(manager: Manager) {
+        repository.insertManager(manager)
+    }
+
+    /* C : 임시 아티스트 등록 메서드 */
+    fun insertArtist(artist: Artist) {
+        repository.insertArtist(artist)
     }
 
     /**

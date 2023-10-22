@@ -54,7 +54,7 @@ interface ArtistDAO {
     fun getSearchArtistByName(artistName: String): Artist
 
     /**
-     * R: artist table에 있는 객체중, 이름이 일치하는 artist를 반환하는 함수
+     * R: artist table에 있는 객체중, ID가 일치하는 artist를 반환하는 함수
      * @return artist
      */
     @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")

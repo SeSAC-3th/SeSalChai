@@ -9,13 +9,18 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
+import org.sesac.management.data.room.Artist
+import org.sesac.management.data.room.ArtistDAO
 import org.sesac.management.data.room.Event
 import org.sesac.management.data.room.EventDAO
-import org.sesac.management.data.room.Notice
+import org.sesac.management.data.room.Manager
+import org.sesac.management.data.room.ManagerDAO
 
 class EventRepository(context: Context) {
     val TAG: String = "로그"
+    private var artistDAO: ArtistDAO
     private var eventDAO: EventDAO
+    private var managerDAO: ManagerDAO
     private val coroutineIOScope = CoroutineScope(IO)
     var eventListLiveData = MutableLiveData<List<Event>>()
     var eventLiveData = MutableLiveData<Event>()
@@ -23,17 +28,29 @@ class EventRepository(context: Context) {
     private var eventId = MutableLiveData<Long>()
 
     init {
+        artistDAO = AgencyRoomDB.getInstance(context).generateArtistDAO()
         eventDAO = AgencyRoomDB.getInstance(context).generateEventDAO()
-//        coroutineIOScope.launch {
-//            eventDAO.getAllEvent().forEach {
-//                Log.d(TAG, "DB에서 가져온 Event 값 : $it")
-//            }
-//        }
+        managerDAO = AgencyRoomDB.getInstance(context).generateManagerDAO()
     }
 
+    /* C : 임시 이벤트 등록 메서드 */
     fun insertEvent(event: Event) {
         coroutineIOScope.launch(Dispatchers.IO) {
             eventDAO.insertEvent(event)
+        }
+    }
+
+    /* C : 임시 매니저 등록 메서드 */
+    fun insertManager(manager: Manager) {
+        coroutineIOScope.launch(Dispatchers.IO) {
+            managerDAO.insertManager(manager)
+        }
+    }
+
+    /* C: 임시 아티스트 등록 메서드 */
+    fun insertArtist(artist: Artist) {
+        coroutineIOScope.launch(Dispatchers.IO){
+            artistDAO.insertArtist(artist)
         }
     }
 

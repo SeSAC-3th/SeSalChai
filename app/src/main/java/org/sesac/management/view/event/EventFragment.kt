@@ -1,6 +1,5 @@
 package org.sesac.management.view.event
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,7 +9,6 @@ import org.sesac.management.data.model.eventList
 import org.sesac.management.data.room.Event
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.extension.changeFragment
-import org.sesac.management.view.artist.ArtistDetailFragment
 import org.sesac.management.view.artist.ArtistRecyclerAdapter
 import java.util.Date
 
@@ -27,6 +25,8 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     imgUri = "이미지 URI"
                 )
             )
+            //INSERT INTO artist (name, member_info, debut_day, type, rate_id, img_uri)
+            //VALUES ('르세라핌', '신진혁, 함우빈, 최종혁', '2023-10-23', 'SINGER', 1, '이미지 URI');
         }
         with(binding) {
             /* Enroll Button */
@@ -47,7 +47,5 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 )
             }
         }
-
-
     }
 }
