@@ -8,8 +8,18 @@
     android:background="@color/white"
     android:clickable="true"
     tools:context=".view.artist.ArtistFragment">
-    <include layout="@layout/layout_search"
-        android:id="@+id/tb_artist"/>
+
+    <include
+        android:id="@+id/tb_artist"
+        layout="@layout/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- chip (그룹명 순, 데뷔일 순 정렬) -->
     <com.google.android.material.chip.ChipGroup
@@ -22,34 +32,59 @@
         app:layout_constraintTop_toBottomOf="@id/tb_artist">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_groupSort"
+            android:id="@+id/chip_singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chip 1"
+            android:text="가수"
             android:textColor="@color/primary1"
             app:chipBackgroundColor="@color/primary4"
             app:chipStrokeColor="@color/primary1"
             app:chipStrokeWidth="2dp" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_debutSort"
+            android:id="@+id/chip_actor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chip 2"
+            android:text="배우"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_comedian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="코미디언"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모델"
             android:textColor="@color/white"
             app:chipBackgroundColor="@color/primary5"
             app:chipStrokeColor="@color/primary1"
             app:chipStrokeWidth="2dp" />
     </com.google.android.material.chip.ChipGroup>
 
-    <!-- artist recyclerview -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_artist"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip_group" />
+        app:layout_constraintTop_toBottomOf="@id/chip_group"
+        android:layout_marginBottom="?attr/actionBarSize">
+        <!-- artist recyclerview -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_artist_enroll"
