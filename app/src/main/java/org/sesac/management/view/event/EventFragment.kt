@@ -10,6 +10,7 @@ import org.sesac.management.data.model.eventList
 import org.sesac.management.data.room.Event
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.artist.ArtistDetailFragment
 import org.sesac.management.view.artist.ArtistRecyclerAdapter
 import java.util.Date
 
@@ -27,15 +28,26 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 )
             )
         }
-
-        with(binding.rvEvent) {
-            layoutManager = GridLayoutManager(activity, 2)
-            adapter = ArtistRecyclerAdapter(
-                eventList,
-                onClick = {
-                    binding.eventLayout.changeFragment(this@EventFragment, EventDetailFragment())
+        with(binding) {
+            /* Enroll Button */
+            with(btnEventEnroll) {
+                setOnAvoidDuplicateClick {
+                    eventLayout.changeFragment(this@EventFragment, EventEnrollFragment())
                 }
-            )
+            }
+
+            /* RecyclerView */
+            with(rvEvent) {
+                layoutManager = GridLayoutManager(activity, 2)
+                adapter = ArtistRecyclerAdapter(
+                    eventList,
+                    onClick = {
+                        binding.eventLayout.changeFragment(this@EventFragment, EventDetailFragment())
+                    }
+                )
+            }
         }
+
+
     }
 }

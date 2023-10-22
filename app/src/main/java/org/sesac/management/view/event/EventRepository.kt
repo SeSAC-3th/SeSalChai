@@ -46,6 +46,7 @@ class EventRepository(context: Context) {
      */
     fun getAllEvent(): MutableLiveData<List<Event>> {
         coroutineIOScope.launch(Dispatchers.Main) {
+            // Main Thread 작업
             eventListLiveData.value = asyncAllEvent()
         }
         return eventListLiveData
@@ -53,6 +54,7 @@ class EventRepository(context: Context) {
 
     private suspend fun asyncAllEvent(): List<Event> {
         return coroutineIOScope.async(IO) {
+            // Background 작업
             return@async eventDAO.getAllEvent()
         }.await()
     }
@@ -124,7 +126,6 @@ class EventRepository(context: Context) {
             return@async eventDAO.deleteEventFromManager(eventId)
         }.await()
     }
-
 
     /**
      * D :
