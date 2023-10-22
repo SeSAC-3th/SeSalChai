@@ -1,5 +1,6 @@
 package org.sesac.management.view.artist.enroll
 
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
@@ -16,9 +17,18 @@ class ArtistEnrollFragment :
             layoutInputDebut.tilLayout.helperText =
                 resources.getString(R.string.artist_debut_helper)
 
+            layoutInputName.tilLayout.hint = resources.getString(R.string.artist_name)
+            layoutInputName.tilLayout.helperText = resources.getString(R.string.artist_name_helper)
+
             layoutInputMember.tilLayout.hint = resources.getString(R.string.artist_member)
             layoutInputMember.tilLayout.helperText =
                 resources.getString(R.string.artist_member_helper)
+
+            spinnerArtistType.adapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.artist_types,
+                android.R.layout.simple_list_item_1
+            )
 
             /* 취소 버튼 */
             with(btnCancel) {

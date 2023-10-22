@@ -27,6 +27,14 @@
     <string name="artist_title">아티스트 등록</string>
     <string name="artist_debut_date">데뷔일</string>
     <string name="artist_debut_helper">0000-00-00 형식으로 입력해주세요.</string>
-    <string name="artist_member">멤버</string>
+    <string name="artist_name">그룹 이름</string>
+    <string name="artist_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
+    <string name="artist_member">멤버 (솔로면 아티스트 이름을 입력해주세요.)</string>
     <string name="artist_member_helper">,로 구분하여 작성해주세요.</string>
+    <string-array name="artist_types">
+        <item>가수</item>
+        <item>배우</item>
+        <item>코미디언</item>
+        <item>모델</item>
+    </string-array>
 </resources>

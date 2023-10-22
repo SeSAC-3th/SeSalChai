@@ -29,29 +29,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
 
-    <include
-        android:id="@+id/layout_input_debut"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        layout="@layout/layout_textinput"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="@dimen/horizontal_margin"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/artist_enroll_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_artist"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_artist">
 
-    <include
-        android:id="@+id/layout_input_member"
-        android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/layout_input_debut"
+                layout="@layout/layout_textinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="@dimen/horizontal_margin"/>
+
+            <include
+                android:id="@+id/layout_input_name"
+                layout="@layout/layout_textinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/content_title_margin_top"
+                android:layout_marginEnd="@dimen/horizontal_margin"/>
+
+            <include
+                android:id="@+id/layout_input_member"
+                layout="@layout/layout_textinput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/content_title_margin_top"
+                android:layout_marginEnd="@dimen/horizontal_margin"/>
+
+            <Spinner
+                android:id="@+id/spinner_artistType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/content_title_margin_top"
+                android:layout_marginEnd="@dimen/horizontal_margin"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/artist_enroll_guideline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/layout_textinput"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:layout_marginTop="@dimen/content_title_margin_top"
-        android:layout_marginEnd="@dimen/horizontal_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_input_debut"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel"
@@ -63,9 +96,10 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_save"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <com.google.android.material.button.MaterialButton
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/artist_enroll_guideline" />
 
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -75,5 +109,6 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_cancel" />
+        app:layout_constraintStart_toEndOf="@id/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@id/artist_enroll_guideline" />
 </androidx.constraintlayout.widget.ConstraintLayout>
