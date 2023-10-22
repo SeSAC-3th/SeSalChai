@@ -66,7 +66,6 @@ interface ArtistDAO {
      */
     @Query("SELECT * FROM artist WHERE type=:type")
     fun getArtistByType(type: ArtistType): List<Artist>
-
     /**
      * R:  Rate 모든객체 반환하기
      * @return List<Rate>

@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 
-
 @Dao
 interface ManagerDAO {
     /**
@@ -15,9 +14,5 @@ interface ManagerDAO {
      */
     @Insert
     fun insertManager(vararg manager: Manager): List<Long>
-
-
-
-
 
 }
