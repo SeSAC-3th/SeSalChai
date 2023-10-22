@@ -1,6 +1,7 @@
 package org.sesac.management.util.common
 
 import android.app.Application
+import org.sesac.management.data.room.AgencyRoomDB
 
 class ApplicationClass : Application() {
     companion object {
@@ -10,5 +11,6 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         appInstance = this
+        AgencyRoomDB.getInstance(this)
     }
 }

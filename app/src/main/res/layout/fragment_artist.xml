@@ -8,6 +8,9 @@
     android:background="@color/white"
     android:clickable="true"
     tools:context=".view.artist.ArtistFragment">
+    <include layout="@layout/layout_search"
+        android:id="@+id/tb_artist"/>
+
     <!-- chip (그룹명 순, 데뷔일 순 정렬) -->
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
@@ -16,7 +19,7 @@
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/tb_artist">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_groupSort"
