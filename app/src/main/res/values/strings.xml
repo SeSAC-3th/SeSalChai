@@ -22,4 +22,11 @@
 
     <!-- TextInputLayout -->
     <string name="hint_text_input">텍스트 인풋 레이아웃</string>
+
+    <!-- ArtistEnroll -->
+    <string name="artist_title">아티스트 등록</string>
+    <string name="artist_debut_date">데뷔일</string>
+    <string name="artist_debut_helper">0000-00-00 형식으로 입력해주세요.</string>
+    <string name="artist_member">멤버</string>
+    <string name="artist_member_helper">,로 구분하여 작성해주세요.</string>
 </resources>
