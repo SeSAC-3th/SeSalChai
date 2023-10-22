@@ -24,7 +24,7 @@ class ArtistEnrollFragment :
     private var groupName = ""
     private var memberListString = ""
     private lateinit var artistType: ArtistType
-    private var insert = emptyList<Long>()
+    private var insertValue = emptyList<Long>()
 
     override fun onViewCreated() {
         initView()
@@ -44,6 +44,7 @@ class ArtistEnrollFragment :
             else -> ArtistType.NONE
         }
 
+        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             CoroutineScope(Dispatchers.IO).launch {
                 viewModel.insertArtist(
@@ -59,6 +60,7 @@ class ArtistEnrollFragment :
                 )
             }
             showToastMessage(resources.getString(R.string.artist_enroll_success))
+            // DB에 저장하고 popBackStack()
             parentFragmentManager.popBackStack()
         } else {
             showToastMessage(resources.getString(R.string.artist_enroll_error))
@@ -71,12 +73,13 @@ class ArtistEnrollFragment :
         memberListString: String,
         artistType: ArtistType
     ): Boolean {
+        // 각각의 입력값이 비어있거나 기본 값이면 false 반환
         return !(debutDate.isEmpty() || groupName.isEmpty() || memberListString.isEmpty() || artistType == ArtistType.NONE)
     }
 
     private fun observeData() {
         viewModel.insertArtist.observe(viewLifecycleOwner) {
-            insert = it
+            insertValue = it
         }
     }
 
@@ -176,7 +179,9 @@ class ArtistEnrollFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // view가 destroy되면 TextWatcher와 TextInputLayout 연결 해제
         removeTextWatcherFromTextInputLayout(debutTextWatcher)
         removeTextWatcherFromTextInputLayout(nameTextWatcher)
+        removeTextWatcherFromTextInputLayout(memberTextWatcher)
     }
 }

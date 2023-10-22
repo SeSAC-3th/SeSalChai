@@ -15,7 +15,7 @@ import org.sesac.management.data.room.ArtistDAO
 class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
     private val coroutineIOScope = CoroutineScope(IO)
-    private var insert = MutableLiveData<List<Long>>()
+    private var insertResult = MutableLiveData<List<Long>>()
 
     init {
         artistDAO = AgencyRoomDB.getInstance(context).generateArtistDAO()
@@ -27,8 +27,8 @@ class ArtistRepository(context: Context) {
     }
 
     suspend fun insertArtist(artist: Artist): List<Long> {
-        insert = asyncInsertArtist(artist)
-        return insert.value as List<Long>
+        insertResult = asyncInsertArtist(artist)
+        return insertResult.value as List<Long>
     }
 
     private suspend fun asyncInsertArtist(artist: Artist): MutableLiveData<List<Long>> {
@@ -36,8 +36,8 @@ class ArtistRepository(context: Context) {
             return@async artistDAO.insertArtist(artist)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
-            insert.value = insertReturn
-            insert
+            insertResult.value = insertReturn
+            insertResult
         }.await()
     }
 }
