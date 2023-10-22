@@ -21,24 +21,30 @@ import org.sesac.management.util.common.ioScope
 import java.util.Date
 
 class NoticeViewModel(application: Application) : AndroidViewModel(application) {
-    private val noticeRepository= NoticeRepository.getInstance()
+    private val noticeRepository = NoticeRepository.getInstance()
     private val coroutineIOScope = CoroutineScope(Dispatchers.IO)
 
     val noticeListLiveData = noticeRepository.allNotices
-    var selectedNotice : LiveData<Notice>?=null
+    var selectedNotice: LiveData<Notice>? = null
+    val homeNoticeLiveData= noticeRepository.homeNotices
 
     fun insertNoticeInfo(notice: Notice) {
         coroutineIOScope.launch(Dispatchers.IO) {
             noticeRepository.insertNotice(notice)
         }
     }
-    fun getAllNotice() : LiveData<List<Notice>>? {
+
+    fun getAllNotice(): LiveData<List<Notice>>? {
         return noticeListLiveData
     }
 
-    fun getNotice(id: Int) : LiveData<Notice> {
-        selectedNotice=noticeRepository.getNotice(id)
+    fun getNotice(id: Int): LiveData<Notice> {
+        selectedNotice = noticeRepository.getNotice(id)
         return selectedNotice as LiveData<Notice>
+    }
+
+    fun getHomeNotice() : LiveData<List<Notice>>? {
+        return homeNoticeLiveData
     }
 
 }

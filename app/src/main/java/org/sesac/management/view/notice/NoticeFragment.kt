@@ -32,7 +32,6 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
 
     private fun observerSetup() {
         viewModel.getAllNotice()?.observe(viewLifecycleOwner) { notices ->
-            Log.e("DDDD", "${notices.size}")
             notices?.let {
                 updateUI(notices)
             }

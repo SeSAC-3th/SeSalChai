@@ -22,6 +22,10 @@ interface NoticeDAO {
      */
     @Query("SELECT * FROM notice")
     fun getAllNotice() : LiveData<List<Notice>>
+
+    @Query("""SELECT * FROM notice ORDER BY created_at ASC LIMIT 5 """)
+    fun getHomeNotice() : LiveData<List<Notice>>
+
     /**
      * R: noticeId로 Notice 객체를 반환하는 함수
      * @return : notice

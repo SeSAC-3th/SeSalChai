@@ -16,15 +16,18 @@ import org.sesac.management.util.common.ioScope
 class NoticeRepository(application: Application) {
     private var noticeDao: NoticeDAO
     val allNotices: LiveData<List<Notice>>?
+    val homeNotices: LiveData<List<Notice>>?
     init {
         noticeDao=AgencyRoomDB.getInstance(application).generateNoticeDAO()
         allNotices = noticeDao.getAllNotice()
+        homeNotices=noticeDao.getHomeNotice()
     }
     fun insertNotice(notice: Notice) {
         ioScope.launch {
             noticeDao.insertNotice(notice)
         }
     }
+
     fun getNotice(noticeId: Int): LiveData<Notice> = noticeDao.getNoticeById(noticeId)
 
     fun updateNotice(notice: Notice) {
