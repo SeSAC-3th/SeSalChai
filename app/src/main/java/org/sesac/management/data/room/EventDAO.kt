@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+
 @Dao
 interface EventDAO {
 
@@ -25,13 +26,14 @@ interface EventDAO {
      * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
      * @return event
      */
-    @Query("""SELECT * FROM event WHERE event_id = :eventId""")
+    @Query("""SELECT * FROM event WHERE event_id=:eventId""")
     fun getSearchByEventID(eventId: Int): Event
+
     /**
      * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
      * @return event
      */
-    @Query("""SELECT * FROM event WHERE name = :eventName""")
+    @Query("""SELECT * FROM event WHERE name=:eventName""")
     fun getSearchEvent(eventName: String): Event
 
 
@@ -42,16 +44,17 @@ interface EventDAO {
      */
     @Update
     fun updateEvent(event: Event)
+
     /**
      * D: event table에 있는 객체중, 해당하는 id의 객체를 삭제한다
      */
-    @Query("""DELETE FROM event WHERE event_id = :eventId""")
+    @Query("""DELETE FROM event WHERE event_id=:eventId""")
     fun deleteEvent(eventId: Int)
 
     /**
      * D: artist table에 있는 객체중, 해당하는 id의 객체를 삭제한다
      */
-    @Query("""DELETE FROM manager WHERE event_id = :eventId""")
+    @Query("""DELETE FROM manager WHERE event_id=:eventId""")
     fun deleteEventFromManager(eventId: Int)
 
     /**

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+
 @Dao
 interface ArtistDAO {
 
@@ -24,7 +25,7 @@ interface ArtistDAO {
     fun insertRate(vararg rate: Rate): List<Long>
 
     //Artist 객체에 Rate 객체 id 업데이트
-    @Query("UPDATE artist SET rate_id = :rateId WHERE artist_id = :artistId")
+    @Query("UPDATE artist SET rate_id =:rateId WHERE artist_id =:artistId")
     fun linkRateToArtist(rateId: Int, artistId: Int)
 
     @Transaction
@@ -49,21 +50,21 @@ interface ArtistDAO {
      * R: artist table에 있는 객체중, 이름이 일치하는 artist를 반환하는 함수
      * @return artist
      */
-    @Query("""SELECT * FROM artist WHERE name = :artistName""")
+    @Query("""SELECT * FROM artist WHERE name=:artistName""")
     fun getSearchArtistByName(artistName: String): Artist
 
     /**
      * R: artist table에 있는 객체중, 이름이 일치하는 artist를 반환하는 함수
      * @return artist
      */
-    @Query("""SELECT * FROM artist WHERE artist_id = :artistId""")
+    @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")
     fun getSearchArtistById(artistId: Int): Artist
 
     /**
      * R: event table에 있는 모든 객체를 return하는 함수
      * @return all notice
      */
-    @Query("SELECT * FROM artist WHERE type = :type")
+    @Query("SELECT * FROM artist WHERE type=:type")
     fun getArtistByType(type: ArtistType): List<Artist>
     /**
      * R:  Rate 모든객체 반환하기
@@ -76,21 +77,21 @@ interface ArtistDAO {
      * R:  rateId로 Rate 객체 반환하기
      * @return rate
      */
-    @Query("""SELECT * FROM rate WHERE rate_id = :rateId""")
+    @Query("""SELECT * FROM rate WHERE rate_id=:rateId""")
     fun getRate(rateId: Int): Rate
 
     /**
      * eventId로 ManagerList 반환하는 함수
      * [getArtistFromEvent]에서 사용
      */
-    @Query("""SELECT * FROM manager WHERE :artistId == manager.artist_id""")
+    @Query("""SELECT * FROM manager WHERE :artistId==manager.artist_id""")
     fun searchAllEventByArtist(artistId: Int): List<Manager>
 
     /**
      * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
      * @return event
      */
-    @Query("""SELECT * FROM event WHERE event_id = :eventId""")
+    @Query("""SELECT * FROM event WHERE event_id=:eventId""")
     fun getSearchByEventID(eventId: Int): Event
 
     /**
