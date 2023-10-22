@@ -16,6 +16,7 @@ class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
     private val coroutineIOScope = CoroutineScope(IO)
     private var insertResult = MutableLiveData<List<Long>>()
+    private var updateResult = MutableLiveData<Unit>()
 
     init {
         artistDAO = AgencyRoomDB.getInstance(context).generateArtistDAO()
@@ -38,6 +39,21 @@ class ArtistRepository(context: Context) {
         return CoroutineScope(Dispatchers.Main).async {
             insertResult.value = insertReturn
             insertResult
+        }.await()
+    }
+
+    suspend fun updateArtist(artist: Artist): Unit? {
+        updateResult = asyncUpdateArtist(artist)
+        return updateResult.value
+    }
+
+    private suspend fun asyncUpdateArtist(artist: Artist): MutableLiveData<Unit> {
+        val updateReturn = coroutineIOScope.async(IO) {
+            return@async artistDAO.updateArtist(artist)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            updateResult.value = updateReturn
+            updateResult
         }.await()
     }
 }
