@@ -1,48 +1,53 @@
 package org.sesac.management.view.notice
 
+import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.launch
-import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.model.artistList
 import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.FragmentNoticeBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
-import java.util.Date
 
 class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
     private val viewModel: NoticeViewModel by viewModels()
-
+    private var adapter: NoticeRecyclerAdapter = NoticeRecyclerAdapter(emptyList()) { }
 
     override fun onViewCreated() {
-        lifecycleScope.launch {
-            viewModel.insertMemberInfo(Notice(title = "제목 1", content = "내용 1", createdAt = Date()))
-        }
         with(binding) {
             toolbarNotice.setToolbarMenu("공지사항", true)
-
-            with(rvEvent) {
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-                adapter = NoticetRecyclerAdapter(
-                    artistList,
-                    onClick = {
-                        binding.noticeLayout.changeFragment(
-                            this@NoticeFragment, NoticeDetailFragment()
-                        )
-                    }
-                )
-            }
-
             btnNoticeEnrollNavigation.setOnAvoidDuplicateClickFlow {
                 noticeLayout.changeFragment(this@NoticeFragment, NoticeEnrollFragment())
+            }
+
+            rvEvent.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                observerSetup()
+            }
+        }
+
+    }
+
+    private fun observerSetup() {
+        viewModel.getAllNotice()?.observe(viewLifecycleOwner) { notices ->
+            Log.e("DDDD", "${notices.size}")
+            notices?.let {
+                updateUI(notices)
             }
         }
     }
 
+    private fun updateUI(notices: List<Notice>) {
+        adapter= NoticeRecyclerAdapter(notices) { noticeId->
+            val bundle=Bundle()
+            bundle.putInt("notice_id",noticeId)
+            val fragment= NoticeDetailFragment()
+            fragment.arguments=bundle
+            binding.noticeLayout.changeFragment(this@NoticeFragment, fragment)
+        }
+        binding.rvEvent.adapter=adapter
+    }
 
 }

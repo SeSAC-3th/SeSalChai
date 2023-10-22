@@ -14,7 +14,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         with(binding) {
             tvHomeCompName.text = resources.getString(R.string.title_home_comp_name)
             tvHomeCompInfo.text = resources.getString(R.string.title_home_comp_info)
-            includedLayoutHomeNotice.homeNotice.setOnAvoidDuplicateClick {
+            includedLayoutHomeNotice.ivNoticeNavigate.setOnAvoidDuplicateClick {
                 homeLayout.changeFragment(this@HomeFragment, NoticeFragment())
             }
         }

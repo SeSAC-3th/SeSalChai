@@ -16,11 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_notice_navigate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_plus"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/home_notice"
         app:layout_constraintEnd_toEndOf="@id/home_notice_divider"
         app:layout_constraintTop_toTopOf="@id/home_notice" />
