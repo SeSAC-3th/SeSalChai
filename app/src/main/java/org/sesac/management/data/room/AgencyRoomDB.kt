@@ -21,7 +21,7 @@ abstract class AgencyRoomDB : RoomDatabase() {
     abstract fun generateNoticeDAO(): NoticeDAO
     abstract fun generateArtistDAO(): ArtistDAO
     abstract fun generateEventDAO (): EventDAO
-    abstract fun genertaeManagerDAO (): ManagerDAO
+    abstract fun generateManagerDAO (): ManagerDAO
 
     companion object {
 

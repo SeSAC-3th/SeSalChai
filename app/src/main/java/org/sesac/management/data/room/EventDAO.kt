@@ -62,8 +62,8 @@ interface EventDAO {
      * [manager] 삭제
      */
     @Transaction
-    suspend fun deleteArtistWithEvent(event: Event) {
-        deleteEvent(event.eventId)
-        deleteEventFromManager(event.eventId)
+    suspend fun deleteArtistWithEvent(eventId: Int) {
+        deleteEvent(eventId)
+        deleteEventFromManager(eventId)
     }
 }

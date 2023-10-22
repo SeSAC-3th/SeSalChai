@@ -1,12 +1,9 @@
 package org.sesac.management.view.notice
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
-import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
 import org.sesac.management.data.room.Notice
@@ -17,7 +14,6 @@ import java.util.Date
 
 class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
     private val viewModel: NoticeViewModel by viewModels()
-
 
     override fun onViewCreated() {
         lifecycleScope.launch {
