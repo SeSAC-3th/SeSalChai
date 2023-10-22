@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    tools:context=".view.artist.ArtistEnrollFragment">
+    tools:context=".view.artist.enroll.ArtistEnrollFragment">
 
     <!-- toolbar -->
     <include

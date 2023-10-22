@@ -1,10 +1,12 @@
-package org.sesac.management.view.artist
+package org.sesac.management.view.artist.enroll
 
+import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
+    private val viewModel: ArtistEnrollViewModel by viewModels()
     override fun onViewCreated() {
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
