@@ -1,4 +1,4 @@
-package org.sesac.management.view.adapter
+package org.sesac.management.view.adapter.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
