@@ -3,7 +3,12 @@ package org.sesac.management.data.model
 import org.sesac.management.R
 import java.util.Date
 
-
+enum class ArtistType {
+    SINGER,
+    ACTOR,
+    COMEDIAN,
+    MODEL
+}
 data class Artist(
     // primary key
     var artistId: Int,
