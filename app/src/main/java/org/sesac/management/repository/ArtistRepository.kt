@@ -1,4 +1,4 @@
-package org.sesac.management.data.repository
+package org.sesac.management.repository
 
 import android.content.Context
 import android.util.Log

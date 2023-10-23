@@ -26,6 +26,7 @@ class CustomConverter {
     fun fromUUID(uuid: UUID?): String? {
         return uuid?.toString()
     }
+
     @TypeConverter
     fun fromIntList(value: List<Int>?): String? {
         // List<Int>를 문자열로 변환

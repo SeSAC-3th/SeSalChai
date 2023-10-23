@@ -9,7 +9,9 @@ import org.sesac.management.data.model.eventList
 import org.sesac.management.data.room.Event
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.extension.changeFragment
-import org.sesac.management.view.artist.ArtistRecyclerAdapter
+import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
+import org.sesac.management.view.event.detail.EventDetailFragment
+import org.sesac.management.view.event.enroll.EventEnrollFragment
 import java.util.Date
 
 
@@ -42,7 +44,10 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 adapter = ArtistRecyclerAdapter(
                     eventList,
                     onClick = {
-                        binding.eventLayout.changeFragment(this@EventFragment, EventDetailFragment())
+                        binding.eventLayout.changeFragment(
+                            this@EventFragment,
+                            EventDetailFragment()
+                        )
                     }
                 )
             }

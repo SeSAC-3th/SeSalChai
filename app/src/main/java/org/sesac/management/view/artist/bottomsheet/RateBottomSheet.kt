@@ -1,4 +1,4 @@
-package org.sesac.management.view.artist
+package org.sesac.management.view.artist.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater

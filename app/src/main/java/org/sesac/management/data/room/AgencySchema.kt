@@ -6,7 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import org.jetbrains.annotations.NotNull
 import org.sesac.management.data.util.CustomConverter
 import java.util.Date
 

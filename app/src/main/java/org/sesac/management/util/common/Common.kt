@@ -22,6 +22,7 @@ const val RXERROR = "RX_ERROR"
 
 // Rx Event 더블 클릭 간격 시간
 const val CLICK_INTERVAL_TIME = 300L
+
 // Rx Event 텍스트 완성 시간
 const val INPUT_COMPLETE_TIME = 1000L
 
@@ -30,4 +31,4 @@ val ioScope = CoroutineScope(Dispatchers.IO)
 val mainScope = CoroutineScope(Dispatchers.Main)
 
 //DB Table Name
-const val NOTICE_DB_NAME="tb_notice"
+const val NOTICE_DB_NAME = "tb_notice"
