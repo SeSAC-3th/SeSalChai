@@ -2,9 +2,7 @@ package org.sesac.management.view.artist.enroll
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,11 +12,12 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.room.Artist
 import org.sesac.management.data.room.ArtistType
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
+import org.sesac.management.view.artist.ArtistViewModel
 import java.util.Date
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistEnrollViewModel by viewModels()
+    private val viewModel: ArtistViewModel by viewModels()
 
     private var debutDate = emptyList<String>()
     private var groupName = ""

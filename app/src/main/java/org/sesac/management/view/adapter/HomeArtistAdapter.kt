@@ -1,10 +1,8 @@
-package org.sesac.management.view.home
+package org.sesac.management.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.sesac.management.R
-import org.sesac.management.data.model.artistList
 import org.sesac.management.data.room.Artist
 import org.sesac.management.databinding.ItemHomeArtistBinding
 
@@ -12,13 +10,13 @@ class HomeArtistAdapter(val artists: List<Artist>) : RecyclerView.Adapter<HomeAr
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): HomeArtistAdapter.ArtistViewHolder {
+    ): ArtistViewHolder {
         return ArtistViewHolder(
             ItemHomeArtistBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         )
     }
 
-    override fun onBindViewHolder(holder: HomeArtistAdapter.ArtistViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         holder.bind(artists[position])
     }
 

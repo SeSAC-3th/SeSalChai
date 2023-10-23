@@ -4,8 +4,8 @@ import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.view.artist.ArtistEventViewPagerAdapter
-import org.sesac.management.view.artist.RateBottomSheet
+import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
+import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {

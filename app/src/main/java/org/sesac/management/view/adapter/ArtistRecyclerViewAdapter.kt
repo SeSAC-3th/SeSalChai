@@ -1,4 +1,4 @@
-package org.sesac.management.view.artist
+package org.sesac.management.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,13 +23,13 @@ class ArtistRecyclerAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ArtistRecyclerAdapter.ArtistInfo {
+    ): ArtistInfo {
         val binding =
             ItemCommonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ArtistInfo(binding)
     }
 
-    override fun onBindViewHolder(holder: ArtistRecyclerAdapter.ArtistInfo, position: Int) {
+    override fun onBindViewHolder(holder: ArtistInfo, position: Int) {
         val agencyInfo = items[position]
         with(holder.itemBinding) {
             ivThumbnail.setImageResource(agencyInfo.thumbnail)

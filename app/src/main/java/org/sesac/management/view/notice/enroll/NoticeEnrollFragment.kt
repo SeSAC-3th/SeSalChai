@@ -1,9 +1,10 @@
-package org.sesac.management.view.notice
+package org.sesac.management.view.notice.enroll
 
 import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.FragmentNoticeEnrollBinding
+import org.sesac.management.view.notice.NoticeViewModel
 import java.util.Date
 
 class NoticeEnrollFragment() :

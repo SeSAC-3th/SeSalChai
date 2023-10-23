@@ -1,4 +1,4 @@
-package org.sesac.management.view.event
+package org.sesac.management.view.event.detail
 
 import android.graphics.Rect
 import android.view.View

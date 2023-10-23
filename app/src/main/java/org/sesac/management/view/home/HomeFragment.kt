@@ -2,12 +2,12 @@ package org.sesac.management.view.home
 
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.FragmentHomeBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.adapter.HomeNoticeAdapter
 import org.sesac.management.view.notice.NoticeFragment
 import org.sesac.management.view.notice.NoticeViewModel
 

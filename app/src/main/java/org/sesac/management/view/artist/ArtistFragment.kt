@@ -5,6 +5,7 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentArtistBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.adapter.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
