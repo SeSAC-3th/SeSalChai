@@ -12,16 +12,27 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
 
     override fun onViewCreated() {
         with(binding) {
-            /* chip Button : 그룹명 순 정렬 */
-            chipGroupSort.setOnAvoidDuplicateClick {
+            /* chip Button : 가수 목록 */
+            chipSinger.setOnAvoidDuplicateClick {
                 // 임시로 넣어 둔 코드(화면 전환 코드)
                 artistLayout.changeFragment(this@ArtistFragment, ArtistDetailFragment())
             }
 
-            /* chip Button : 데뷔일 순 정렬 */
-            chipDebutSort.setOnAvoidDuplicateClick {
+            /* chip Button : 배우 목록 */
+            chipActor.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
+
+            /* chip Button : 코미디언 목록 */
+            chipComedian.setOnAvoidDuplicateClick {
+                artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+            }
+
+            /* chip Button : 모델 목록 */
+            chipModel.setOnAvoidDuplicateClick {
+                artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+            }
+
             /* Floating Button : 아티스트 등록 */
             btnArtistEnroll.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
