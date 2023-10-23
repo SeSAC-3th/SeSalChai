@@ -27,6 +27,7 @@
         android:id="@+id/btn_notice_enroll_navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         android:layout_marginEnd="@dimen/floating_action_button_margin_end"
         android:layout_marginBottom="@dimen/floating_action_button_margin_bottom"
         android:backgroundTint="@color/primary2"

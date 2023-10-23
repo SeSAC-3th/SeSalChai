@@ -2,6 +2,7 @@ package org.sesac.management.util.common
 
 import android.app.Application
 import org.sesac.management.data.room.AgencyRoomDB
+import org.sesac.management.view.notice.NoticeRepository
 
 class ApplicationClass : Application() {
     companion object {
@@ -11,6 +12,6 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         appInstance = this
-        AgencyRoomDB.getInstance(this)
+        NoticeRepository.initialize(appInstance)
     }
 }
