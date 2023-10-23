@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.viewpager2.pageSelections
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -209,68 +211,39 @@ abstract class BaseFragment<VB : ViewBinding>(
             }
         }
     }
-    
+
     fun backPress() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     /**
-     * TextWatcher를 상속받은 textWatcher 생성
-     * 필수로 재정의 해줘야 하는 멤버 함수(beforeTextChanged, onTextChanged, afterTextChanged)를 미리 정의
-     * 각각의 함수 안에 각 Fragment에서 override 해서 사용할 함수들을 미리 선언
-     *
-     * 각 Fragment에서 사용 시 onViewCreated에서
-     * val editText = binding.includedLayoutTextinput.tilEt
-     * addTextWatcherToTextInputEditText(editText)
-     * 와 같이 선언 후 필요한 함수를 상황에 따라 사용 가능
-     * @author 우빈
+     * s: 현재 TextInputEditText에 입력된 값
+     * start: s에 저장된 문자열에서 새로 추가될 문자열의 시작 위치 값
+     * count: s에 새로운 문자열이 추가된 후 문자열의 길이
+     * after: 새로 추가될 문자열의 길이
      */
-    /**
-     * 주의!!!!
-     * TextInputLayout이 여러개일 경우 아래 함수 override 시 바로 상단에 어느 Layout에 대한 함수인지 필수로 추가할 것!!!!
-     */
-    protected open fun beforeTextChange(s: CharSequence?) {}
-    protected open fun onTextChange(s: CharSequence?) {}
-    protected open fun afterTextChange(s: Editable?) {}
-
-    private val textWatcher = object : TextWatcher {
-        /**
-         * s: 현재 TextInputEditText에 입력된 값
-         * start: s에 저장된 문자열에서 새로 추가될 문자열의 시작 위치 값
-         * count: s에 새로운 문자열이 추가된 후 문자열의 길이
-         * after: 새로 추가될 문자열의 길이
-         */
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            beforeTextChange(s)
-        }
-
-        /**
-         * start 위치에서 before 문자열 개수만큼 문자열이 count 개수만큼 변경되었을 때 호출
-         * s: 새로 입력한 문자열이 추가된 TextInputEditText의 값을 가지고 있음
-         * start: 새로 추가된 문자열의 시작 위치 값
-         * before: 삭제된 기존 문자열의 개수
-         * count: 새로 추가된 문자열의 개수
-         */
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            onTextChange(s)
-        }
-
-        /**
-         * TextInputEditText의 Text가 변경된 것을 다른 곳에 통보할 때 사용
-         * s.toString()으로 현재 TextInputEditText의 Text값 불러올 수 있음
-         */
-        override fun afterTextChanged(s: Editable?) {
-            afterTextChange(s)
-        }
-    }
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            beforeTextChange(s)
+//        }
 
     /**
-     * 각 Fragment마다 아래와 같은 함수 실행해서 EditText에 TextWatcher를 추가해 줄 것
-     * @author 우빈
+     * start 위치에서 before 문자열 개수만큼 문자열이 count 개수만큼 변경되었을 때 호출
+     * s: 새로 입력한 문자열이 추가된 TextInputEditText의 값을 가지고 있음
+     * start: 새로 추가된 문자열의 시작 위치 값
+     * before: 삭제된 기존 문자열의 개수
+     * count: 새로 추가된 문자열의 개수
      */
-    protected fun addTextWatcherToTextInputEditText(textInputEditText: TextInputEditText) {
-        textInputEditText.addTextChangedListener(textWatcher)
-    }
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            onTextChange(s)
+//        }
+
+    /**
+     * TextInputEditText의 Text가 변경된 것을 다른 곳에 통보할 때 사용
+     * s.toString()으로 현재 TextInputEditText의 Text값 불러올 수 있음
+     */
+//        override fun afterTextChanged(s: Editable?) {
+//            afterTextChange(s)
+//        }
 
     /**
      * 사용법 ( withBinding(binding.includedLayoutTextinput) )
@@ -288,4 +261,52 @@ abstract class BaseFragment<VB : ViewBinding>(
      * @author 우빈
      */
 
+    /**
+     * 각 Fragment마다 아래와 같은 함수 실행해서 EditText에 TextWatcher를 추가해 줄 것
+     * val textInputLayoutDebut = layoutInputDebut.tilLayout
+     * addTextInputLayoutWithTextWatcher(textInputLayoutDebut, debutTextWatcher)
+     *
+     *     private val debutTextWatcher = object : TextWatcher {
+     *         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+     *
+     *         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+     *
+     *         override fun afterTextChanged(s: Editable?) {
+     *             val inputText = s.toString()
+     *             val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+     *             if (inputText.isEmpty()) {
+     *                 binding.layoutInputDebut.tilLayout.error =
+     *                     resources.getString(R.string.artist_error_debut_empty)
+     *             } else {
+     *                 if (inputText.matches(Regex(dateRegex))) {
+     *                     binding.layoutInputDebut.tilLayout.error = null
+     *                 } else {
+     *                     binding.layoutInputDebut.tilLayout.error =
+     *                         resources.getString(R.string.artist_error_debut_not_valid)
+     *                 }
+     *             }
+     *         }
+     *     }
+     * @author 우빈
+     */
+    private val textInputLayouts = mutableListOf<TextInputLayout>()
+
+    protected fun addTextInputLayoutWithTextWatcher(
+        textInputLayout: TextInputLayout,
+        textWatcher: TextWatcher
+    ) {
+        textInputLayout.editText?.addTextChangedListener(textWatcher)
+        textInputLayouts.add(textInputLayout)
+    }
+
+    protected fun removeTextWatcherFromTextInputLayout(textWatcher: TextWatcher) {
+        for (textInputLayout in textInputLayouts) {
+            textInputLayout.editText?.removeTextChangedListener(textWatcher)
+        }
+        textInputLayouts.clear()
+    }
+
+    fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }

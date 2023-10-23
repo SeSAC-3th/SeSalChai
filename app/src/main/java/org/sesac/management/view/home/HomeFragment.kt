@@ -19,12 +19,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
 
-        val editText = binding.includedLayoutTextinput.tilEt
-        addTextWatcherToTextInputEditText(editText)
-
-        val editText2 = binding.includedLayoutTextinputPassword.tilEt
-        addTextWatcherToTextInputEditText(editText2)
-
         with(binding.includedLayoutTextinput){
             tilLayout.hint=resources.getString(R.string.app_name)
             tilLayout.isCounterEnabled = true
@@ -36,12 +30,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         with(binding.includedLayoutTextinputPassword){
             tilLayout.isEndIconVisible = true
             tilLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-        }
-    }
-
-    override fun afterTextChange(s: Editable?) {
-        if (s.toString().isEmpty()) {
-            binding.includedLayoutTextinput.tilLayout.error = "ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
         }
     }
 }

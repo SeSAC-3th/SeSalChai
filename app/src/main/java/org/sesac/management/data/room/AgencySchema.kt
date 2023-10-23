@@ -107,7 +107,8 @@ enum class ArtistType {
     SINGER,
     ACTOR,
     COMEDIAN,
-    MODEL
+    MODEL,
+    NONE
 }
 
 @Entity(

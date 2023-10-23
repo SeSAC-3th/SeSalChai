@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/artistDetailFragment"
-        android:name="org.sesac.management.view.artist.ArtistDetailFragment"
+        android:name="org.sesac.management.view.artist.detail.ArtistDetailFragment"
         android:label="fragment_artist_detail"
         tools:layout="@layout/fragment_artist_detail" />
     <fragment
         android:id="@+id/artistEnrollFragment"
-        android:name="org.sesac.management.view.artist.ArtistEnrollFragment"
+        android:name="org.sesac.management.view.artist.enroll.ArtistEnrollFragment"
         android:label="fragment_artist_enroll"
         tools:layout="@layout/fragment_artist_enroll" />
     <fragment
