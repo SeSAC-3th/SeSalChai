@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
@@ -15,6 +16,8 @@ import org.sesac.management.util.common.CLICK_INTERVAL_TIME
 import org.sesac.management.util.common.INPUT_COMPLETE_TIME
 import org.sesac.management.util.common.mainScope
 import reactivecircus.flowbinding.android.view.clicks
+import reactivecircus.flowbinding.android.view.focusChanges
+import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import reactivecircus.flowbinding.android.widget.afterTextChanges
 
 /**
@@ -82,4 +85,36 @@ fun ViewGroup.changeFragment(from: Fragment, to: Fragment) {
         .add(this.id, to)
         .addToBackStack(null)
         .commitAllowingStateLoss()
+}
+
+/**
+ * TextInputLayout Extension
+ *
+ * @param actionInMainThread, 이벤트 발생 시 동작하는 고차 함수
+ * @receiver
+ * @author 진혁
+ */
+// editText의 변화가 일어난 뒤의 동작을 설정하는 메서드
+fun TextInputLayout.afterTextChangesInFlow(actionInMainThread: (TextInputLayout, AfterTextChangeEvent) -> Unit) {
+    if (this.editText != null) {
+        this.editText!!.afterTextChanges()
+            .onEach { event ->
+                actionInMainThread(this, event)
+            }
+            .launchIn(mainScope)
+    }
+}
+// editText의 포커스가 바꼈을 때 동작을 설정하는 메서드
+fun TextInputLayout.focusChangesInFlow(actionInMainThread: (TextInputLayout, Boolean) -> Unit) {
+    if (this.editText != null) {
+        this.editText!!.focusChanges()
+            .onEach {
+                actionInMainThread(this, it)
+            }.launchIn(mainScope)
+    }
+}
+// TextInputLayout의 hint와 helperText를 설정하는 메서드
+fun TextInputLayout.initInFlow(hint: String, helperText: String) {
+    this.hint = hint
+    this.helperText = helperText
 }

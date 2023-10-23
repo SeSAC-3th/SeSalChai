@@ -7,7 +7,8 @@ enum class ArtistType {
     SINGER,
     ACTOR,
     COMEDIAN,
-    MODEL
+    MODEL,
+    NULL
 }
 data class Artist(
     // primary key

@@ -1,18 +1,15 @@
 package org.sesac.management.base
 
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.viewpager2.pageSelections
@@ -244,7 +241,6 @@ abstract class BaseFragment<VB : ViewBinding>(
 //        override fun afterTextChanged(s: Editable?) {
 //            afterTextChange(s)
 //        }
-
     /**
      * 사용법 ( withBinding(binding.includedLayoutTextinput) )
      * 1. 힌트를 설정할 때: tilLayout.hint = "힌트 입력"
@@ -306,7 +302,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         textInputLayouts.clear()
     }
 
-    fun showToastMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
+//    fun showToastMessage(message: String) {
+//        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+//    }
 }
