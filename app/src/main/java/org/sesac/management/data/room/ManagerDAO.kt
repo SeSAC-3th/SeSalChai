@@ -3,7 +3,6 @@ package org.sesac.management.data.room
 import androidx.room.Dao
 import androidx.room.Insert
 
-
 @Dao
 interface ManagerDAO {
     /**

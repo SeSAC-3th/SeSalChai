@@ -28,3 +28,6 @@ const val INPUT_COMPLETE_TIME = 1000L
 val defaultScope = CoroutineScope(Dispatchers.Default)
 val ioScope = CoroutineScope(Dispatchers.IO)
 val mainScope = CoroutineScope(Dispatchers.Main)
+
+//DB Table Name
+const val NOTICE_DB_NAME="tb_notice"
