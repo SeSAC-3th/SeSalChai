@@ -44,7 +44,10 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 adapter = ArtistRecyclerAdapter(
                     eventList,
                     onClick = {
-                        binding.eventLayout.changeFragment(this@EventFragment, EventDetailFragment())
+                        binding.eventLayout.changeFragment(
+                            this@EventFragment,
+                            EventDetailFragment()
+                        )
                     }
                 )
             }

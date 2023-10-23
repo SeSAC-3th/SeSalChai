@@ -12,11 +12,13 @@ class NoticeRepository(application: Application) {
     private var noticeDao: NoticeDAO
     val allNotices: LiveData<List<Notice>>?
     val homeNotices: LiveData<List<Notice>>?
+
     init {
-        noticeDao=AgencyRoomDB.getInstance(application).generateNoticeDAO()
+        noticeDao = AgencyRoomDB.getInstance(application).generateNoticeDAO()
         allNotices = noticeDao.getAllNotice()
-        homeNotices=noticeDao.getHomeNotice()
+        homeNotices = noticeDao.getHomeNotice()
     }
+
     fun insertNotice(notice: Notice) {
         ioScope.launch {
             noticeDao.insertNotice(notice)
@@ -30,11 +32,13 @@ class NoticeRepository(application: Application) {
             noticeDao.updateNotice(notice)
         }
     }
+
     fun deleteNotice(notice: Notice) {
         ioScope.launch {
             noticeDao.deleteNotice(notice)
         }
     }
+
     companion object {
         private var INSTANCE: NoticeRepository? = null
 

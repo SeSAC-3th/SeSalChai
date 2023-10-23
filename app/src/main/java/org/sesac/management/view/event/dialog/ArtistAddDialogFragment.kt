@@ -11,14 +11,14 @@ import androidx.fragment.app.DialogFragment
 import org.sesac.management.R
 import org.sesac.management.databinding.FragmentArtistAddDialogBinding
 
-class ArtistAddDialogFragment : DialogFragment(){
-    private lateinit var binding : FragmentArtistAddDialogBinding
+class ArtistAddDialogFragment : DialogFragment() {
+    private lateinit var binding: FragmentArtistAddDialogBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentArtistAddDialogBinding.inflate(inflater,container,false)
+        binding = FragmentArtistAddDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 

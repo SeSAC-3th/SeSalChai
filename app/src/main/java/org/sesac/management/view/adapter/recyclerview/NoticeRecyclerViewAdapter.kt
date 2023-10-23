@@ -39,10 +39,11 @@ class NoticeRecyclerAdapter(
             tvDate.text = notice.createdAt.toString()
         }
     }
+
     override fun getItemCount(): Int = items.size
 
     fun setNoticeList(notices: List<Notice>) {
-        items=notices
+        items = notices
         notifyDataSetChanged()
     }
 }

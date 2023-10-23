@@ -25,21 +25,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             includedLayoutHomeNotice.rvNotice.apply {
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    observeSetUp()
+                observeSetUp()
             }
         }
     }
+
     fun observeSetUp() {
         noticeViewModel.getHomeNotice()?.observe(
-            viewLifecycleOwner) {notices ->
+            viewLifecycleOwner
+        ) { notices ->
             notices?.let {
                 updateUI(notices)
             }
         }
     }
+
     private fun updateUI(notices: List<Notice>) {
-            noticeAdapter= HomeNoticeAdapter(notices)
-            binding.includedLayoutHomeNotice.rvNotice.adapter=noticeAdapter
-        }
+        noticeAdapter = HomeNoticeAdapter(notices)
+        binding.includedLayoutHomeNotice.rvNotice.adapter = noticeAdapter
+    }
 
 }

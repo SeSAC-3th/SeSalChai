@@ -20,8 +20,8 @@ import org.sesac.management.data.util.CustomConverter
 abstract class AgencyRoomDB : RoomDatabase() {
     abstract fun generateNoticeDAO(): NoticeDAO
     abstract fun generateArtistDAO(): ArtistDAO
-    abstract fun generateEventDAO (): EventDAO
-    abstract fun generateManagerDAO (): ManagerDAO
+    abstract fun generateEventDAO(): EventDAO
+    abstract fun generateManagerDAO(): ManagerDAO
 
     companion object {
 

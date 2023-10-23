@@ -15,7 +15,7 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
 
     val noticeListLiveData = noticeRepository.allNotices
     var selectedNotice: LiveData<Notice>? = null
-    val homeNoticeLiveData= noticeRepository.homeNotices
+    val homeNoticeLiveData = noticeRepository.homeNotices
 
     fun insertNoticeInfo(notice: Notice) {
         coroutineIOScope.launch(Dispatchers.IO) {
@@ -32,8 +32,7 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
         return selectedNotice as LiveData<Notice>
     }
 
-    fun getHomeNotice() : LiveData<List<Notice>>? {
+    fun getHomeNotice(): LiveData<List<Notice>>? {
         return homeNoticeLiveData
     }
-
 }

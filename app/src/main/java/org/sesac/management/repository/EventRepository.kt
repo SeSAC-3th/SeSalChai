@@ -1,7 +1,6 @@
 package org.sesac.management.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +48,7 @@ class EventRepository(context: Context) {
 
     /* C: 임시 아티스트 등록 메서드 */
     fun insertArtist(artist: Artist) {
-        coroutineIOScope.launch(Dispatchers.IO){
+        coroutineIOScope.launch(Dispatchers.IO) {
             artistDAO.insertArtist(artist)
         }
     }

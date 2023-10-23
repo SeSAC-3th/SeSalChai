@@ -39,7 +39,7 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
     }
 
     private fun updateUI(notices: List<Notice>) {
-        adapter= NoticeRecyclerAdapter(notices) { noticeId->
+        adapter = NoticeRecyclerAdapter(notices) { noticeId ->
 //            val bundle=Bundle()
 //            bundle.putInt("notice_id",noticeId)
 //            val fragment= NoticeDetailFragment()
@@ -47,6 +47,6 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
             viewModel.getNotice(noticeId)
             binding.noticeLayout.changeFragment(this@NoticeFragment, NoticeDetailFragment())
         }
-        binding.rvEvent.adapter=adapter
+        binding.rvEvent.adapter = adapter
     }
 }

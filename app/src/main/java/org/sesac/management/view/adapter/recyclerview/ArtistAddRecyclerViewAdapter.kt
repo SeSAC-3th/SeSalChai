@@ -29,7 +29,7 @@ class ArtistAddRecyclerViewAdapter(val artists: List<ArtistThumbnail>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ArtistThumbnail) {
             with(binding) {
-                tvArtistName.text=item.title
+                tvArtistName.text = item.title
             }
         }
     }

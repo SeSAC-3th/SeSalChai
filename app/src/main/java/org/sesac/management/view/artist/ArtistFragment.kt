@@ -43,7 +43,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 layoutManager = GridLayoutManager(activity, 2)
                 adapter = ArtistRecyclerAdapter(
                     artistList,
-                    onClick={
+                    onClick = {
                         childFragmentManager
                             .beginTransaction()
                             .add(binding.artistLayout.id, ArtistDetailFragment())
