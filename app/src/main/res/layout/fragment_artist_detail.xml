@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.artist.ArtistDetailFragment">
+    tools:context=".view.artist.detail.ArtistDetailFragment">
 
   <!-- toolbar -->
   <include layout="@layout/layout_toolbar"

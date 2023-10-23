@@ -1,9 +1,11 @@
-package org.sesac.management.view.artist
+package org.sesac.management.view.artist.detail
 
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentArtistDetailBinding
+import org.sesac.management.view.artist.ArtistEventViewPagerAdapter
+import org.sesac.management.view.artist.RateBottomSheet
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
