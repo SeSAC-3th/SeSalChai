@@ -12,7 +12,7 @@ class NoticeDetailFragment() :
     private val viewModel: NoticeViewModel by viewModels()
     var notice : Notice? =null
     override fun onViewCreated() {
-        val id=arguments?.getInt("notice_id",0) ?: 0
+//        val id=arguments?.getInt("notice_id",0) ?: 0
         viewModel.getNotice(id)
         with(binding) {
             toolbarNoticeDetail.setToolbarMenu("공지사항 상세", true)
