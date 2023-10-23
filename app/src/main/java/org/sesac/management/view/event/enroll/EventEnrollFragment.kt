@@ -3,7 +3,7 @@ package org.sesac.management.view.event.enroll
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.extension.changeFragment
-import org.sesac.management.view.event.ArtistAddDialogFragment
+import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {

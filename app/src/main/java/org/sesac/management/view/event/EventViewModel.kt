@@ -9,10 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
 import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistType
 import org.sesac.management.data.room.Event
 import org.sesac.management.data.room.EventDAO
 import org.sesac.management.data.room.Manager
+import org.sesac.management.repository.EventRepository
 import java.util.Date
 
 class EventViewModel(application: Application) : AndroidViewModel(application) {

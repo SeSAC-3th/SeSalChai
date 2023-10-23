@@ -1,4 +1,4 @@
-package org.sesac.management.view.event
+package org.sesac.management.view.event.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import org.sesac.management.R
-import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentArtistAddDialogBinding
 
 class ArtistAddDialogFragment : DialogFragment(){
