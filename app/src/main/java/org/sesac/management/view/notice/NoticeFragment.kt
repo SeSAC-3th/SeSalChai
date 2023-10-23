@@ -27,7 +27,6 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
                 observerSetup()
             }
         }
-
     }
 
     private fun observerSetup() {
@@ -47,8 +46,6 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
             viewModel.getNotice(noticeId)
             binding.noticeLayout.changeFragment(this@NoticeFragment, NoticeDetailFragment())
         }
-
         binding.rvEvent.adapter=adapter
     }
-
 }

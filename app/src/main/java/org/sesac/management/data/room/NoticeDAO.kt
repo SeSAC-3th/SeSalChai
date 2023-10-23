@@ -48,6 +48,4 @@ interface NoticeDAO {
      */
     @Delete
     fun deleteNotice(notice: Notice)
-
-
 }
