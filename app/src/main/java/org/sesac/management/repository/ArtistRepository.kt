@@ -10,11 +10,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
+import org.sesac.management.util.common.ioScope
+import org.sesac.management.util.common.mainScope
 
 class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
     private val coroutineIOScope = CoroutineScope(IO)
+    private var getAllResult = MutableLiveData<List<Artist>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
 
@@ -25,6 +29,21 @@ class ArtistRepository(context: Context) {
                 Log.d("TAG", it.toString())
             }
         }
+    }
+
+    suspend fun getAllArtist(): List<Artist> {
+        getAllResult = asyncGetAllArtist()
+        return getAllResult.value as List<Artist>
+    }
+
+    private suspend fun asyncGetAllArtist(): MutableLiveData<List<Artist>> {
+        val getAllReturn = ioScope.async {
+            return@async artistDAO.getAllArtist()
+        }.await()
+        return mainScope.async {
+            getAllResult.value = getAllReturn
+            getAllResult
+        }.await()
     }
 
     suspend fun insertArtist(artist: Artist): List<Long> {
@@ -56,4 +75,11 @@ class ArtistRepository(context: Context) {
             updateResult
         }.await()
     }
+
+
+    // Rate용
+    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
+    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
+    fun getAllRate() = artistDAO.getAllRate()
+    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 }

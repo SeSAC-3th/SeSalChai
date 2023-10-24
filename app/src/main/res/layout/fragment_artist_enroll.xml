@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="@dimen/horizontal_margin"/>
+                android:layout_marginEnd="@dimen/horizontal_margin" />
 
             <include
                 android:id="@+id/layout_input_name"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="@dimen/content_title_margin_top"
-                android:layout_marginEnd="@dimen/horizontal_margin"/>
+                android:layout_marginEnd="@dimen/horizontal_margin" />
 
             <include
                 android:id="@+id/layout_input_member"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="@dimen/content_title_margin_top"
-                android:layout_marginEnd="@dimen/horizontal_margin"/>
+                android:layout_marginEnd="@dimen/horizontal_margin" />
 
             <Spinner
                 android:id="@+id/spinner_artistType"
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="@dimen/content_title_margin_top"
-                android:layout_marginEnd="@dimen/horizontal_margin"/>
+                android:layout_marginEnd="@dimen/horizontal_margin" />
         </LinearLayout>
     </ScrollView>
 
