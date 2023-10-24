@@ -15,6 +15,10 @@ import org.sesac.management.data.local.Manager
 import org.sesac.management.repository.EventRepository
 import java.util.Date
 
+//class EventViewModel(private val eventRepository2: EventRepository2) : ViewModel() {
+//
+//}
+
 class EventViewModel(application: Application) : AndroidViewModel(application) {
     val TAG: String = "로그"
     private var eventDAO: EventDAO
@@ -132,4 +136,15 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
         Log.d(TAG, "EventViewModel - deleteEventWithManager() called")
     }
 
+
+//    class EventViewModelFactory(private val eventRepository2: EventRepository2) :
+//        ViewModelProvider.Factory {
+//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//            return if (modelClass.isAssignableFrom(EventViewModel::class.java)) {
+//                EventViewModel(eventRepository2) as T
+//            } else {
+//                throw IllegalArgumentException()
+//            }
+//        }
+//    }
 }

@@ -2,8 +2,10 @@ package org.sesac.management.util.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 
 // BaseFragment에서 사용하는 typealias
 typealias FragmentInflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
@@ -32,3 +34,8 @@ val mainScope = CoroutineScope(Dispatchers.Main)
 
 //DB Table Name
 const val NOTICE_DB_NAME = "tb_notice"
+
+//
+fun showToastMessage(message: String) {
+    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show()
+}

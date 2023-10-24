@@ -10,6 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
 
 class ArtistRepository(context: Context) {
@@ -56,4 +57,11 @@ class ArtistRepository(context: Context) {
             updateResult
         }.await()
     }
+
+
+    // Rate용
+    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
+    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
+    fun getAllRate() = artistDAO.getAllRate()
+    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 }
