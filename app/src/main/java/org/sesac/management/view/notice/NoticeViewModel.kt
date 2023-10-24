@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.sesac.management.data.room.Notice
+import org.sesac.management.data.local.Notice
 import org.sesac.management.repository.NoticeRepository
 
 class NoticeViewModel(application: Application) : AndroidViewModel(application) {

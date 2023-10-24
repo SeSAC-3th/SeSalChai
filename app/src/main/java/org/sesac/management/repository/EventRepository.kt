@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.sesac.management.data.room.AgencyRoomDB
-import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistDAO
-import org.sesac.management.data.room.Event
-import org.sesac.management.data.room.EventDAO
-import org.sesac.management.data.room.Manager
-import org.sesac.management.data.room.ManagerDAO
+import org.sesac.management.data.local.AgencyRoomDB
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.dao.ArtistDAO
+import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.dao.EventDAO
+import org.sesac.management.data.local.Manager
+import org.sesac.management.data.local.dao.ManagerDAO
 
 class EventRepository(context: Context) {
     val TAG: String = "로그"

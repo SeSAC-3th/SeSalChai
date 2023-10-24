@@ -1,4 +1,4 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local
 
 import android.graphics.Bitmap
 import androidx.room.ColumnInfo

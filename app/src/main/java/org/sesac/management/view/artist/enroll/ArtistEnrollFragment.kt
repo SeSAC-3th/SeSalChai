@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistType
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
 import org.sesac.management.view.artist.ArtistViewModel
 import java.util.Date

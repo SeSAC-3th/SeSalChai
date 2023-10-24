@@ -1,10 +1,15 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
+import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Manager
+import org.sesac.management.data.local.Rate
 
 @Dao
 interface ArtistDAO {
