@@ -3,11 +3,13 @@ package org.sesac.management.view.adapter.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.sesac.management.R
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.model.ArtistThumbnail
 import org.sesac.management.databinding.ItemCommonItemBinding
 
 class ArtistRecyclerAdapter(
-    private val items: List<ArtistThumbnail>, private val onClick: () -> Unit
+    private val items: List<Artist>, private val onClick: () -> Unit
 ) :
     RecyclerView.Adapter<ArtistRecyclerAdapter.ArtistInfo>() {
     inner class ArtistInfo(val itemBinding: ItemCommonItemBinding) :
@@ -32,9 +34,9 @@ class ArtistRecyclerAdapter(
     override fun onBindViewHolder(holder: ArtistInfo, position: Int) {
         val agencyInfo = items[position]
         with(holder.itemBinding) {
-            ivThumbnail.setImageResource(agencyInfo.thumbnail)
-            tvTitle.text = agencyInfo.title
-            tvContents.text = agencyInfo.content
+            ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            tvTitle.text = agencyInfo.name
+            tvContents.text = agencyInfo.type.toString()
         }
     }
 

@@ -1,17 +1,62 @@
 package org.sesac.management.view.artist
 
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.model.artistList
+import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.FragmentArtistBinding
+import org.sesac.management.util.common.ioScope
+import org.sesac.management.util.common.mainScope
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
+    private val viewModel: ArtistViewModel by viewModels()
 
     override fun onViewCreated() {
+        getArtistInfo()
+        observeData()
+        initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllArtist()
+    }
+
+    private fun getArtistInfo() {
+        viewModel.getAllArtist()
+    }
+
+    private fun observeData() {
+        viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
+            makeList(artist)
+        }
+    }
+
+    private fun makeList(artistList: List<Artist>) {
+        with(binding.rvArtist) {
+            layoutManager = GridLayoutManager(activity, 2)
+            adapter = ArtistRecyclerAdapter(
+                artistList,
+                onClick = {
+                    childFragmentManager
+                        .beginTransaction()
+                        .add(binding.artistLayout.id, ArtistDetailFragment())
+                        .addToBackStack(null)
+                        .commitAllowingStateLoss()
+                }
+            )
+        }
+    }
+
+    private fun initView() {
         with(binding) {
             /* chip Button : 가수 목록 */
             chipSinger.setOnAvoidDuplicateClick {
@@ -38,21 +83,6 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             btnArtistEnroll.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
-            /* Artist RecyclerView */
-            with(rvArtist) {
-                layoutManager = GridLayoutManager(activity, 2)
-                adapter = ArtistRecyclerAdapter(
-                    artistList,
-                    onClick = {
-                        childFragmentManager
-                            .beginTransaction()
-                            .add(binding.artistLayout.id, ArtistDetailFragment())
-                            .addToBackStack(null)
-                            .commitAllowingStateLoss()
-                    }
-                )
-            }
         }
     }
-
 }

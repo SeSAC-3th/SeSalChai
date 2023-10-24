@@ -1,6 +1,7 @@
 package org.sesac.management.data.model
 
 import org.sesac.management.R
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import java.util.Date
 
@@ -11,6 +12,7 @@ enum class ArtistType {
     MODEL,
     NULL
 }
+
 data class Artist(
     // primary key
     var artistId: Int,
@@ -44,4 +46,14 @@ val artistList = listOf(
         title = "아이유",
         content = "솔로 가수"
     ),
+)
+
+fun Artist.toModelArtist() = Artist(
+    artistId = artistId,
+    name = name,
+    memberInfo = memberInfo,
+    debutDay = debutDay,
+    type = type,
+    rateId = rateId,
+    imgUri = imgUri
 )

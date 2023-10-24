@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.model.ArtistThumbnail
 import org.sesac.management.databinding.ItemEventDetailArtistBinding
 
-class EventRecyclerViewAdapter(val artistList: List<ArtistThumbnail>) :
+class EventRecyclerViewAdapter(
+    val artistList: List<ArtistThumbnail>,
+    private val onClick: () -> Unit
+) :
     RecyclerView.Adapter<EventRecyclerViewAdapter.EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
