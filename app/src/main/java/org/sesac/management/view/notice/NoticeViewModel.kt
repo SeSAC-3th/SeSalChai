@@ -35,4 +35,8 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
     fun getHomeNotice(): LiveData<List<Notice>>? {
         return homeNoticeLiveData
     }
+
+    fun deleteNotice(noticeId: Int) {
+        noticeRepository.deleteNotice(noticeId)
+    }
 }

@@ -202,7 +202,7 @@ abstract class BaseFragment<VB : ViewBinding>(
                 backPress()
             }
             if (hamburgerListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
-                ivHamburger.setImageResource(R.drawable.baseline_menu_24) // hamburger 버튼이 있다.
+                ivHamburger.setImageResource(R.drawable.baseline_edit_24) // hamburger 버튼이 있다.
                 ivHamburger.setOnAvoidDuplicateClick { // hamburger 클릭 이벤트
                     hamburgerListener()
                 }

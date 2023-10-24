@@ -1,5 +1,6 @@
 package org.sesac.management.view.notice
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.sesac.management.base.BaseFragment
@@ -13,7 +14,7 @@ import org.sesac.management.view.notice.enroll.NoticeEnrollFragment
 
 class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
     private val viewModel: NoticeViewModel by viewModels()
-    private var adapter: NoticeRecyclerAdapter = NoticeRecyclerAdapter(emptyList()) { }
+    private var adapter: NoticeRecyclerAdapter = NoticeRecyclerAdapter(emptyList(), { }) { }
 
     override fun onViewCreated() {
         with(binding) {
@@ -39,14 +40,17 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
     }
 
     private fun updateUI(notices: List<Notice>) {
-        adapter = NoticeRecyclerAdapter(notices) { noticeId ->
-//            val bundle=Bundle()
-//            bundle.putInt("notice_id",noticeId)
-//            val fragment= NoticeDetailFragment()
-//            fragment.arguments=bundle
-            viewModel.getNotice(noticeId)
-            binding.noticeLayout.changeFragment(this@NoticeFragment, NoticeDetailFragment())
+        adapter = NoticeRecyclerAdapter(notices, onItemClick()) { noticeId ->
+            viewModel.deleteNotice(noticeId)
         }
         binding.rvEvent.adapter = adapter
+    }
+
+    private fun onItemClick(): (Int) -> Unit = { noticeId ->
+        val bundle = Bundle()
+        bundle.putInt("notice_id", noticeId)
+        val fragment = NoticeDetailFragment()
+        fragment.arguments = bundle
+        binding.noticeLayout.changeFragment(this@NoticeFragment, fragment)
     }
 }
