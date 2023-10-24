@@ -1,6 +1,7 @@
 package org.sesac.management.data.model
 
 import org.sesac.management.R
+import org.sesac.management.data.room.ArtistType
 import java.util.Date
 
 enum class ArtistType {
@@ -18,7 +19,7 @@ data class Artist(
     val debutDay: Date,
     val type: ArtistType,
     val rateId: Int,
-    val imgUri : String,
+    val imgUri: String,
 )
 
 data class ArtistThumbnail(
@@ -26,19 +27,20 @@ data class ArtistThumbnail(
     val title: String,
     val content: String,
 )
+
 val artistList = listOf(
     ArtistThumbnail(
-        thumbnail =  R.drawable.twice_chaeyeong,
+        thumbnail = R.drawable.twice_chaeyeong,
         title = "아이유",
         content = "솔로 가수"
     ),
     ArtistThumbnail(
-        thumbnail =  R.drawable.girls_generation_hyoyeon,
+        thumbnail = R.drawable.girls_generation_hyoyeon,
         title = "아이유",
         content = "솔로 가수"
     ),
     ArtistThumbnail(
-        thumbnail =  R.drawable.girls_generation_all,
+        thumbnail = R.drawable.girls_generation_all,
         title = "아이유",
         content = "솔로 가수"
     ),

@@ -14,12 +14,13 @@ import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
+import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistEnrollViewModel by viewModels()
+    private val viewModel: ArtistViewModel by viewModels()
 
 //    private var debutDate = emptyList<String>()
 //    private var groupName = ""

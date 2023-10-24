@@ -5,6 +5,7 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.artistList
 import org.sesac.management.databinding.FragmentArtistBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
@@ -42,7 +43,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 layoutManager = GridLayoutManager(activity, 2)
                 adapter = ArtistRecyclerAdapter(
                     artistList,
-                    onClick={
+                    onClick = {
                         childFragmentManager
                             .beginTransaction()
                             .add(binding.artistLayout.id, ArtistDetailFragment())

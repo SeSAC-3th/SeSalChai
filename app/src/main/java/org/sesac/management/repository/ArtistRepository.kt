@@ -1,4 +1,4 @@
-package org.sesac.management.data.repository
+package org.sesac.management.repository
 
 import android.content.Context
 import android.util.Log
@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
 import org.sesac.management.data.room.Artist
 import org.sesac.management.data.room.ArtistDAO
+import org.sesac.management.data.room.Rate
 
 class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
@@ -56,4 +57,11 @@ class ArtistRepository(context: Context) {
             updateResult
         }.await()
     }
+
+
+    // Rate용
+    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
+    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
+    fun getAllRate() = artistDAO.getAllRate()
+    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 }

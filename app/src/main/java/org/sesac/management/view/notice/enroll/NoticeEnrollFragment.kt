@@ -1,15 +1,16 @@
-package org.sesac.management.view.notice
+package org.sesac.management.view.notice.enroll
 
 import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.FragmentNoticeEnrollBinding
+import org.sesac.management.view.notice.NoticeViewModel
 import java.util.Date
 
 class NoticeEnrollFragment() :
     BaseFragment<FragmentNoticeEnrollBinding>(FragmentNoticeEnrollBinding::inflate) {
 
-    private val noticeViewModel : NoticeViewModel by viewModels()
+    private val noticeViewModel: NoticeViewModel by viewModels()
     override fun onViewCreated() {
 
         with(binding) {
@@ -20,9 +21,8 @@ class NoticeEnrollFragment() :
                 backPress()
             }
 
-
             btnSave.setOnAvoidDuplicateClick {
-                val notice= Notice(
+                val notice = Notice(
                     binding.etTitle.text.toString(),
                     binding.etContent.text.toString(),
                     Date(),

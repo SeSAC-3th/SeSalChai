@@ -1,4 +1,4 @@
-package org.sesac.management.view.event
+package org.sesac.management.view.adapter.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,7 +29,7 @@ class ArtistAddRecyclerViewAdapter(val artists: List<ArtistThumbnail>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ArtistThumbnail) {
             with(binding) {
-                tvArtistName.text=item.title
+                tvArtistName.text = item.title
             }
         }
     }

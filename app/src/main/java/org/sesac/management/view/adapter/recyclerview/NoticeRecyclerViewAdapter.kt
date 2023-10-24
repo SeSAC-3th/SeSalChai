@@ -1,4 +1,4 @@
-package org.sesac.management.view.notice
+package org.sesac.management.view.adapter.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,13 +25,13 @@ class NoticeRecyclerAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NoticeRecyclerAdapter.NoticeInfo {
+    ): NoticeInfo {
         val binding =
             ItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NoticeInfo(binding)
     }
 
-    override fun onBindViewHolder(holder: NoticeRecyclerAdapter.NoticeInfo, position: Int) {
+    override fun onBindViewHolder(holder: NoticeInfo, position: Int) {
         val notice = items[position]
         with(holder.itemBinding) {
             tvRank.text = notice.noticeId.toString()
@@ -39,10 +39,11 @@ class NoticeRecyclerAdapter(
             tvDate.text = notice.createdAt.toString()
         }
     }
+
     override fun getItemCount(): Int = items.size
 
     fun setNoticeList(notices: List<Notice>) {
-        items=notices
+        items = notices
         notifyDataSetChanged()
     }
 }

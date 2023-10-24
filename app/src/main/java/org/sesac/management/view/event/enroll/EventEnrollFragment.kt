@@ -1,9 +1,9 @@
-package org.sesac.management.view.event
+package org.sesac.management.view.event.enroll
 
-import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {
@@ -14,10 +14,12 @@ class EventEnrollFragment :
             /* Enroll Button Click */
             with(ivAdd) {
                 setOnAvoidDuplicateClick {
-                    eventEnrollLayout.changeFragment(this@EventEnrollFragment, ArtistAddDialogFragment())
+                    eventEnrollLayout.changeFragment(
+                        this@EventEnrollFragment,
+                        ArtistAddDialogFragment()
+                    )
                 }
             }
         }
     }
-
 }

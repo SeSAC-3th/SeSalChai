@@ -1,4 +1,4 @@
-package org.sesac.management.view.artist
+package org.sesac.management.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View

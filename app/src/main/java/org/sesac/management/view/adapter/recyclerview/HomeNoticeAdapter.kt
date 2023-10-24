@@ -1,9 +1,8 @@
-package org.sesac.management.view.home
+package org.sesac.management.view.adapter.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import org.sesac.management.data.room.Notice
 import org.sesac.management.databinding.ItemHomeNoticeBinding
 

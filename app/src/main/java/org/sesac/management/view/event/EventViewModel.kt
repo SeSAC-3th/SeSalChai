@@ -9,11 +9,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.data.room.AgencyRoomDB
 import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistType
 import org.sesac.management.data.room.Event
 import org.sesac.management.data.room.EventDAO
 import org.sesac.management.data.room.Manager
+import org.sesac.management.repository.EventRepository
 import java.util.Date
+
+//class EventViewModel(private val eventRepository2: EventRepository2) : ViewModel() {
+//
+//}
 
 class EventViewModel(application: Application) : AndroidViewModel(application) {
     val TAG: String = "로그"
@@ -132,4 +136,15 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
         Log.d(TAG, "EventViewModel - deleteEventWithManager() called")
     }
 
+
+//    class EventViewModelFactory(private val eventRepository2: EventRepository2) :
+//        ViewModelProvider.Factory {
+//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//            return if (modelClass.isAssignableFrom(EventViewModel::class.java)) {
+//                EventViewModel(eventRepository2) as T
+//            } else {
+//                throw IllegalArgumentException()
+//            }
+//        }
+//    }
 }

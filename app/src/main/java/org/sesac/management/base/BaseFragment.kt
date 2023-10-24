@@ -1,7 +1,6 @@
 package org.sesac.management.base
 
 import android.os.Bundle
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.viewpager2.pageSelections
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -285,22 +283,22 @@ abstract class BaseFragment<VB : ViewBinding>(
      *     }
      * @author 우빈
      */
-    private val textInputLayouts = mutableListOf<TextInputLayout>()
-
-    protected fun addTextInputLayoutWithTextWatcher(
-        textInputLayout: TextInputLayout,
-        textWatcher: TextWatcher
-    ) {
-        textInputLayout.editText?.addTextChangedListener(textWatcher)
-        textInputLayouts.add(textInputLayout)
-    }
-
-    protected fun removeTextWatcherFromTextInputLayout(textWatcher: TextWatcher) {
-        for (textInputLayout in textInputLayouts) {
-            textInputLayout.editText?.removeTextChangedListener(textWatcher)
-        }
-        textInputLayouts.clear()
-    }
+//    private val textInputLayouts = mutableListOf<TextInputLayout>()
+//
+//    protected fun addTextInputLayoutWithTextWatcher(
+//        textInputLayout: TextInputLayout,
+//        textWatcher: TextWatcher
+//    ) {
+//        textInputLayout.editText?.addTextChangedListener(textWatcher)
+//        textInputLayouts.add(textInputLayout)
+//    }
+//
+//    protected fun removeTextWatcherFromTextInputLayout(textWatcher: TextWatcher) {
+//        for (textInputLayout in textInputLayouts) {
+//            textInputLayout.editText?.removeTextChangedListener(textWatcher)
+//        }
+//        textInputLayouts.clear()
+//    }
 
 //    fun showToastMessage(message: String) {
 //        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

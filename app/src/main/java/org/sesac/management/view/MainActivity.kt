@@ -2,8 +2,6 @@ package org.sesac.management.view
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.widget.Toast
-import android.os.PersistableBundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager

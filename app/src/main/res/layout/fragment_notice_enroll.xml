@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.notice.NoticeEnrollFragment">
+    tools:context=".view.notice.enroll.NoticeEnrollFragment">
 
     <include
         android:id="@+id/toolbar_notice_enroll"
@@ -22,7 +22,6 @@
         app:helperText="Supporting text"
         app:helperTextTextColor="@color/primary1"
         app:hintTextColor="@color/primary1"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_notice_enroll">
@@ -33,7 +32,6 @@
             android:layout_height="wrap_content"
             android:clipToOutline="true"
             app:strokeColor="@color/primary1" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToOutline="true" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -63,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_margin="8dp"
-        android:background="@color/primary3"
+        android:background="@drawable/drawable_round_search"
         android:text="취소"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,11 +72,10 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_margin="8dp"
-        android:background="@color/primary1"
+        android:background="@drawable/drawable_round_search"
         android:text="저장"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_cancel" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
