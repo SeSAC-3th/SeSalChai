@@ -29,19 +29,19 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
             insertEvent(
                 Event(
                     name = "쇼!새싹중심", place = "상암MBC", date = Date(), description = "아이즈원",
-                    imgUri = "이미지 URI"
+                    imgUri = null
                 )
             )
             insertEvent(
                 Event(
                     name = "새싹가요", place = "상암SBS", date = Date(), description = "르세라핌",
-                    imgUri = "이미지 URI"
+                    imgUri = null
                 )
             )
             insertEvent(
                 Event(
                     name = "새싹뱅크", place = "KBS 별관", date = Date(), description = "뉴진스",
-                    imgUri = "이미지 URI"
+                    imgUri = null
                 )
             )
             insertManager(

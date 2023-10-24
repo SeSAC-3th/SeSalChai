@@ -1,9 +1,13 @@
 package org.sesac.management.view.artist.enroll
 
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +28,13 @@ class ArtistEnrollFragment :
     private var memberListString = ""
     private lateinit var artistType: ArtistType
     private var insertValue = emptyList<Long>()
-
+    /* 선택한 이미지 절대경로 가져오기 */
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            binding.ivArtist.setImageURI(uri)
+        }
+        /* 선택한 이미지 Uri 처리 */
+    }
     override fun onViewCreated() {
         initView()
         initTextWatcher()
@@ -53,7 +63,7 @@ class ArtistEnrollFragment :
                         Date(),
                         artistType,
                         null,
-                        "",
+                        null,
                         0
                     )
                 )
@@ -96,6 +106,10 @@ class ArtistEnrollFragment :
             layoutInputMember.tilLayout.hint = resources.getString(R.string.artist_member)
             layoutInputMember.tilLayout.helperText =
                 resources.getString(R.string.artist_member_helper)
+            /* image 설정 */
+            ivArtist.setOnClickListener {
+                getContent.launch("image/*")
+            }
 
             spinnerArtistType.adapter = ArrayAdapter.createFromResource(
                 requireContext(),

@@ -24,7 +24,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             viewModel.insertEvent(
                 Event(
                     name = "새싹카운트다운", place = "상암 Mnet", date = Date(), description = "새싹 3기",
-                    imgUri = "이미지 URI"
+                    imgUri = null
                 )
             )
             //INSERT INTO artist (name, member_info, debut_day, type, rate_id, img_uri)
