@@ -44,6 +44,12 @@
         <item>@string/model</item>
     </string-array>
 
+    <!-- ArtistEdit -->
+    <string name="artist_edit_title">아티스트 수정</string>
+
+    <!-- EventDialog -->
+    <string name="event_select_artist">참여 아티스트 선택</string>
+
     <string name="artist_error_debut_empty">데뷔일을 입력해주세요.</string>
     <string name="artist_error_debut_not_valid">데뷔일 형식이 맞지 않습니다.</string>
 
