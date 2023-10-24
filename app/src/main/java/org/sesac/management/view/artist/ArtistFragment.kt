@@ -24,11 +24,6 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllArtist()
-    }
-
     private fun getArtistInfo() {
         viewModel.getAllArtist()
     }
