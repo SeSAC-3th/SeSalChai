@@ -30,24 +30,6 @@ data class ArtistThumbnail(
     val content: String,
 )
 
-val artistList = listOf(
-    ArtistThumbnail(
-        thumbnail = R.drawable.twice_chaeyeong,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_hyoyeon,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_all,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
-)
-
 fun Artist.toModelArtist() = Artist(
     artistId = artistId,
     name = name,

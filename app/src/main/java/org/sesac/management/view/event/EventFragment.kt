@@ -1,19 +1,14 @@
 package org.sesac.management.view.event
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.eventList
-import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.extension.changeFragment
-import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
-import org.sesac.management.view.adapter.recyclerview.EventRecyclerViewAdapter
+import org.sesac.management.view.adapter.recyclerview.EventRecyclerAdapter
 import org.sesac.management.view.event.detail.EventDetailFragment
 import org.sesac.management.view.event.enroll.EventEnrollFragment
-import java.util.Date
 
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
@@ -31,7 +26,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             /* RecyclerView */
             with(rvEvent) {
                 layoutManager = GridLayoutManager(activity, 2)
-                adapter = EventRecyclerViewAdapter(
+                adapter = EventRecyclerAdapter(
                     eventList,
                     onClick = {
                         binding.eventLayout.changeFragment(

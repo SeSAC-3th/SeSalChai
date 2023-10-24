@@ -34,7 +34,6 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
         CoroutineScope(Dispatchers.Main).launch {
             insertArtist.value = repository.insertArtist(artist)
         }
-        getAllArtist()
     }
 
     fun insertRate(rate: Rate) = viewModelScope.launch {

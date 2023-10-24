@@ -1,7 +1,11 @@
 package org.sesac.management.view.artist
 
+import android.annotation.SuppressLint
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -18,6 +22,7 @@ import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
     private val viewModel: ArtistViewModel by viewModels()
+    private lateinit var artistAdapter: ArtistRecyclerAdapter
 
     override fun onViewCreated() {
         getArtistInfo()
@@ -43,7 +48,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
     private fun makeList(artistList: List<Artist>) {
         with(binding.rvArtist) {
             layoutManager = GridLayoutManager(activity, 2)
-            adapter = ArtistRecyclerAdapter(
+            artistAdapter = ArtistRecyclerAdapter(
                 artistList,
                 onClick = {
                     childFragmentManager
@@ -53,9 +58,11 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                         .commitAllowingStateLoss()
                 }
             )
+            adapter = artistAdapter
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun initView() {
         with(binding) {
             /* chip Button : 가수 목록 */
@@ -82,6 +89,25 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             /* Floating Button : 아티스트 등록 */
             btnArtistEnroll.setOnAvoidDuplicateClick {
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+            }
+
+            with(swipeRefresh) {
+                setSize(SwipeRefreshLayout.MEASURED_STATE_TOO_SMALL)
+                setColorSchemeColors(
+                    android.R.color.holo_blue_bright,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_red_light
+                )
+                setOnRefreshListener {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        artistAdapter.let {
+                            viewModel.getAllArtist()
+                            it.notifyItemRangeChanged(0, childCount)
+                        }
+                        isRefreshing = false
+                    }, 1000L)
+                }
             }
         }
     }
