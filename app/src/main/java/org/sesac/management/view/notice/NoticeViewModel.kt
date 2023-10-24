@@ -10,12 +10,14 @@ import org.sesac.management.data.local.Notice
 import org.sesac.management.repository.NoticeRepository
 
 class NoticeViewModel(application: Application) : AndroidViewModel(application) {
+
     private val noticeRepository = NoticeRepository.getInstance()
     private val coroutineIOScope = CoroutineScope(Dispatchers.IO)
 
-    val noticeListLiveData = noticeRepository.allNotices
+    var selectedNoticeId: Int = 0
     var selectedNotice: LiveData<Notice>? = null
-    val homeNoticeLiveData = noticeRepository.homeNotices
+    private val noticeListLiveData = noticeRepository.allNotices
+    private val homeNoticeLiveData = noticeRepository.homeNotices
 
     fun insertNoticeInfo(notice: Notice) {
         coroutineIOScope.launch(Dispatchers.IO) {
@@ -38,5 +40,9 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun deleteNotice(noticeId: Int) {
         noticeRepository.deleteNotice(noticeId)
+    }
+
+    fun update(notice : Notice) {
+        noticeRepository.updateNotice(notice)
     }
 }

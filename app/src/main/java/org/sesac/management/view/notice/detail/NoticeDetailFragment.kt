@@ -12,33 +12,34 @@ import org.sesac.management.view.notice.edit.NoticeEditFragment
 
 class NoticeDetailFragment() :
     BaseFragment<FragmentNoticeDetailBinding>(FragmentNoticeDetailBinding::inflate) {
-    private val viewModel: NoticeViewModel by viewModels()
-    var notice: Notice? = null
+    private val sharedViewModel: NoticeViewModel
+            by viewModels(ownerProducer = { requireParentFragment() })
+
     override fun onViewCreated() {
-        val id=arguments?.getInt("notice_id",0) ?: 0
-        viewModel.getNotice(id)
+        Log.e("bbbb","${sharedViewModel.selectedNoticeId}")
         with(binding) {
             toolbarNoticeDetail.setToolbarMenu("공지사항 상세", true) {
-                binding.layoutNoticeDetail.changeFragment(this@NoticeDetailFragment,NoticeEditFragment())
+                binding.layoutNoticeDetail.changeFragment(
+                    this@NoticeDetailFragment,
+                    NoticeEditFragment()
+                )
             }
         }
 
-        viewModel.selectedNotice?.observe(
+        sharedViewModel.selectedNotice?.observe(
             viewLifecycleOwner
         ) { notice ->
             notice?.let {
-                this.notice = notice
-                updateUi()
+                updateUI(it)
             }
         }
     }
 
-    fun updateUi() {
+    private fun updateUI(notice: Notice) {
         with(binding) {
-            tvNoticeTitle.text = notice?.title.toString()
-            tvContent.text = notice?.content
-            tvDate.text = notice?.createdAt.toString()
+            tvNoticeTitle.text = notice.title
+            tvContent.text = notice.content
+            tvDate.text = notice.createdAt.toString()
         }
     }
-
 }
