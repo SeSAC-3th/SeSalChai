@@ -7,12 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
-import org.sesac.management.util.common.mainScope
 
 class ArtistViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = ArtistRepository(application)
