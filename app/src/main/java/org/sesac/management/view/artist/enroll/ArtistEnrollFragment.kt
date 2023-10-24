@@ -1,6 +1,11 @@
 package org.sesac.management.view.artist.enroll
 
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
@@ -28,13 +33,26 @@ class ArtistEnrollFragment :
     private var memberListString = ""
     private lateinit var artistType: ArtistType
     private var insertValue = emptyList<Long>()
-    /* 선택한 이미지 절대경로 가져오기 */
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            binding.ivArtist.setImageURI(uri)
+    val contentResolver: ContentResolver? = context?.contentResolver
+    private var bitmap: Bitmap? = null
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                binding.ivArtist.setImageURI(uri)
+                if (Build.VERSION.SDK_INT < 28) {
+                    bitmap = MediaStore.Images.Media
+                        .getBitmap(contentResolver, uri)
+                } else {
+                    val decode = this.contentResolver?.let { it1 ->
+                        ImageDecoder.createSource(
+                            it1,
+                            uri
+                        )
+                    }
+                    bitmap = decode?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
+                }
+            }
         }
-        /* 선택한 이미지 Uri 처리 */
-    }
     override fun onViewCreated() {
         initView()
         initTextWatcher()
@@ -63,7 +81,7 @@ class ArtistEnrollFragment :
                         Date(),
                         artistType,
                         null,
-                        null,
+                        bitmap,
                         0
                     )
                 )
