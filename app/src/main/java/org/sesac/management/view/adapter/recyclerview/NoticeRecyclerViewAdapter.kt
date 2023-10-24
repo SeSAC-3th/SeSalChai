@@ -10,11 +10,26 @@ import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 class NoticeRecyclerAdapter(
     private var items: List<Notice>,
     private val onClick: (Int) -> Unit,
-    private val onDeleteClick: (Int)->Unit,
+    private val onDeleteClick: (Int) -> Unit,
 ) :
     RecyclerView.Adapter<NoticeRecyclerAdapter.NoticeInfo>() {
     inner class NoticeInfo(val itemBinding: ItemNoticeBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+        fun bind(item: Notice) {
+            with(itemBinding) {
+                tvRank.text = item.noticeId.toString()
+                tvTitle.text = item.title
+                tvDate.text = item.createdAt.toString()
+
+                root.setOnAvoidDuplicateClickFlow {
+                    onClick(item.noticeId)
+                }
+
+                ivDeleteNotice.setOnAvoidDuplicateClickFlow {
+                    onDeleteClick(item.noticeId)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -27,20 +42,7 @@ class NoticeRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: NoticeInfo, position: Int) {
-        val notice = items[position]
-        with(holder.itemBinding) {
-            tvRank.text = notice.noticeId.toString()
-            tvTitle.text = notice.title
-            tvDate.text = notice.createdAt.toString()
-
-            root.setOnAvoidDuplicateClickFlow {
-                onClick(notice.noticeId)
-            }
-
-            ivDeleteNotice.setOnAvoidDuplicateClickFlow {
-                onDeleteClick(notice.noticeId)
-            }
-        }
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size

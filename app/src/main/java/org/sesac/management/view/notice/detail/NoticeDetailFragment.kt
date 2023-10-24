@@ -6,6 +6,7 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeDetailBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.notice.NoticeViewModel
 import org.sesac.management.view.notice.edit.NoticeEditFragment
 
@@ -18,7 +19,7 @@ class NoticeDetailFragment() :
         viewModel.getNotice(id)
         with(binding) {
             toolbarNoticeDetail.setToolbarMenu("공지사항 상세", true) {
-                layoutNoticeDetail.changeFragment(this@NoticeDetailFragment,NoticeEditFragment())
+                binding.layoutNoticeDetail.changeFragment(this@NoticeDetailFragment,NoticeEditFragment())
             }
         }
 

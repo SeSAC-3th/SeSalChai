@@ -20,16 +20,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
     private val viewModel: EventViewModel by viewModels()
 
     override fun onViewCreated() {
-        lifecycleScope.launch {
-            viewModel.insertEvent(
-                Event(
-                    name = "새싹카운트다운", place = "상암 Mnet", date = Date(), description = "새싹 3기",
-                    imgUri = "이미지 URI"
-                )
-            )
-            //INSERT INTO artist (name, member_info, debut_day, type, rate_id, img_uri)
-            //VALUES ('르세라핌', '신진혁, 함우빈, 최종혁', '2023-10-23', 'SINGER', 1, '이미지 URI');
-        }
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {
