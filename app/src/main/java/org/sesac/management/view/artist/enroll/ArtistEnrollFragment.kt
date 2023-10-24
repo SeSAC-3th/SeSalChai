@@ -6,8 +6,8 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistType
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
