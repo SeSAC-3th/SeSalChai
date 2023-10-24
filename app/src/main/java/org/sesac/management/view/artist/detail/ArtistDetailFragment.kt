@@ -79,7 +79,9 @@ class ArtistDetailFragment :
 
     private fun initView() {
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true)
+            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
+                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            }
 
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
