@@ -1,10 +1,11 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import org.sesac.management.data.local.Event
 
 @Dao
 interface EventDAO {

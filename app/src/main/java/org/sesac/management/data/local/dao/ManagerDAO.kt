@@ -1,7 +1,8 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import org.sesac.management.data.local.Manager
 
 @Dao
 interface ManagerDAO {

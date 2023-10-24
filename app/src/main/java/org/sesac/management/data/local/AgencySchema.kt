@@ -1,4 +1,4 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

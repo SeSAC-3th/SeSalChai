@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.eventList
-import org.sesac.management.data.room.Event
+import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter

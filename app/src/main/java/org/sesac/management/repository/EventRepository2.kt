@@ -1,7 +1,7 @@
 package org.sesac.management.repository
 
-import org.sesac.management.data.room.Event
-import org.sesac.management.data.room.EventDAO
+import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.dao.EventDAO
 
 class EventRepository2(private val eventDAO: EventDAO) {
     companion object {
