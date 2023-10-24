@@ -30,14 +30,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tb_artist">
-
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체"
+            android:textColor="@color/primary1"
+            app:chipBackgroundColor="@color/primary4"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가수"
-            android:textColor="@color/primary1"
-            app:chipBackgroundColor="@color/primary4"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
             app:chipStrokeColor="@color/primary1"
             app:chipStrokeWidth="2dp" />
 

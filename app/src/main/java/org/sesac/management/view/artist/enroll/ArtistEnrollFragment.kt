@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -15,7 +16,9 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
+import org.sesac.management.data.util.converUriToBitmap
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
@@ -39,18 +42,13 @@ class ArtistEnrollFragment :
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
+                Log.d(ARTIST, "uri: $uri")
                 binding.ivArtist.setImageURI(uri)
-                if (Build.VERSION.SDK_INT < 28) {
-                    bitmap = MediaStore.Images.Media
-                        .getBitmap(contentResolver, uri)
-                } else {
-                    val decode = this.contentResolver?.let { it1 ->
-                        ImageDecoder.createSource(
-                            it1,
-                            uri
-                        )
+                contentResolver?.let { it1 ->
+                    Log.d(ARTIST, "contentResolver: $contentResolver")
+                    converUriToBitmap(uri, it1).let {
+                        bitmap = it
                     }
-                    bitmap = decode?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
                 }
             }
         }
@@ -82,7 +80,8 @@ class ArtistEnrollFragment :
                         Date(),
                         artistType,
                         null,
-                        bitmap,
+//                        bitmap,
+                        null,
                         0
                     )
                 )

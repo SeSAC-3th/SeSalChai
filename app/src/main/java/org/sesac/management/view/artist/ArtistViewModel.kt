@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
 
@@ -48,5 +49,17 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getRate(rateId: Int) = viewModelScope.launch {
         repository.getRate(rateId)
+    }
+
+    fun getSearchResult(keyword: String){
+        CoroutineScope(Dispatchers.Main).launch {
+            getAllArtist.value = repository.getArtistByName(keyword)
+        }
+    }
+
+    fun getArtistByType(type: ArtistType){
+        CoroutineScope(Dispatchers.Main).launch {
+            getAllArtist.value = repository.getArtistByType(type)
+        }
     }
 }

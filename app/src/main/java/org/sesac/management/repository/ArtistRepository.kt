@@ -10,8 +10,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
@@ -19,6 +21,7 @@ class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
     private val coroutineIOScope = CoroutineScope(IO)
     private var getAllResult = MutableLiveData<List<Artist>>()
+    private var getTypeResult = MutableLiveData<List<Artist>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
 
@@ -82,4 +85,30 @@ class ArtistRepository(context: Context) {
     fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
     fun getAllRate() = artistDAO.getAllRate()
     fun getRate(rateId: Int) = artistDAO.getRate(rateId)
+
+    fun getArtistDetailById(aritstId: Int): Artist {
+        return artistDAO.getSearchArtistById(aritstId)
+    }
+
+    fun getArtistByName(name: String): List<Artist> {
+        return artistDAO.getSearchArtistByName(name)
+    }
+    suspend fun getArtistByType(type: ArtistType):List<Artist>? {
+        getTypeResult = asyncgetArtistByType(type)
+        return getTypeResult.value
+    }
+
+    private suspend fun asyncgetArtistByType(type: ArtistType): MutableLiveData<List<Artist>> {
+        val updateReturn = coroutineIOScope.async(IO) {
+            return@async artistDAO.getArtistByType(type)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getTypeResult.value = updateReturn
+            getTypeResult
+        }.await()
+    }
+    suspend fun deleteArtist(aritstId: Int) {
+        var tmpArtist = getArtistDetailById(aritstId)
+        artistDAO.deleteArtistWithEvent(tmpArtist)
+    }
 }

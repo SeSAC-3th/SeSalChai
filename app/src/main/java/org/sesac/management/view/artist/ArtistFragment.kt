@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
@@ -55,24 +56,27 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
     private fun initView() {
         with(binding) {
             /* chip Button : 가수 목록 */
+            chipAll.setOnAvoidDuplicateClick {
+                viewModel.getAllArtist()
+            }
+            /* chip Button : 가수 목록 */
             chipSinger.setOnAvoidDuplicateClick {
-                // 임시로 넣어 둔 코드(화면 전환 코드)
-                artistLayout.changeFragment(this@ArtistFragment, ArtistDetailFragment())
+                viewModel.getArtistByType(ArtistType.SINGER)
             }
 
             /* chip Button : 배우 목록 */
             chipActor.setOnAvoidDuplicateClick {
-                artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+                viewModel.getArtistByType(ArtistType.ACTOR)
             }
 
             /* chip Button : 코미디언 목록 */
             chipComedian.setOnAvoidDuplicateClick {
-                artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+                viewModel.getArtistByType(ArtistType.COMEDIAN)
             }
 
             /* chip Button : 모델 목록 */
             chipModel.setOnAvoidDuplicateClick {
-                artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
+                viewModel.getArtistByType(ArtistType.MODEL)
             }
 
             /* Floating Button : 아티스트 등록 */

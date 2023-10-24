@@ -1,15 +1,21 @@
 package org.sesac.management.data.util
 
 import android.Manifest
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import org.sesac.management.data.util.ImagePermission.FLAG_PERM_STORAGE
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 import org.sesac.management.view.MainActivity
 
@@ -40,4 +46,20 @@ fun checkPermission(permissions: Array<out String>, flag: Int,activityCompat: Ma
     }
     return true
 }
-
+fun converUriToBitmap(uri: Uri,contentResolver:ContentResolver): Bitmap?{
+    var bitmap:Bitmap? = null
+    if (Build.VERSION.SDK_INT < 28) {
+        bitmap = MediaStore.Images.Media
+            .getBitmap(contentResolver, uri)
+    } else {
+        val decode = contentResolver?.let { it1 ->
+            ImageDecoder.createSource(
+                it1,
+                uri
+            )
+        }
+        bitmap = decode?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
+    }
+    Log.d(ARTIST, "onViewCreated: $bitmap")
+    return bitmap
+}
