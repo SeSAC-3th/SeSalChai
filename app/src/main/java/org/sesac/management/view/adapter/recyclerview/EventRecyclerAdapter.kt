@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.model.ArtistThumbnail
 import org.sesac.management.databinding.ItemCommonItemBinding
 
-class ArtistRecyclerAdapter(
+class EventRecyclerAdapter(
     private val items: List<ArtistThumbnail>, private val onClick: () -> Unit
 ) :
-    RecyclerView.Adapter<ArtistRecyclerAdapter.ArtistInfo>() {
+    RecyclerView.Adapter<EventRecyclerAdapter.ArtistInfo>() {
     inner class ArtistInfo(val itemBinding: ItemCommonItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         init {
@@ -39,6 +39,4 @@ class ArtistRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-
 }

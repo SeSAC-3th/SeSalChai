@@ -22,7 +22,7 @@ class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
     private val viewModel: ArtistViewModel by viewModels()
 
-//    private var debutDate = emptyList<String>()
+    //    private var debutDate = emptyList<String>()
 //    private var groupName = ""
 //    private var memberListString = ""
 //    private lateinit var artistType: ArtistType
