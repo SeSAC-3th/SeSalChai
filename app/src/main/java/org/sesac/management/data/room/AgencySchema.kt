@@ -1,5 +1,6 @@
 package org.sesac.management.data.room
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -62,7 +63,7 @@ data class Event(
     var description: String,
 
     @ColumnInfo(name = "img_uri")
-    var imgUri: String,
+    var imgUri: Bitmap? = null,
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "event_id")
@@ -94,7 +95,7 @@ data class Artist(
     @ColumnInfo(name = "rate_id")
     var rateId: Int?,
     @ColumnInfo(name = "img_uri")
-    var imgUri: String,
+    var imgUri: Bitmap? = null,
 
     // primary key
     @PrimaryKey(autoGenerate = true)
