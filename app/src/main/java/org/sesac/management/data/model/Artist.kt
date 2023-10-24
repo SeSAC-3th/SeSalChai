@@ -1,7 +1,7 @@
 package org.sesac.management.data.model
 
 import org.sesac.management.R
-import org.sesac.management.data.room.ArtistType
+import org.sesac.management.data.local.ArtistType
 import java.util.Date
 
 data class Artist(

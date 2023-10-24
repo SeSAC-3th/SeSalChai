@@ -1,10 +1,14 @@
-package org.sesac.management.data.room
+package org.sesac.management.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import org.sesac.management.data.local.dao.ArtistDAO
+import org.sesac.management.data.local.dao.EventDAO
+import org.sesac.management.data.local.dao.ManagerDAO
+import org.sesac.management.data.local.dao.NoticeDAO
 import org.sesac.management.data.util.CustomConverter
 
 /**

@@ -3,9 +3,9 @@ package org.sesac.management.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.launch
-import org.sesac.management.data.room.AgencyRoomDB
-import org.sesac.management.data.room.Notice
-import org.sesac.management.data.room.NoticeDAO
+import org.sesac.management.data.local.AgencyRoomDB
+import org.sesac.management.data.local.Notice
+import org.sesac.management.data.local.dao.NoticeDAO
 import org.sesac.management.util.common.ioScope
 
 class NoticeRepository(application: Application) {

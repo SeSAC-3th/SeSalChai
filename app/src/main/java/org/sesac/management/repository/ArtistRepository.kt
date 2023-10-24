@@ -8,9 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.sesac.management.data.room.AgencyRoomDB
-import org.sesac.management.data.room.Artist
-import org.sesac.management.data.room.ArtistDAO
+import org.sesac.management.data.local.AgencyRoomDB
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.dao.ArtistDAO
 
 class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
