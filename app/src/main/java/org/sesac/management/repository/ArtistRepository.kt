@@ -14,7 +14,6 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
-import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
@@ -85,8 +84,12 @@ class ArtistRepository(context: Context) {
 
 
     // Rate용
-    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
-    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
+    fun insertRateWithArtist(rate: Rate, artistId: Int) {
+        ioScope.launch {
+            artistDAO.insertRateWithArtist(rate, artistId)
+        }
+    }
+
     fun getAllRate() = artistDAO.getAllRate()
     fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 
@@ -138,7 +141,7 @@ class ArtistRepository(context: Context) {
         }.await()
     }
 
-    suspend fun getEventFromArtist(artistId: Int):MutableLiveData<List<Event>>{
+    suspend fun getEventFromArtist(artistId: Int): MutableLiveData<List<Event>> {
         getEventResult = asyncgetEventFromArtist(artistId)
         return getEventResult
     }
