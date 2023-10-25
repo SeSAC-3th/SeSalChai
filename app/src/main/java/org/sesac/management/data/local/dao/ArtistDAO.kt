@@ -49,7 +49,7 @@ interface ArtistDAO {
      * @return all artist
      */
     @Query("""SELECT * FROM artist""")
-    fun getAllArtist(): List<Artist>
+    suspend fun getAllArtist(): List<Artist>
 
     /**
      * R: artist table에 있는 객체중, 이름이 일치하는 artist를 반환하는 함수

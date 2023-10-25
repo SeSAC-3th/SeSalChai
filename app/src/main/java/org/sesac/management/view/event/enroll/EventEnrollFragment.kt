@@ -1,20 +1,16 @@
 package org.sesac.management.view.event.enroll
 
-import android.content.ContentResolver
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {
+    val viewModel: EventViewModel by viewModels({ requireParentFragment() })
     /* 선택한 이미지 절대경로 가져오기 */
     val contentResolver: ContentResolver? = context?.contentResolver
     private var bitmap: Bitmap? = null
