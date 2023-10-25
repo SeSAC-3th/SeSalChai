@@ -3,6 +3,7 @@ package org.sesac.management.view.artist
 import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -20,7 +21,7 @@ import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistAdapter: ArtistRecyclerAdapter
 
     override fun onViewCreated() {

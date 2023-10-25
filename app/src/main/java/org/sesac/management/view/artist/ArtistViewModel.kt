@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,10 +16,11 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
+import org.sesac.management.repository.EventRepository
 import org.sesac.management.util.common.ARTIST
+import org.sesac.management.view.event.EventViewModel
 
-class ArtistViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = ArtistRepository(application)
+class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
 
     var getAllArtist = MutableLiveData<List<Artist>>()
     var getArtistDetail = MutableLiveData<Artist>()
@@ -71,21 +74,28 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
     fun getArtistById(id: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             getArtistDetail.value = repository.getArtistById(id)
-            Log.d(ARTIST, "getArtistById: ${getArtistDetail.value}")
         }
     }
 
     fun getEventFromArtistId(artistId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             getEventFromArtist = repository.getEventFromArtist(artistId)
-            Log.d(ARTIST, "getArtistById: ${getArtistDetail.value}")
         }
     }
 
     fun deleteArtist(artist: Artist) {
         CoroutineScope(Dispatchers.Main).launch {
             repository.deleteArtist(artist)
-            Log.d(ARTIST, "getArtistById: ${getArtistDetail.value}")
+        }
+    }
+    class ArtistViewModelFactory(private val artistRepository: ArtistRepository) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return if (modelClass.isAssignableFrom(ArtistViewModel::class.java)) {
+                ArtistViewModel(artistRepository) as T
+            } else {
+                throw IllegalArgumentException()
+            }
         }
     }
 }

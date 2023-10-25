@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -30,12 +31,8 @@ import java.util.Date
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by activityViewModels()
 
-    //    private var debutDate = emptyList<String>()
-//    private var groupName = ""
-//    private var memberListString = ""
-//    private lateinit var artistType: ArtistType
     private var insertValue = emptyList<Long>()
     val contentResolver: ContentResolver? = context?.contentResolver
     private var bitmap: Bitmap? = null
