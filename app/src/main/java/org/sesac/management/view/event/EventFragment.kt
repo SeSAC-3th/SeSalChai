@@ -55,7 +55,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 //            //INSERT INTO artist (name, member_info, debut_day, type, rate_id, img_uri)
 //            //VALUES ('르세라핌', '신진혁, 함우빈, 최종혁', '2023-10-23', 'SINGER', 1, '이미지 URI');
 //        }
-
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {

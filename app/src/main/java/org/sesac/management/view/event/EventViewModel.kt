@@ -12,7 +12,6 @@ import org.sesac.management.data.local.Event
 import org.sesac.management.repository.EventRepository
 
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
-
     fun insertEvent(event: Event) {
         viewModelScope.launch {
             eventRepository.insertEvent(event)

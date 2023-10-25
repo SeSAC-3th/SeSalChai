@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
+import org.sesac.management.data.local.Event
 
-class ArtistEventViewPagerAdapter(private val items: List<Int>) :
+class ArtistEventViewPagerAdapter(private val items: List<Event>) :
     RecyclerView.Adapter<ArtistEventViewPagerAdapter.EventViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
@@ -23,9 +25,12 @@ class ArtistEventViewPagerAdapter(private val items: List<Int>) :
     override fun getItemCount(): Int = items.size
 
     class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(event: Int) {
+        fun bind(event: Event) {
             view.findViewById<ImageView>(R.id.iv_event).apply {
-                setImageResource(R.drawable.ic_launcher_background)
+                setImageResource((event.imgUri ?: R.drawable.ic_launcher_background) as Int)
+            }
+            view.findViewById<TextView>(R.id.tv_title).apply {
+                text = event.name
             }
         }
     }
