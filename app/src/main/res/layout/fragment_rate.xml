@@ -16,22 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_rate_ranking" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/test2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/test" />
-
     <HorizontalScrollView
         android:id="@+id/layout_rate_scroll"
         android:layout_width="match_parent"
@@ -45,10 +29,12 @@
             android:id="@+id/chipGroup_rate_evaluationItems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vertical_margin">
+            android:layout_marginTop="@dimen/vertical_margin"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_average"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="종합"
@@ -59,6 +45,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_income"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="수익"
@@ -69,6 +56,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_popularity"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인기도"
@@ -80,6 +68,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_sing"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가창력"
@@ -91,6 +80,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_dance"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="춤"
@@ -101,6 +91,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rate_performance"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="연기력"

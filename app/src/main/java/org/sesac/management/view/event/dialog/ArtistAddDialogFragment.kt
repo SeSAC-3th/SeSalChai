@@ -13,6 +13,7 @@ import org.sesac.management.databinding.FragmentArtistAddDialogBinding
 
 class ArtistAddDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentArtistAddDialogBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

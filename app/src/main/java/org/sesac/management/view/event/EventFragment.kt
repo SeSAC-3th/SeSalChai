@@ -7,7 +7,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.local.Event
 import org.sesac.management.data.model.eventList
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
@@ -15,7 +14,6 @@ import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.EventRecyclerAdapter
 import org.sesac.management.view.event.detail.EventDetailFragment
 import org.sesac.management.view.event.enroll.EventEnrollFragment
-import java.util.Date
 
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
@@ -34,14 +32,14 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
         }
 
         // livedata-flow
-        viewModel.eventByID(1).observe(viewLifecycleOwner) {
+        viewModel.getEventByID(1).observe(viewLifecycleOwner) {
             if (it != null) {
 
             }
         }
 
         // livedata-livedata
-        viewModel.eventByName("").observe(viewLifecycleOwner) {
+        viewModel.getEventByName("").observe(viewLifecycleOwner) {
             if (it != null) {
 
             }

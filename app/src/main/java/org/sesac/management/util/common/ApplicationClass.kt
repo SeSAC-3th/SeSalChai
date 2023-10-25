@@ -13,6 +13,7 @@ class ApplicationClass : Application() {
 
     val database by lazy { AgencyRoomDB.getInstance(this) }
 
+
     val eventRepository by lazy {
         EventRepository(
             eventDAO = database.generateEventDAO(),
@@ -20,7 +21,6 @@ class ApplicationClass : Application() {
             artistDAO = database.generateArtistDAO()
         )
     }
-
     override fun onCreate() {
         super.onCreate()
         appInstance = this
