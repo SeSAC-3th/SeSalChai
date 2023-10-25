@@ -9,6 +9,8 @@ import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.notice.NoticeViewModel
 import org.sesac.management.view.notice.edit.NoticeEditFragment
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class NoticeDetailFragment() :
     BaseFragment<FragmentNoticeDetailBinding>(FragmentNoticeDetailBinding::inflate) {
@@ -16,7 +18,6 @@ class NoticeDetailFragment() :
             by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onViewCreated() {
-        Log.e("bbbb","${sharedViewModel.selectedNoticeId}")
         with(binding) {
             toolbarNoticeDetail.setToolbarMenu("공지사항 상세", true) {
                 binding.layoutNoticeDetail.changeFragment(
@@ -39,7 +40,9 @@ class NoticeDetailFragment() :
         with(binding) {
             tvNoticeTitle.text = notice.title
             tvContent.text = notice.content
-            tvDate.text = notice.createdAt.toString()
+            tvDate.text = SimpleDateFormat(
+                "yyyy년 MMM dd일 ", Locale.KOREA
+            ).format(notice.createdAt)
         }
     }
 }

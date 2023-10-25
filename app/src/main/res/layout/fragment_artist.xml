@@ -38,8 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체"
-            android:textColor="@color/primary1"
-            app:chipBackgroundColor="@color/primary4"
+            android:checked="true"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
             app:chipStrokeColor="@color/primary1"
             app:chipStrokeWidth="2dp" />
 

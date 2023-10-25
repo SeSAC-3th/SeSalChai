@@ -38,5 +38,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/baseline_menu_24" />
+        tools:src="@drawable/baseline_edit_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
