@@ -5,7 +5,6 @@
     android:id="@+id/layout_event_artist_add"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/drawable_round_dialog"
     android:elevation="10dp">
 
     <androidx.recyclerview.widget.RecyclerView

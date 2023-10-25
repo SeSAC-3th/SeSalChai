@@ -32,6 +32,7 @@ class ArtistAddDialogFragment : DialogFragment() {
          */
         viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
             // 아티스트 목록을 가져온 후 RecyclerView에 표시
+            Log.d(TAG, "getAllArtist : $artist")
             val rvArtist = this.binding.rvArtist
             rvArtist.layoutManager = LinearLayoutManager(requireContext())
             // artists를 DialogItem으로 변환
@@ -49,7 +50,17 @@ class ArtistAddDialogFragment : DialogFragment() {
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
+            var co = viewModel.getAllArtist.value
+            // 아티스트 목록을 가져온 후 RecyclerView에 표시
+            Log.d(TAG, "getAllArtist : ${co}")
+            val rvArtist = this.binding.rvArtist
+            rvArtist.layoutManager = LinearLayoutManager(requireContext())
+            // artists를 DialogItem으로 변환
+            val dialogItems = co?.map { artist ->
+                DialogItem(artist.name, artist.artistId, selectedItems.contains(artist.name))
+            }
+            val adapter = dialogItems?.let { DialogAdapter(it) }
+            rvArtist.adapter = adapter
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(resources.getString(R.string.event_select_artist))

@@ -32,7 +32,7 @@ class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate),
     CustomDialogListener {
     val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
-    val artistViewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
+//    val artistViewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var eventDescription: String
     /* 선택한 이미지 절대경로 가져오기 */
     val contentResolver: ContentResolver? = context?.contentResolver
@@ -56,13 +56,13 @@ class EventEnrollFragment :
             }
         }
     /* 선택한 이미지 Uri 처리 */
-    private fun getArtistInfo() {
-        artistViewModel.getAllArtist()
-    }
+//    private fun getArtistInfo() {
+//        artistViewModel.getAllArtist()
+//    }
 
 
     override fun onViewCreated() {
-        getArtistInfo()
+//        getArtistInfo()
 
         with(binding) {
             tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
