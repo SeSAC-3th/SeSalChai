@@ -38,7 +38,7 @@ class ArtistDetailFragment :
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             artistId = artist.artistId
-            rateId = artist.rateId ?: -1
+//            rateId = artist.rateId ?: -1
             getViewToData(artist)
         }
     }

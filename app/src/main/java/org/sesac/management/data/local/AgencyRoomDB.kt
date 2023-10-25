@@ -16,7 +16,7 @@ import org.sesac.management.data.util.CustomConverter
  * @author kimwest00
  */
 @Database(
-    entities = [Artist::class, Company::class, Event::class, Notice::class, Rate::class, Manager::class],
+    entities = [Artist::class, Company::class, Event::class, Notice::class, Manager::class],
 //    entities = [Notice::class],
     version = 1
 )

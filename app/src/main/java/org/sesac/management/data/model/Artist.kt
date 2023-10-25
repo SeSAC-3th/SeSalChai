@@ -20,7 +20,7 @@ data class Artist(
     val memberInfo: String,
     val debutDay: Date,
     val type: ArtistType,
-    val rateId: Int?,
+    val rate: Rate?,
     val imgUri: Bitmap?,
 )
 
@@ -36,7 +36,7 @@ fun Artist.toModelArtist() = org.sesac.management.data.model.Artist(
     memberInfo = memberInfo,
     debutDay = debutDay,
     type = type,
-    rateId = rateId,
+    rate = null,
     imgUri = imgUri
 )
 
@@ -46,6 +46,6 @@ fun org.sesac.management.data.model.Artist.toLocalArtist() = Artist(
     memberInfo = memberInfo,
     debutDay = debutDay,
     type = type,
-    rateId = rateId,
+    rate = null,
     imgUri = imgUri
 )

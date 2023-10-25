@@ -27,6 +27,7 @@ class ArtistRepository(artistDAO: ArtistDAO) {
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
     private var getEventResult = MutableLiveData<List<Event>>()
+    private var getRateResult = MutableLiveData<MutableList<Rate>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
@@ -92,16 +93,29 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         }.await()
     }
 
+    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
+    suspend fun getAllRate():MutableLiveData<MutableList<Rate>>{
+        getRateResult = asyncGetAllRate()
+        return getRateResult
+    }
+    suspend fun asyncGetAllRate():MutableLiveData<MutableList<Rate>>{
+        val getDetailValue = coroutineIOScope.async(IO) {
+            return@async artistDAO.getAllArtist()
+        }.await()
+        getDetailValue.forEach { it->
+            it.rate?.let { it1 -> getRateResult.value?.add(it1) }
+        }
+        return CoroutineScope(Dispatchers.Main).async {
+            getRateResult
+        }.await()
+    }
 
     // Rate용
     fun insertRateWithArtist(rate: Rate, artistId: Int) {
         ioScope.launch {
-            artistDAO.insertRateWithArtist(rate, artistId)
+//            artistDAO.insertArtist(artist = )
         }
     }
-
-    fun getAllRate() = artistDAO.getAllRate()
-    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 
     suspend fun getArtistById(id: Int): Artist? {
         getDetail = asyncgetArtistById(id)

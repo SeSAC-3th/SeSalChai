@@ -1,11 +1,7 @@
 package org.sesac.management.view.event.enroll
 
-import android.content.ContentResolver
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
