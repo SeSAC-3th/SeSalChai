@@ -41,6 +41,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             artistAdapter = ArtistRecyclerAdapter(
                 artistList,
                 onClick = {
+                    viewModel.getArtistById(it)
                     childFragmentManager
                         .beginTransaction()
                         .add(binding.artistLayout.id, ArtistDetailFragment())

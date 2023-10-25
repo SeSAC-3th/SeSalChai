@@ -1,14 +1,18 @@
 package org.sesac.management.view.artist.detail
 
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
+import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
+    private val viewModel: ArtistViewModel by viewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
 
@@ -22,6 +26,7 @@ class ArtistDetailFragment :
     )
 
     override fun onViewCreated() {
+        observeData()
         with(binding) {
             layoutToolbar.setToolbarMenu("아티스트 상세", true)
 
@@ -53,6 +58,30 @@ class ArtistDetailFragment :
                 override fun onPageScrollStateChanged(state: Int) {}
             })
         }
+    }
+
+    private fun observeData() {
+        viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
+            getViewToData(artist)
+        }
+    }
+
+    private fun getViewToData(artist: Artist) {
+        val memberInfo = convertMemberInfo(artist.memberInfo)
+        with(binding) {
+            tvArtist.text = "${artist.name}\n${artist.debutDay}\n${memberInfo.size}"
+            ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+            memberInfo.forEach {
+                tvMember.text = "${binding.tvMember.text}\n$it"
+            }
+        }
+    }
+
+    private fun convertMemberInfo(memberInfo: String): List<String> {
+        val delimiter = "," // 구분자, 여기서는 쉼표
+        val stringList = memberInfo.split(delimiter)
+        val resultList = stringList.map { it.trim() }
+        return resultList
     }
 
     /* viewpager2 adapter 연결 및 margin 설정 */

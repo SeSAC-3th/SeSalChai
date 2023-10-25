@@ -17,6 +17,7 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
     private val repository = ArtistRepository(application)
 
     var getAllArtist = MutableLiveData<List<Artist>>()
+    var getArtistDetail = MutableLiveData<Artist>()
     var insertArtist = MutableLiveData<List<Long>>()
     private var _rateList = MutableLiveData<List<Rate>>()
     val rateList: LiveData<List<Rate>>
@@ -51,15 +52,21 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
         repository.getRate(rateId)
     }
 
-    fun getSearchResult(keyword: String){
+    fun getSearchResult(keyword: String) {
         CoroutineScope(Dispatchers.Main).launch {
             getAllArtist.value = repository.getArtistByName(keyword)
         }
     }
 
-    fun getArtistByType(type: ArtistType){
+    fun getArtistByType(type: ArtistType) {
         CoroutineScope(Dispatchers.Main).launch {
             getAllArtist.value = repository.getArtistByType(type)
+        }
+    }
+
+    fun getArtistById(id: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            getArtistDetail.value = repository.getArtistById(id)
         }
     }
 }

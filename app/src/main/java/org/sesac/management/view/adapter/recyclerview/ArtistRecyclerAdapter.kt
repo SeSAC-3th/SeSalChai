@@ -8,7 +8,7 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.ItemCommonItemBinding
 
 class ArtistRecyclerAdapter(
-    private val items: List<Artist>, private val onClick: () -> Unit
+    private val items: List<Artist>, private val onClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<ArtistRecyclerAdapter.ArtistInfo>() {
     inner class ArtistInfo(val itemBinding: ItemCommonItemBinding) :
@@ -16,7 +16,7 @@ class ArtistRecyclerAdapter(
         init {
             // 아이템 뷰 클릭 시 Fragment로 이동
             itemBinding.root.setOnClickListener {
-                onClick()
+                onClick(items[absoluteAdapterPosition].artistId)
             }
         }
     }

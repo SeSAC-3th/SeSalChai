@@ -21,6 +21,7 @@ class ArtistRepository(context: Context) {
     private var artistDAO: ArtistDAO
     private val coroutineIOScope = CoroutineScope(IO)
     private var getAllResult = MutableLiveData<List<Artist>>()
+    private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
@@ -86,8 +87,19 @@ class ArtistRepository(context: Context) {
     fun getAllRate() = artistDAO.getAllRate()
     fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 
-    fun getArtistDetailById(aritstId: Int): Artist {
-        return artistDAO.getSearchArtistById(aritstId)
+    suspend fun getArtistById(id: Int):Artist? {
+        getDetail = asyncgetArtistById(id)
+        return getDetail.value
+    }
+
+    private suspend fun asyncgetArtistById(id: Int): MutableLiveData<Artist> {
+        val getDetailValue = coroutineIOScope.async(IO) {
+            return@async artistDAO.getSearchArtistById(id)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getDetail.value = getDetailValue
+            getDetail
+        }.await()
     }
 
     fun getArtistByName(name: String): List<Artist> {
@@ -107,8 +119,8 @@ class ArtistRepository(context: Context) {
             getTypeResult
         }.await()
     }
-    suspend fun deleteArtist(aritstId: Int) {
-        var tmpArtist = getArtistDetailById(aritstId)
-        artistDAO.deleteArtistWithEvent(tmpArtist)
-    }
+//    suspend fun deleteArtist(aritstId: Int) {
+//        var tmpArtist = getArtistDetailById(aritstId)
+//        artistDAO.deleteArtistWithEvent(tmpArtist)
+//    }
 }
