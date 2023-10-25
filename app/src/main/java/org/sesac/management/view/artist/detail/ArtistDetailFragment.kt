@@ -1,5 +1,6 @@
 package org.sesac.management.view.artist.detail
 
+import android.os.Bundle
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.text.format.DateFormat
@@ -7,8 +8,6 @@ import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
@@ -25,6 +24,7 @@ class ArtistDetailFragment :
     private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
+    private var artistId = 0
 
     /* events 임시 데이터 */
     private var events: List<Event> = listOf()
@@ -35,17 +35,13 @@ class ArtistDetailFragment :
     }
 
     private fun observeData() {
-        Log.d(ARTIST, "2. getArtistById: ${viewModel.getArtistDetail}")
-
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            Log.d(ARTIST, "3.getArtistById: ${artist}")
+            artistId = artist.artistId
             getViewToData(artist)
         }
     }
 
     private fun getViewToData(artist: Artist) {
-        Log.d(ARTIST, "4. getArtistById: ${artist}")
-
         val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
             //아티스트 정보
@@ -69,9 +65,7 @@ class ArtistDetailFragment :
                 }
             }
             events = viewModel.getEventFromArtist.value ?: listOf()
-
         }
-
     }
 
     private fun convertMemberInfo(memberInfo: String): List<String> {
@@ -87,8 +81,12 @@ class ArtistDetailFragment :
 
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
+                val bundle = Bundle()
+                bundle.putInt("artistId", artistId)
                 val rateBottomSheet = RateBottomSheet()
-                activity?.let { rateBottomSheet.show(it.supportFragmentManager, "dialog") }
+                rateBottomSheet.arguments = bundle
+                childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
+                    .commitAllowingStateLoss()
             }
 
             /* viewPager2 */

@@ -94,8 +94,12 @@ class ArtistRepository(artistDAO: ArtistDAO) {
 
 
     // Rate용
-    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
-    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
+    fun insertRateWithArtist(rate: Rate, artistId: Int) {
+        ioScope.launch {
+            artistDAO.insertRateWithArtist(rate, artistId)
+        }
+    }
+
     fun getAllRate() = artistDAO.getAllRate()
     fun getRate(rateId: Int) = artistDAO.getRate(rateId)
 

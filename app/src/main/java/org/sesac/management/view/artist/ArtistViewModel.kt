@@ -43,12 +43,8 @@ class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
         }
     }
 
-    fun insertRate(rate: Rate) = viewModelScope.launch {
-        repository.insertRate(rate)
-    }
-
-    fun updateRate(rateId: Int, artistId: Int) = viewModelScope.launch {
-        repository.updateRate(rateId, artistId)
+    fun insertRateWithArtist(rate: Rate, artistId: Int) = viewModelScope.launch {
+        repository.insertRateWithArtist(rate, artistId)
     }
 
     fun getAllRate() = viewModelScope.launch {
