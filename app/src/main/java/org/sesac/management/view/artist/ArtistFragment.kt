@@ -46,7 +46,6 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 artistList,
                 onDelete = {
                     viewModel.deleteArtist(it)
-//                    viewModel.getAllArtist()
                 },
                 onClick = {
                     viewModel.getArtistById(it)

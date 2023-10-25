@@ -31,10 +31,10 @@ class ArtistDetailFragment :
 
     private fun observeData() {
         Log.d(ARTIST, "2. getArtistById: ${viewModel.getArtistDetail}")
-        viewModel.getArtistDetail.value?.let { getViewToData(it) }
 
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             Log.d(ARTIST, "getArtistById: ${artist}")
+            getViewToData(artist)
         }
     }
 
@@ -44,7 +44,7 @@ class ArtistDetailFragment :
         val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
             //아티스트 정보
-            tvArtist.text = "${artist.name}\n${artist.debutDay}\n${memberInfo.size}"
+            tvArtist.text = "아티스트 이름:${artist.name}\n${artist.debutDay.month}\n${memberInfo.size}"
 
             //이미지
             artist.imgUri?.let {
