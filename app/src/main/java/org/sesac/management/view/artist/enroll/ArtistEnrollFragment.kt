@@ -2,10 +2,7 @@ package org.sesac.management.view.artist.enroll
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,12 +27,8 @@ import java.util.Date
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
-    //    private var debutDate = emptyList<String>()
-//    private var groupName = ""
-//    private var memberListString = ""
-//    private lateinit var artistType: ArtistType
     private var insertValue = emptyList<Long>()
     val contentResolver: ContentResolver? = context?.contentResolver
     private var bitmap: Bitmap? = null
@@ -52,6 +45,7 @@ class ArtistEnrollFragment :
                 }
             }
         }
+
     override fun onViewCreated() {
         initView()
         initTextWatcher()
@@ -128,14 +122,6 @@ class ArtistEnrollFragment :
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
             layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_title), true)
-//            layoutInputDebut.tilLayout.hint = resources.getString(R.string.artist_debut_date)
-//            layoutInputDebut.tilLayout.helperText = resources.getString(R.string.artist_debut_helper)
-
-//            layoutInputName.tilLayout.hint = resources.getString(R.string.artist_name)
-//            layoutInputName.tilLayout.helperText = resources.getString(R.string.artist_name_helper)
-
-//            layoutInputMember.tilLayout.hint = resources.getString(R.string.artist_member)
-//            layoutInputMember.tilLayout.helperText = resources.getString(R.string.artist_member_helper)
             layoutInputDebut.tilLayout.initInFlow(
                 resources.getString(R.string.artist_debut_date),
                 resources.getString(R.string.artist_debut_helper)
@@ -172,13 +158,6 @@ class ArtistEnrollFragment :
 
     private fun initTextWatcher() {
         with(binding) {
-//            val textInputLayoutDebut = layoutInputDebut.tilLayout
-//            val textInputLayoutName = layoutInputName.tilLayout
-//            val textInputLayoutMember = layoutInputMember.tilLayout
-//            addTextInputLayoutWithTextWatcher(textInputLayoutDebut, debutTextWatcher)
-//            addTextInputLayoutWithTextWatcher(textInputLayoutName, nameTextWatcher)
-//            addTextInputLayoutWithTextWatcher(textInputLayoutMember, memberTextWatcher)
-
             layoutInputDebut.tilLayout.afterTextChangesInFlow(inputDebut)
             layoutInputDebut.tilLayout.focusChangesInFlow(hasFocus)
 
@@ -230,62 +209,4 @@ class ArtistEnrollFragment :
 
     private val hasFocus =
         { layout: TextInputLayout, hasFocus: Boolean -> if (hasFocus) layout.error = null }
-
-//    private val debutTextWatcher = object : TextWatcher {
-//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//
-//        override fun afterTextChanged(s: Editable?) {
-//            val inputText = s.toString()
-//            val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
-//            if (inputText.isEmpty()) {
-//                binding.layoutInputDebut.tilLayout.error =
-//                    resources.getString(R.string.artist_error_debut_empty)
-//            } else {
-//                if (inputText.matches(Regex(dateRegex))) {
-//                    binding.layoutInputDebut.tilLayout.error = null
-//                } else {
-//                    binding.layoutInputDebut.tilLayout.error =
-//                        resources.getString(R.string.artist_error_debut_not_valid)
-//                }
-//            }
-//        }
-//    }
-
-//    private val nameTextWatcher = object : TextWatcher {
-//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//
-//        override fun afterTextChanged(s: Editable?) {
-//            val inputText = s.toString()
-//            if (inputText.isEmpty()) {
-//                binding.layoutInputName.tilLayout.error =
-//                    resources.getString(R.string.artist_error_name_empty)
-//            }
-//        }
-//    }
-
-//    private val memberTextWatcher = object : TextWatcher {
-//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//
-//        override fun afterTextChanged(s: Editable?) {
-//            val inputText = s.toString()
-//            if (inputText.isEmpty()) {
-//                binding.layoutInputMember.tilLayout.error =
-//                    resources.getString(R.string.artist_error_member_empty)
-//            }
-//        }
-//    }
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//////         view가 destroy되면 TextWatcher와 TextInputLayout 연결 해제
-////        removeTextWatcherFromTextInputLayout(debutTextWatcher)
-////        removeTextWatcherFromTextInputLayout(nameTextWatcher)
-////        removeTextWatcherFromTextInputLayout(memberTextWatcher)
-//    }
 }
