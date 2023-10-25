@@ -114,8 +114,20 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         }.await()
     }
 
-    fun getArtistByName(name: String): List<Artist> {
-        return artistDAO.getSearchArtistByName(name)
+
+    suspend fun getArtistByName(keyword:String): List<Artist>? {
+        getAllResult = asyncgetArtistByName(keyword)
+        return getAllResult.value
+    }
+
+    private suspend fun asyncgetArtistByName(keyword:String): MutableLiveData<List<Artist>> {
+        val searchResult = coroutineIOScope.async(IO) {
+            return@async artistDAO.getSearchArtistByName(keyword)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getAllResult.value = searchResult
+            getAllResult
+        }.await()
     }
 
     suspend fun getArtistByType(type: ArtistType): List<Artist>? {

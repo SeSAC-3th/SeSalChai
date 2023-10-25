@@ -3,6 +3,8 @@ package org.sesac.management.view.artist
 import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -94,6 +96,10 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
 
+            with(tbArtist) {
+                etSearch.addTextChangedListener(debutTextWatcher)
+            }
+
             with(swipeRefresh) {
                 setSize(SwipeRefreshLayout.MEASURED_STATE_TOO_SMALL)
                 setColorSchemeColors(
@@ -115,16 +121,19 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         }
     }
 
-    private val searchArtist = { layout: TextInputEditText, event: AfterTextChangeEvent ->
-        viewModel.getSearchResult(layout.text.toString())
-    }
 
-    private fun getSearchList() {
-        with(binding.tbArtist) {
-            val searchTxt = etSearch.text.toString()
-            // TODO: add textchange 
-//            etSearch.addTextChangedListener(searchArtist)
-            viewModel.getSearchResult(searchTxt)
+    private val debutTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if(!s.toString().isEmpty()){
+                viewModel.getSearchResult(s.toString())
+            }else{
+                viewModel.getAllArtist()
+            }
         }
     }
+
 }
