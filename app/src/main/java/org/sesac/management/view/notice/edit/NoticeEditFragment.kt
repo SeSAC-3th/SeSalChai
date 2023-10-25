@@ -17,7 +17,6 @@ class NoticeEditFragment
     private lateinit var selectedNotice: Notice
 
     override fun onViewCreated() {
-        Log.e("aaaa", "${sharedViewModel.selectedNoticeId}")
         with(binding) {
             toolbarNoticeEdit.setToolbarMenu("공지사항 수정", true)
 

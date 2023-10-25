@@ -18,9 +18,14 @@
         android:id="@+id/tv_notice_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:textSize="30sp"
+        android:text="아아아아아"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_notice_detail" />
 
@@ -28,9 +33,9 @@
         android:id="@+id/tv_date_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="작성일시: "
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:text="작성일시 : "
+        app:layout_constraintStart_toStartOf="@id/tv_notice_title"
         app:layout_constraintTop_toBottomOf="@id/tv_notice_title" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -38,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2023.09.10"
+        android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@id/tv_date_header"
         app:layout_constraintTop_toTopOf="@id/tv_date_header" />
 
@@ -47,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/background_notice_content_r16"
         android:paddingHorizontal="20dp"
         android:text="Two-line snackbar with longer action and close affordanceTwo-line snackbar with longer action and close affordance"
         app:layout_constraintTop_toBottomOf="@id/tv_date_header" />

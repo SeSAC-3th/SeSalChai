@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.ItemNoticeBinding
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class NoticeRecyclerAdapter(
     private var items: List<Notice>,
@@ -17,9 +19,9 @@ class NoticeRecyclerAdapter(
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: Notice) {
             with(itemBinding) {
-                tvRank.text = item.noticeId.toString()
                 tvTitle.text = item.title
-                tvDate.text = item.createdAt.toString()
+                tvDate.text = SimpleDateFormat(
+                    "yyyy년 MMM dd일", Locale.KOREA).format(item.createdAt)
 
                 root.setOnAvoidDuplicateClickFlow {
                     onClick(item.noticeId)

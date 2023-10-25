@@ -8,66 +8,51 @@
         android:id="@+id/img_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_circle_24"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:src="@drawable/baseline_campaign_24"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_notice_date"
+        android:id="@+id/tv_notice_title"
         style="@style/TextBody1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
+        android:gravity="start"
         android:maxLines="1"
-        android:textSize="15sp"
-        android:text="@string/home_notice_date"
+        android:text="dasdfad"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/img_circle"
-        app:layout_constraintEnd_toStartOf="@id/guilde_date"
         app:layout_constraintStart_toEndOf="@id/img_circle"
         app:layout_constraintTop_toTopOf="@id/img_circle" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guilde_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.27" />
-
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_notice_title"
+        android:id="@+id/tv_notice_date"
         style="@style/TextBody1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:maxLines="1"
-        android:textSize="15sp"
-        android:text="@string/home_notice_title"
-        app:layout_constraintBottom_toBottomOf="@id/img_circle"
-        app:layout_constraintEnd_toStartOf="@id/guilde_title"
-        app:layout_constraintStart_toEndOf="@id/guilde_date"
-        app:layout_constraintTop_toTopOf="@id/img_circle" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guilde_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.48" />
+        android:text="2023-09-11"
+        android:gravity="end"
+        android:textSize="12sp"
+        android:layout_marginEnd="@dimen/horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="@id/img_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/img_circle" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_notice_content"
-        style="@style/TextBody1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:gravity="start"
-        android:maxLines="1"
-        android:textSize="15sp"
-        android:text="@string/home_notice_content"
-        app:layout_constraintBottom_toBottomOf="@id/img_circle"
-        app:layout_constraintStart_toEndOf="@id/guilde_title"
-        app:layout_constraintTop_toTopOf="@id/img_circle" />
+        android:maxLines="2"
+        android:text="dadfadfa"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_notice_title"
+        app:layout_constraintTop_toBottomOf="@id/img_circle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
