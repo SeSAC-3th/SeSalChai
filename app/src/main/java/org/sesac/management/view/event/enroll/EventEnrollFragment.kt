@@ -63,7 +63,7 @@ class EventEnrollFragment :
 
     override fun onViewCreated() {
 //        getArtistInfo()
-
+        initTextWatcher()
         with(binding) {
             tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
                 enrollEvent()
