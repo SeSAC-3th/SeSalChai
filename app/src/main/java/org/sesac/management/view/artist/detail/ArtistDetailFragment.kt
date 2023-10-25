@@ -1,15 +1,14 @@
 package org.sesac.management.view.artist.detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.model.toModelArtist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.util.common.ARTIST
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
@@ -19,7 +18,7 @@ class ArtistDetailFragment :
     private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
-    private var artistId = 0
+    private lateinit var artistBundle: org.sesac.management.data.model.Artist
 
     /* events 임시 데이터 */
     private var events: List<Event> = listOf()
@@ -31,7 +30,7 @@ class ArtistDetailFragment :
 
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            artistId = artist.artistId
+            artistBundle = artist.toModelArtist()
             getViewToData(artist)
         }
     }
@@ -69,7 +68,7 @@ class ArtistDetailFragment :
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
-                bundle.putInt("artistId", artistId)
+                bundle.putSerializable("artistBundle", artistBundle)
                 val rateBottomSheet = RateBottomSheet()
                 rateBottomSheet.arguments = bundle
                 childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
