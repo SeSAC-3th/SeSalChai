@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ import java.util.Date
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: ArtistViewModel by activityViewModels()
 
     private var insertValue = emptyList<Long>()
     val contentResolver: ContentResolver? = context?.contentResolver
