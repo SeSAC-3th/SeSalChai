@@ -25,6 +25,7 @@ class ArtistDetailFragment :
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
+    private var rateId = 0
 
     /* events 임시 데이터 */
     private var events: List<Event> = listOf()
@@ -37,6 +38,7 @@ class ArtistDetailFragment :
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             artistId = artist.artistId
+            rateId = artist.rateId ?: -1
             getViewToData(artist)
         }
     }
@@ -83,6 +85,7 @@ class ArtistDetailFragment :
             ivChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
                 bundle.putInt("artistId", artistId)
+                bundle.putInt("rateId", rateId)
                 val rateBottomSheet = RateBottomSheet()
                 rateBottomSheet.arguments = bundle
                 childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")

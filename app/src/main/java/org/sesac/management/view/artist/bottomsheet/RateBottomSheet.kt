@@ -1,9 +1,11 @@
 package org.sesac.management.view.artist.bottomsheet
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -27,20 +29,23 @@ class RateBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = arguments
-        with(binding) {
-            btnSave.setOnAvoidDuplicateClickFlow {
-                val earnings = sliderRevenue.value.toInt()
-                val popularity = sliderPopularity.value.toInt()
-                val dance = sliderDance.value.toInt()
-                val performance = sliderPerform.value.toInt()
-                val sing = sliderSing.value.toInt()
+        val artistId = arguments?.getInt("artistId") ?: -1
+        val rateId = arguments?.getInt("rateId") ?: -1
+        if (rateId != -1) {
+            showToastMessage(resources.getString(R.string.artist_enroll_rate))
+        } else {
+            with(binding) {
+                btnSave.setOnAvoidDuplicateClickFlow {
+                    val earnings = sliderRevenue.value.toInt()
+                    val popularity = sliderPopularity.value.toInt()
+                    val dance = sliderDance.value.toInt()
+                    val performance = sliderPerform.value.toInt()
+                    val sing = sliderSing.value.toInt()
 
-                if (bundle != null) {
-                    val data = bundle.getInt("artistId")
                     viewModel.insertRateWithArtist(
                         Rate(
                             earnings,
@@ -49,12 +54,9 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                             dance,
                             performance,
                             0
-                        ), data
+                        ), artistId
                     )
                     showToastMessage(resources.getString(R.string.artist_enroll_success))
-                    dismiss()
-                } else {
-                    showToastMessage(resources.getString(R.string.artist_enroll_fail))
                     dismiss()
                 }
             }
