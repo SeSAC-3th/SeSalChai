@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
+import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ARTIST
@@ -23,6 +24,7 @@ class ArtistRepository(context: Context) {
     private var getAllResult = MutableLiveData<List<Artist>>()
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
+    private var getEventResult = MutableLiveData<List<Event>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
@@ -133,6 +135,21 @@ class ArtistRepository(context: Context) {
         return CoroutineScope(Dispatchers.Main).async {
             deleteResult.value = deleteReturn
             deleteResult
+        }.await()
+    }
+
+    suspend fun getEventFromArtist(artistId: Int):MutableLiveData<List<Event>>{
+        getEventResult = asyncgetEventFromArtist(artistId)
+        return getEventResult
+    }
+
+    private suspend fun asyncgetEventFromArtist(artistId: Int): MutableLiveData<List<Event>> {
+        val eventReturn = coroutineIOScope.async(IO) {
+            return@async artistDAO.getEventsFromArtist(artistId)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getEventResult.value = eventReturn
+            getEventResult
         }.await()
     }
 }

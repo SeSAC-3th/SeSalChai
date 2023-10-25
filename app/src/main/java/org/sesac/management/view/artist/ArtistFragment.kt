@@ -6,14 +6,18 @@ import android.os.Looper
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
+import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
+import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
     private val viewModel: ArtistViewModel by viewModels()
@@ -46,6 +50,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 },
                 onClick = {
                     viewModel.getArtistById(it)
+                    viewModel.getEventFromArtistId(it)
                     childFragmentManager
                         .beginTransaction()
                         .add(binding.artistLayout.id, ArtistDetailFragment())
@@ -107,6 +112,19 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                     }, 1000L)
                 }
             }
+        }
+    }
+
+    private val searchArtist = { layout: TextInputEditText, event: AfterTextChangeEvent ->
+        viewModel.getSearchResult(layout.text.toString())
+    }
+
+    private fun getSearchList() {
+        with(binding.tbArtist) {
+            val searchTxt = etSearch.text.toString()
+            // TODO: add textchange 
+//            etSearch.addTextChangedListener(searchArtist)
+            viewModel.getSearchResult(searchTxt)
         }
     }
 }

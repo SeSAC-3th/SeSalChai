@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.util.common.ARTIST
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
@@ -16,18 +17,12 @@ import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
 
     /* events 임시 데이터 */
-    private val events = listOf(
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background
-    )
+    private var events: List<Event> = listOf()
 
     override fun onViewCreated() {
         observeData()
@@ -48,11 +43,20 @@ class ArtistDetailFragment :
 
         val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
+            //아티스트 정보
             tvArtist.text = "${artist.name}\n${artist.debutDay}\n${memberInfo.size}"
-            ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+
+            //이미지
+            artist.imgUri?.let {
+                ivArtist.setImageBitmap(it)
+            } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+
+            //멤버 정보
             memberInfo.forEach {
                 tvMember.text = "${binding.tvMember.text}\n$it"
             }
+            events = viewModel.getEventFromArtist.value ?: listOf()
+
         }
 
     }
@@ -63,7 +67,8 @@ class ArtistDetailFragment :
         val resultList = stringList.map { it.trim() }
         return resultList
     }
-    private fun initView(){
+
+    private fun initView() {
         with(binding) {
             layoutToolbar.setToolbarMenu("아티스트 상세", true)
 
@@ -96,6 +101,7 @@ class ArtistDetailFragment :
             })
         }
     }
+
     /* viewpager2 adapter 연결 및 margin 설정 */
     private fun initialiseViewPager() = viewPager.apply {
         /* 여백, 너비에 대한 정의 */
