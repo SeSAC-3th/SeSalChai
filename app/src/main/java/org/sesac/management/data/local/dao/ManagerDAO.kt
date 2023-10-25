@@ -13,5 +13,4 @@ interface ManagerDAO {
      */
     @Insert
     fun insertManager(vararg manager: Manager): List<Long>
-
 }
