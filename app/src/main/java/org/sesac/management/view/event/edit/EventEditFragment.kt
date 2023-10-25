@@ -20,10 +20,8 @@ class EventEditFragment :
             }
             with(ivAdd) {
                 setOnAvoidDuplicateClick {
-                    eventEditLayout.changeFragment(
-                        this@EventEditFragment,
-                        ArtistAddDialogFragment()
-                    )
+                    val addDialog= ArtistAddDialogFragment()
+                    activity?.let { addDialog.show(childFragmentManager, "artistDialogFragment") }
                 }
             }
         }
