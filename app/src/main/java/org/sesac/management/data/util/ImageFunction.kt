@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -18,6 +19,7 @@ import org.sesac.management.data.util.ImagePermission.FLAG_PERM_STORAGE
 import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 import org.sesac.management.view.MainActivity
+import java.io.IOException
 
 object ImagePermission {
     //권한 가져오기
@@ -46,20 +48,12 @@ fun checkPermission(permissions: Array<out String>, flag: Int,activityCompat: Ma
     }
     return true
 }
-fun converUriToBitmap(uri: Uri,contentResolver:ContentResolver): Bitmap?{
-    var bitmap:Bitmap? = null
-    if (Build.VERSION.SDK_INT < 28) {
-        bitmap = MediaStore.Images.Media
-            .getBitmap(contentResolver, uri)
-    } else {
-        val decode = contentResolver?.let { it1 ->
-            ImageDecoder.createSource(
-                it1,
-                uri
-            )
-        }
-        bitmap = decode?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
+fun convertUriToBitmap(uri: Uri, context: Context): Bitmap? {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        BitmapFactory.decodeStream(inputStream)
+    } catch (e: IOException) {
+        e.printStackTrace()
+        null
     }
-    Log.d(ARTIST, "onViewCreated: $bitmap")
-    return bitmap
 }

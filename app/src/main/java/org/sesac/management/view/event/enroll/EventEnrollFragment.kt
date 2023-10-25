@@ -6,10 +6,13 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEnrollBinding
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
@@ -19,23 +22,16 @@ class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {
     val viewModel: EventViewModel by viewModels({ requireParentFragment() })
     /* 선택한 이미지 절대경로 가져오기 */
-    val contentResolver: ContentResolver? = context?.contentResolver
+    //* bitmap을 insert할때 넘겨주면 됩니다
     private var bitmap: Bitmap? = null
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
+                Log.d(ARTIST, "uri: $uri")
                 binding.ivSchedule.setImageURI(uri)
-                if (Build.VERSION.SDK_INT < 28) {
-                    bitmap = MediaStore.Images.Media
-                        .getBitmap(contentResolver, uri)
-                } else {
-                    val decode = this.contentResolver?.let { it1 ->
-                        ImageDecoder.createSource(
-                            it1,
-                            uri
-                        )
-                    }
-                    bitmap = decode?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
+                context?.let { it1 ->
+                    var tmpBitmap = convertUriToBitmap(uri, it1)
+                    tmpBitmap?.let { it2 -> bitmap = it2 }
                 }
             }
         }
