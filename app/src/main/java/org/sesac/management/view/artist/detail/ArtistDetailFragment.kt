@@ -1,33 +1,76 @@
 package org.sesac.management.view.artist.detail
 
+import android.util.Log
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
+import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
-import org.sesac.management.view.artist.edit.ArtistEditFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
+    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
 
     /* events 임시 데이터 */
-    private val events = listOf(
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background,
-        R.drawable.ic_launcher_background
-    )
+    private var events: List<Event> = listOf()
 
     override fun onViewCreated() {
+        observeData()
+        initView()
+    }
+
+    private fun observeData() {
+        Log.d(ARTIST, "2. getArtistById: ${viewModel.getArtistDetail}")
+
+        viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
+            Log.d(ARTIST, "getArtistById: ${artist}")
+            getViewToData(artist)
+        }
+    }
+
+    private fun getViewToData(artist: Artist) {
+        Log.d(ARTIST, "3. getArtistById: ${artist}")
+
+        val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
-                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            //아티스트 정보
+            tvArtist.text = "아티스트 이름:${artist.name}\n${artist.debutDay.month}\n${memberInfo.size}"
+
+            //이미지
+            artist.imgUri?.let {
+                ivArtist.setImageBitmap(it)
+            } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+
+            //멤버 정보
+            memberInfo.forEach {
+                tvMember.text = "${binding.tvMember.text}\n$it"
             }
+            events = viewModel.getEventFromArtist.value ?: listOf()
+
+        }
+
+    }
+
+    private fun convertMemberInfo(memberInfo: String): List<String> {
+        val delimiter = "," // 구분자, 여기서는 쉼표
+        val stringList = memberInfo.split(delimiter)
+        val resultList = stringList.map { it.trim() }
+        return resultList
+    }
+
+    private fun initView() {
+        with(binding) {
+            layoutToolbar.setToolbarMenu("아티스트 상세", true)
 
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
