@@ -1,6 +1,14 @@
 package org.sesac.management.view.artist.enroll
 
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -8,7 +16,9 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
+import org.sesac.management.data.util.converUriToBitmap
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
@@ -27,7 +37,21 @@ class ArtistEnrollFragment :
 //    private var memberListString = ""
 //    private lateinit var artistType: ArtistType
     private var insertValue = emptyList<Long>()
-
+    val contentResolver: ContentResolver? = context?.contentResolver
+    private var bitmap: Bitmap? = null
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                Log.d(ARTIST, "uri: $uri")
+                binding.ivArtist.setImageURI(uri)
+                contentResolver?.let { it1 ->
+                    Log.d(ARTIST, "contentResolver: $contentResolver")
+                    converUriToBitmap(uri, it1).let {
+                        bitmap = it
+                    }
+                }
+            }
+        }
     override fun onViewCreated() {
         initView()
         initTextWatcher()
@@ -56,7 +80,8 @@ class ArtistEnrollFragment :
                         Date(),
                         artistType,
                         null,
-                        "",
+//                        bitmap,
+                        null,
                         0
                     )
                 )
@@ -123,7 +148,10 @@ class ArtistEnrollFragment :
                 resources.getString(R.string.artist_member),
                 resources.getString(R.string.artist_member_helper)
             )
-
+            /* image 설정 */
+            ivArtist.setOnClickListener {
+                getContent.launch("image/*")
+            }
             spinnerArtistType.adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.artist_types,

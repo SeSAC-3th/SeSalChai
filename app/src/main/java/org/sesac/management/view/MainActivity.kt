@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var currentFragmentTag: String // 현재 보고 있는 fragment의 tag
-
+//    val contentResolver = this.getContentResolver()
     // 화면을 회전했을 때 지금까지 보고 있던 fragment의 tag로 해당 fragment를 찾아서 보여준다.
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
