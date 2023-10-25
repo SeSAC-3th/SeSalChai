@@ -17,6 +17,7 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.extension.setOnFinishInputFlow
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
@@ -97,7 +98,13 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             }
 
             with(tbArtist) {
-                etSearch.addTextChangedListener(debutTextWatcher)
+                etSearch.setOnFinishInputFlow {
+                    if(it.isNotEmpty()){
+                        viewModel.getSearchResult(it)
+                    }else{
+                        viewModel.getAllArtist()
+                    }
+                }
             }
 
             with(swipeRefresh) {
