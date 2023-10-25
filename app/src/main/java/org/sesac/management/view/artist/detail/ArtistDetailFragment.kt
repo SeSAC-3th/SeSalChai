@@ -1,7 +1,11 @@
 package org.sesac.management.view.artist.detail
 
 import android.os.Bundle
+import android.icu.text.SimpleDateFormat
+import android.os.Build
+import android.text.format.DateFormat
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
@@ -10,13 +14,14 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.util.common.ARTIST
+import org.sesac.management.view.MainActivity
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
@@ -40,7 +45,10 @@ class ArtistDetailFragment :
         val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
             //아티스트 정보
-            tvArtist.text = "아티스트 이름:${artist.name}\n${artist.debutDay.month}\n${memberInfo.size}"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tvArtist.text =
+                    "이름:${artist.name}\n 데뷔 일: ${SimpleDateFormat("yyyy-MM-dd").format(artist.debutDay)}\n 인원 수:${memberInfo.size}명"
+            }
 
             //이미지
             artist.imgUri?.let {
@@ -48,8 +56,13 @@ class ArtistDetailFragment :
             } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
 
             //멤버 정보
+            tvMember.text = ""
             memberInfo.forEach {
-                tvMember.text = "${binding.tvMember.text}\n$it"
+                if(tvMember.text.isNotEmpty()){
+                    tvMember.text = "${binding.tvMember.text}\n$it"
+                }else{
+                    tvMember.text = it
+                }
             }
             events = viewModel.getEventFromArtist.value ?: listOf()
         }

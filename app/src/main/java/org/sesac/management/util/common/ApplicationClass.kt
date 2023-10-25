@@ -2,6 +2,7 @@ package org.sesac.management.util.common
 
 import android.app.Application
 import org.sesac.management.data.local.AgencyRoomDB
+import org.sesac.management.repository.ArtistRepository
 import org.sesac.management.repository.EventRepository
 import org.sesac.management.repository.NoticeRepository
 
@@ -17,6 +18,11 @@ class ApplicationClass : Application() {
         EventRepository(
             eventDAO = database.generateEventDAO(),
             manageDAO = database.generateManagerDAO(),
+            artistDAO = database.generateArtistDAO()
+        )
+    }
+    val artistRepository by lazy {
+        ArtistRepository(
             artistDAO = database.generateArtistDAO()
         )
     }

@@ -3,6 +3,9 @@ package org.sesac.management.view.artist
 import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,13 +17,14 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.extension.setOnFinishInputFlow
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistAdapter: ArtistRecyclerAdapter
 
     override fun onViewCreated() {
@@ -93,6 +97,16 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 artistLayout.changeFragment(this@ArtistFragment, ArtistEnrollFragment())
             }
 
+            with(tbArtist) {
+                etSearch.setOnFinishInputFlow {
+                    if(it.isNotEmpty()){
+                        viewModel.getSearchResult(it)
+                    }else{
+                        viewModel.getAllArtist()
+                    }
+                }
+            }
+
             with(swipeRefresh) {
                 setSize(SwipeRefreshLayout.MEASURED_STATE_TOO_SMALL)
                 setColorSchemeColors(
@@ -114,16 +128,19 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         }
     }
 
-    private val searchArtist = { layout: TextInputEditText, event: AfterTextChangeEvent ->
-        viewModel.getSearchResult(layout.text.toString())
-    }
 
-    private fun getSearchList() {
-        with(binding.tbArtist) {
-            val searchTxt = etSearch.text.toString()
-            // TODO: add textchange 
-//            etSearch.addTextChangedListener(searchArtist)
-            viewModel.getSearchResult(searchTxt)
+    private val debutTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if(!s.toString().isEmpty()){
+                viewModel.getSearchResult(s.toString())
+            }else{
+                viewModel.getAllArtist()
+            }
         }
     }
+
 }
