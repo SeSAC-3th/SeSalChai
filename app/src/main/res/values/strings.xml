@@ -50,6 +50,26 @@
     <!-- EventDialog -->
     <string name="event_select_artist">참여 아티스트 선택</string>
 
+    <!-- EventEnroll -->
+    <string name="event_title">행사 등록</string>
+    <string name="event_date">행사일</string>
+    <string name="event_date_helper">0000-00-00 형식으로 입력해주세요.</string>
+    <string name="event_name">행사명</string>
+    <string name="event_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
+    <string name="event_place">행사장소</string>
+    <string name="event_description">참여 아티스트 +</string>
+
+    <!-- Event Enroll InputLayout -->
+    <string name="event_error_date_empty">행사일을 입력해주세요.</string>
+    <string name="event_error_date_not_valid">행사일 형식이 맞지 않습니다.</string>
+
+    <string name="event_error_name_empty">행사명을 입력해주세요.</string>
+    <string name="event_error_place_empty">행사장소를 입력해주세요.</string>
+
+    <string name="event_enroll_error">행사 정보를 모두 입력해주세요.</string>
+    <string name="event_enroll_success">등록되었습니다.</string>
+
+    <!-- Artist Enroll InputLayout -->
     <string name="artist_error_debut_empty">데뷔일을 입력해주세요.</string>
     <string name="artist_error_debut_not_valid">데뷔일 형식이 맞지 않습니다.</string>
 

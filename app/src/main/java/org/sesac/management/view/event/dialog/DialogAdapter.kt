@@ -1,5 +1,6 @@
 package org.sesac.management.view.event.dialog
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import org.sesac.management.data.model.DialogItem
 import org.sesac.management.databinding.ItemEventEnrollAddArtistBinding
 
 class DialogAdapter(private val itemList: List<DialogItem>) : RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
+    val TAG: String = "로그"
     class DialogViewHolder(val binding: ItemEventEnrollAddArtistBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
@@ -16,6 +18,7 @@ class DialogAdapter(private val itemList: List<DialogItem>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: DialogViewHolder, position: Int) {
         val item = itemList[position]
+        Log.d(TAG, " RecyclerView item : $item")
         val binding = holder.binding
 
         with(binding) {
