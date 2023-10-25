@@ -45,17 +45,17 @@ class ArtistEditFragment :
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             ioScope.launch {
-                viewModel.insertArtist(
-                    Artist(
-                        groupName,
-                        memberListString,
-                        Date(),
-                        artistType,
-                        null,
-                        "",
-                        0
-                    )
-                )
+//                viewModel.insertArtist(
+//                    Artist(
+//                        groupName,
+//                        memberListString,
+//                        Date(),
+//                        artistType,
+//                        null,
+//                        "Url",
+//                        0
+//                    )
+//                )
             }
             showToastMessage(resources.getString(R.string.artist_enroll_success))
             // DB에 저장하고 popBackStack()
