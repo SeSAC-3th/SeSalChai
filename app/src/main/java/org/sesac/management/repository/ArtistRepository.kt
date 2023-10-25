@@ -19,14 +19,17 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
     private var getEventResult = MutableLiveData<List<Event>>()
+    private var getRateResult = MutableLiveData<MutableList<Rate>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
-
     companion object {
         @Volatile
         private var instance: ArtistRepository? = null
 
+    companion object {
+        @Volatile
+        private var instance: ArtistRepository? = null
         fun getInstance(artistDAO: ArtistDAO) =
             instance ?: synchronized(this) {
                 instance ?: ArtistRepository(artistDAO).also { instance = it }

@@ -37,7 +37,6 @@ class DialogAdapter(private val itemList: List<DialogItem>) :
             }
         }
     }
-
     override fun getItemCount() = itemList.size
 }
 

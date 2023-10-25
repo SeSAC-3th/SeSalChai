@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import org.sesac.management.R
 import org.sesac.management.databinding.ActivityMainBinding
 import org.sesac.management.util.common.ARTIST
@@ -25,6 +26,10 @@ import org.sesac.management.view.rate.RateFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+     val artistViewModel: ArtistViewModel by viewModels() {
+         ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
+     }
+
 
     val artistViewModel: ArtistViewModel by viewModels() {
         ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)

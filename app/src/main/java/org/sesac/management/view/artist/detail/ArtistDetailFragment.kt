@@ -63,9 +63,7 @@ class ArtistDetailFragment :
                 }
             }
             events = viewModel.getEventFromArtist.value ?: listOf()
-
         }
-
     }
 
     private fun convertMemberInfo(memberInfo: String): List<String> {

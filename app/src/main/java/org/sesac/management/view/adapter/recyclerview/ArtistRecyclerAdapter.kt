@@ -1,7 +1,10 @@
 package org.sesac.management.view.adapter.recyclerview
 
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.local.Artist

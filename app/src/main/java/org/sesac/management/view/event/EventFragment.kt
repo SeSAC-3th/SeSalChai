@@ -1,5 +1,6 @@
 package org.sesac.management.view.event
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -59,7 +60,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
     }
-
     private fun makeList(eventList: List<Event>) {
         /* RecyclerView */
         with(binding.rvEvent) {

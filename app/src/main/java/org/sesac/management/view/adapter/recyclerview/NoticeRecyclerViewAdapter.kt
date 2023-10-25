@@ -24,6 +24,7 @@ class NoticeRecyclerAdapter(
                     "yyyy년 MMM dd일", Locale.KOREA
                 ).format(item.createdAt)
 
+
                 root.setOnAvoidDuplicateClickFlow {
                     onClick(item.noticeId)
                 }

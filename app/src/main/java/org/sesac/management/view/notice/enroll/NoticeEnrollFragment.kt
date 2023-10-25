@@ -6,7 +6,10 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeEnrollBinding
 import org.sesac.management.view.notice.NoticeViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.Date
+import java.util.Locale
 
 class NoticeEnrollFragment() :
     BaseFragment<FragmentNoticeEnrollBinding>(FragmentNoticeEnrollBinding::inflate) {

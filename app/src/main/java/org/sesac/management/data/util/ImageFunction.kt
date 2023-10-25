@@ -46,7 +46,6 @@ fun checkPermission(
     }
     return true
 }
-
 fun convertUriToBitmap(uri: Uri, context: Context): Bitmap? {
     return try {
         val inputStream = context.contentResolver.openInputStream(uri)
