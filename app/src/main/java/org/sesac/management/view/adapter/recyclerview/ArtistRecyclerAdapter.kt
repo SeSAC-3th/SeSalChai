@@ -9,7 +9,7 @@ import org.sesac.management.databinding.ItemCommonItemBinding
 
 class ArtistRecyclerAdapter(
     private val items: List<Artist>, private val onClick: (Int) -> Unit,
-    private val onDelete: (Artist) -> Unit
+    private val onDelete: (Artist) -> Unit,
 ) :
     RecyclerView.Adapter<ArtistRecyclerAdapter.ArtistInfo>() {
     inner class ArtistInfo(val itemBinding: ItemCommonItemBinding) :
@@ -19,7 +19,7 @@ class ArtistRecyclerAdapter(
             itemBinding.root.setOnClickListener {
                 onClick(items[absoluteAdapterPosition].artistId)
             }
-            itemBinding.btnDelete.setOnClickListener{
+            itemBinding.btnDelete.setOnClickListener {
                 onDelete(items[absoluteAdapterPosition])
             }
         }
@@ -27,7 +27,7 @@ class ArtistRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ArtistInfo {
         val binding =
             ItemCommonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,7 +37,11 @@ class ArtistRecyclerAdapter(
     override fun onBindViewHolder(holder: ArtistInfo, position: Int) {
         val agencyInfo = items[position]
         with(holder.itemBinding) {
-            ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            agencyInfo.imgUri?.let {
+                ivThumbnail.setImageBitmap(it)
+            } ?: {
+                ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            }
             tvTitle.text = agencyInfo.name
             tvContents.text = agencyInfo.type.toString()
 

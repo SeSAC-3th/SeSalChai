@@ -6,22 +6,17 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
-import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnFinishInputFlow
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
-import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()
@@ -99,9 +94,9 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
 
             with(tbArtist) {
                 etSearch.setOnFinishInputFlow {
-                    if(it.isNotEmpty()){
+                    if (it.isNotEmpty()) {
                         viewModel.getSearchResult(it)
-                    }else{
+                    } else {
                         viewModel.getAllArtist()
                     }
                 }
@@ -135,9 +130,9 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            if(!s.toString().isEmpty()){
+            if (!s.toString().isEmpty()) {
                 viewModel.getSearchResult(s.toString())
-            }else{
+            } else {
                 viewModel.getAllArtist()
             }
         }

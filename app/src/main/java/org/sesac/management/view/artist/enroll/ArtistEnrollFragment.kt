@@ -1,20 +1,18 @@
 package org.sesac.management.view.artist.enroll
 
-import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
-import org.sesac.management.data.util.converUriToBitmap
+import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
 import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
@@ -31,18 +29,15 @@ class ArtistEnrollFragment :
     private val viewModel: ArtistViewModel by activityViewModels()
 
     private var insertValue = emptyList<Long>()
-    val contentResolver: ContentResolver? = context?.contentResolver
     private var bitmap: Bitmap? = null
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 Log.d(ARTIST, "uri: $uri")
                 binding.ivArtist.setImageURI(uri)
-                contentResolver?.let { it1 ->
-                    Log.d(ARTIST, "contentResolver: $contentResolver")
-                    converUriToBitmap(uri, it1).let {
-                        bitmap = it
-                    }
+                context?.let { it1 ->
+                    var tmpBitmap = convertUriToBitmap(uri, it1)
+                    tmpBitmap?.let { it2 -> bitmap = it2 }
                 }
             }
         }
@@ -75,8 +70,7 @@ class ArtistEnrollFragment :
                         Date(),
                         artistType,
                         null,
-//                        bitmap,
-                        null,
+                        bitmap,
                         0
                     )
                 )

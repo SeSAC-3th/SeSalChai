@@ -12,7 +12,7 @@ class ApplicationClass : Application() {
         fun getApplicationContext(): ApplicationClass = appInstance
     }
     val artistRepository by lazy {
-        ArtistRepository(
+        ArtistRepository.getInstance(
             artistDAO = database.generateArtistDAO()
         )
     }
@@ -21,7 +21,7 @@ class ApplicationClass : Application() {
 
 
     val eventRepository by lazy {
-        EventRepository(
+        EventRepository.getInstance(
             eventDAO = database.generateEventDAO(),
             manageDAO = database.generateManagerDAO(),
             artistDAO = database.generateArtistDAO()

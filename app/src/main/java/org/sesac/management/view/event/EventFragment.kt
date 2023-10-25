@@ -1,6 +1,5 @@
 package org.sesac.management.view.event
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,9 +31,8 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getSearch()
-                viewModel.event.collect {event ->
+                viewModel.event.collect { event ->
                     makeList(event)
-                    Log.d(TAG, "EventFragment: $event")
                 }
             }
         }
@@ -52,15 +50,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
 
-
-//        lifecycleScope.launch {
-//            viewModel.insertEvent(
-//                Event(
-//                    name = "새싹카운트다운", place = "상암 Mnet", date = Date(), description = "새싹 3기",
-//                    imgUri = "이미지 URI"
-//                )
-//            )
-
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {
@@ -70,6 +59,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
     }
+
     private fun makeList(eventList: List<Event>) {
         /* RecyclerView */
         with(binding.rvEvent) {

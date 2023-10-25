@@ -3,7 +3,6 @@ package org.sesac.management.view.home
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
@@ -32,7 +31,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         LinearLayoutManager.VERTICAL,
                         false
                     )
-                addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
+                addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                    )
+                )
                 observeSetUp()
 
             }

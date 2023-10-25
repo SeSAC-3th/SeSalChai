@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import org.sesac.management.R
 import org.sesac.management.databinding.ActivityMainBinding
 import org.sesac.management.util.common.ARTIST
@@ -26,14 +25,11 @@ import org.sesac.management.view.rate.RateFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-     val artistViewModel: ArtistViewModel by viewModels() {
-         ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
-     }
-
+    val artistViewModel: ArtistViewModel by viewModels() {
+        ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
+    }
 
     private lateinit var currentFragmentTag: String // 현재 보고 있는 fragment의 tag
-
-    //    val contentResolver = this.getContentResolver()
 
     // 화면을 회전했을 때 지금까지 보고 있던 fragment의 tag로 해당 fragment를 찾아서 보여준다.
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
