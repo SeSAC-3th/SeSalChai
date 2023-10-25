@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
             currentFragmentTag = HOME // 현재 보고 있는 fragmet의 Tag
         }
-
         clickBottomNavigationView()
     }
 
