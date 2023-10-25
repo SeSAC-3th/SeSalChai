@@ -24,7 +24,7 @@ interface NoticeDAO {
     @Query("SELECT * FROM notice")
     fun getAllNotice(): LiveData<List<Notice>>
 
-    @Query("""SELECT * FROM notice ORDER BY created_at ASC LIMIT 5 """)
+    @Query("""SELECT * FROM notice ORDER BY created_at DESC LIMIT 10 """)
     fun getHomeNotice(): LiveData<List<Notice>>
 
     /**
@@ -47,6 +47,6 @@ interface NoticeDAO {
      * 공지사항 삭제
      * @param noticeId : 삭제 할 공지 사항
      */
-    @Delete
-    fun deleteNotice(notice: Notice)
+    @Query("DELETE FROM notice WHERE notice_id= :noticeId")
+    fun deleteNotice(noticeId: Int)
 }

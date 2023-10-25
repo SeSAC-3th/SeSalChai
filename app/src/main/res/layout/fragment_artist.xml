@@ -72,19 +72,21 @@
             app:chipStrokeWidth="2dp" />
     </com.google.android.material.chip.ChipGroup>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chip_group">
+
         <!-- artist recyclerview -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_artist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_artist_enroll"
@@ -98,5 +100,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_24"
         app:tint="@color/white" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

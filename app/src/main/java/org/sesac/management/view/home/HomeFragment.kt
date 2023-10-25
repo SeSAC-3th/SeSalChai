@@ -12,6 +12,7 @@ import org.sesac.management.view.notice.NoticeFragment
 import org.sesac.management.view.notice.NoticeViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+
     private val noticeViewModel: NoticeViewModel by viewModels()
     private var noticeAdapter = HomeNoticeAdapter(emptyList())
     override fun onViewCreated() {
@@ -24,13 +25,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             includedLayoutHomeNotice.rvNotice.apply {
                 layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    LinearLayoutManager(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
                 observeSetUp()
             }
         }
     }
 
-    fun observeSetUp() {
+    private fun observeSetUp() {
         noticeViewModel.getHomeNotice()?.observe(
             viewLifecycleOwner
         ) { notices ->
@@ -44,5 +49,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         noticeAdapter = HomeNoticeAdapter(notices)
         binding.includedLayoutHomeNotice.rvNotice.adapter = noticeAdapter
     }
-
 }

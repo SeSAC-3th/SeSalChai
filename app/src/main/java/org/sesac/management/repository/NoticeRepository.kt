@@ -33,9 +33,9 @@ class NoticeRepository(application: Application) {
         }
     }
 
-    fun deleteNotice(notice: Notice) {
+    fun deleteNotice(noticeId: Int) {
         ioScope.launch {
-            noticeDao.deleteNotice(notice)
+            noticeDao.deleteNotice(noticeId)
         }
     }
 
