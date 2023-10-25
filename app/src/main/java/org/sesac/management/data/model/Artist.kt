@@ -1,8 +1,17 @@
 package org.sesac.management.data.model
 
-import org.sesac.management.R
+import android.graphics.Bitmap
+import org.sesac.management.data.local.Artist
+import org.sesac.management.data.local.ArtistType
 import java.util.Date
 
+enum class ArtistType {
+    SINGER,
+    ACTOR,
+    COMEDIAN,
+    MODEL,
+    NULL
+}
 
 data class Artist(
     // primary key
@@ -11,8 +20,8 @@ data class Artist(
     val memberInfo: String,
     val debutDay: Date,
     val type: ArtistType,
-    val rateId: Int,
-    val imgUri : String,
+    val rateId: Int?,
+    val imgUri: Bitmap?,
 )
 
 data class ArtistThumbnail(
@@ -20,20 +29,23 @@ data class ArtistThumbnail(
     val title: String,
     val content: String,
 )
-val artistList = listOf(
-    ArtistThumbnail(
-        thumbnail =  R.drawable.twice_chaeyeong,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
-    ArtistThumbnail(
-        thumbnail =  R.drawable.girls_generation_hyoyeon,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
-    ArtistThumbnail(
-        thumbnail =  R.drawable.girls_generation_all,
-        title = "아이유",
-        content = "솔로 가수"
-    ),
+
+fun Artist.toModelArtist() = org.sesac.management.data.model.Artist(
+    artistId = artistId,
+    name = name,
+    memberInfo = memberInfo,
+    debutDay = debutDay,
+    type = type,
+    rateId = rateId,
+    imgUri = imgUri
+)
+
+fun org.sesac.management.data.model.Artist.toLocalArtist() = Artist(
+    artistId = artistId,
+    name = name,
+    memberInfo = memberInfo,
+    debutDay = debutDay,
+    type = type,
+    rateId = rateId,
+    imgUri = imgUri
 )

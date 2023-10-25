@@ -2,28 +2,34 @@ package org.sesac.management.view
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.widget.Toast
-import android.os.PersistableBundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import org.sesac.management.R
 import org.sesac.management.databinding.ActivityMainBinding
 import org.sesac.management.util.common.ARTIST
+import org.sesac.management.util.common.ApplicationClass
 import org.sesac.management.util.common.CUURRENTFRAGMENTTAG
 import org.sesac.management.util.common.EVENT
 import org.sesac.management.util.common.HOME
 import org.sesac.management.util.common.RATE
 import org.sesac.management.view.artist.ArtistFragment
+import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.home.HomeFragment
 import org.sesac.management.view.rate.RateFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+     val artistViewModel: ArtistViewModel by viewModels() {
+         ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
+     }
+
 
     private lateinit var currentFragmentTag: String // 현재 보고 있는 fragment의 tag
 
@@ -40,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+        artistViewModel.getAllArtist
         if (savedInstanceState == null) { // 화면을 회전했을 경우 savedInstatnceState가 null이 아니다. 즉 내부 코드는 한번만 실행된다.
             supportFragmentManager
                 .beginTransaction()

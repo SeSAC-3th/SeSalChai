@@ -29,20 +29,35 @@
         android:layout_marginTop="@dimen/vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tb_artist">
+        app:layout_constraintTop_toBottomOf="@id/tb_artist"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_all"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체"
+            android:checked="true"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
+            app:chipStrokeColor="@color/primary1"
+            app:chipStrokeWidth="2dp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_singer"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가수"
-            android:textColor="@color/primary1"
-            app:chipBackgroundColor="@color/primary4"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/primary5"
             app:chipStrokeColor="@color/primary1"
             app:chipStrokeWidth="2dp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_actor"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="배우"
@@ -53,6 +68,7 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_comedian"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="코미디언"
@@ -63,6 +79,7 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_model"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="모델"
@@ -72,19 +89,21 @@
             app:chipStrokeWidth="2dp" />
     </com.google.android.material.chip.ChipGroup>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip_group"
-        android:layout_marginBottom="?attr/actionBarSize">
+        app:layout_constraintTop_toBottomOf="@id/chip_group">
+
         <!-- artist recyclerview -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_artist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_artist_enroll"
@@ -98,5 +117,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_24"
         app:tint="@color/white" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

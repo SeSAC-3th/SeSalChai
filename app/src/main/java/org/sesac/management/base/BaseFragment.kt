@@ -1,19 +1,14 @@
 package org.sesac.management.base
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.viewpager2.pageSelections
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -195,7 +190,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     fun LayoutToolbarBinding.setToolbarMenu(
         title: String, // 툴바 제목
         backBT: Boolean = false, // true 안해주면, 기본 false
-        hamburgerListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
+        editListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
     ) {
         with(this) {
             tvTitle.text = title // 툴바 제목은 무조건
@@ -203,10 +198,10 @@ abstract class BaseFragment<VB : ViewBinding>(
             ivBack.setOnAvoidDuplicateClick { // backBT 클릭 이벤트
                 backPress()
             }
-            if (hamburgerListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
-                ivHamburger.setImageResource(R.drawable.baseline_menu_24) // hamburger 버튼이 있다.
+            if (editListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
+                ivHamburger.setImageResource(R.drawable.baseline_edit_24) // hamburger 버튼이 있다.
                 ivHamburger.setOnAvoidDuplicateClick { // hamburger 클릭 이벤트
-                    hamburgerListener()
+                    editListener()
                 }
             }
         }
@@ -244,7 +239,6 @@ abstract class BaseFragment<VB : ViewBinding>(
 //        override fun afterTextChanged(s: Editable?) {
 //            afterTextChange(s)
 //        }
-
     /**
      * 사용법 ( withBinding(binding.includedLayoutTextinput) )
      * 1. 힌트를 설정할 때: tilLayout.hint = "힌트 입력"
@@ -289,24 +283,24 @@ abstract class BaseFragment<VB : ViewBinding>(
      *     }
      * @author 우빈
      */
-    private val textInputLayouts = mutableListOf<TextInputLayout>()
+//    private val textInputLayouts = mutableListOf<TextInputLayout>()
+//
+//    protected fun addTextInputLayoutWithTextWatcher(
+//        textInputLayout: TextInputLayout,
+//        textWatcher: TextWatcher
+//    ) {
+//        textInputLayout.editText?.addTextChangedListener(textWatcher)
+//        textInputLayouts.add(textInputLayout)
+//    }
+//
+//    protected fun removeTextWatcherFromTextInputLayout(textWatcher: TextWatcher) {
+//        for (textInputLayout in textInputLayouts) {
+//            textInputLayout.editText?.removeTextChangedListener(textWatcher)
+//        }
+//        textInputLayouts.clear()
+//    }
 
-    protected fun addTextInputLayoutWithTextWatcher(
-        textInputLayout: TextInputLayout,
-        textWatcher: TextWatcher
-    ) {
-        textInputLayout.editText?.addTextChangedListener(textWatcher)
-        textInputLayouts.add(textInputLayout)
-    }
-
-    protected fun removeTextWatcherFromTextInputLayout(textWatcher: TextWatcher) {
-        for (textInputLayout in textInputLayouts) {
-            textInputLayout.editText?.removeTextChangedListener(textWatcher)
-        }
-        textInputLayouts.clear()
-    }
-
-    fun showToastMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
+//    fun showToastMessage(message: String) {
+//        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+//    }
 }

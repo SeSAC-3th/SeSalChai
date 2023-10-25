@@ -41,12 +41,12 @@
     </fragment>
     <fragment
         android:id="@+id/eventDetailFragment"
-        android:name="org.sesac.management.view.event.EventDetailFragment"
+        android:name="org.sesac.management.view.event.detail.EventDetailFragment"
         android:label="fragment_event_detail"
         tools:layout="@layout/fragment_event_detail" />
     <fragment
         android:id="@+id/eventEnrollFragment"
-        android:name="org.sesac.management.view.event.EventEnrollFragment"
+        android:name="org.sesac.management.view.event.enroll.EventEnrollFragment"
         android:label="fragment_event_enroll"
         tools:layout="@layout/fragment_event_enroll" />
     <fragment
@@ -77,12 +77,12 @@
         tools:layout="@layout/fragment_rate" />
     <fragment
         android:id="@+id/noticeDetailFragment"
-        android:name="org.sesac.management.view.notice.NoticeDetailFragment"
+        android:name="org.sesac.management.view.notice.detail.NoticeDetailFragment"
         android:label="fragment_notice_detail"
         tools:layout="@layout/fragment_notice_detail" />
     <fragment
         android:id="@+id/noticeEnrollFragment"
-        android:name="org.sesac.management.view.notice.NoticeEnrollFragment"
+        android:name="org.sesac.management.view.notice.enroll.NoticeEnrollFragment"
         android:label="fragment_notice_enroll"
         tools:layout="@layout/fragment_notice_enroll" />
 </navigation>

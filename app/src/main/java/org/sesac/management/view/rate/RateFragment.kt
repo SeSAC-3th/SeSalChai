@@ -16,6 +16,7 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentRateBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
+import org.sesac.management.view.adapter.RateAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 
 class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::inflate) {

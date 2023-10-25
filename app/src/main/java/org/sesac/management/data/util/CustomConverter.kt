@@ -1,6 +1,9 @@
 package org.sesac.management.data.util
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
+import java.io.ByteArrayOutputStream
 import java.util.Date
 import java.util.UUID
 
@@ -26,6 +29,7 @@ class CustomConverter {
     fun fromUUID(uuid: UUID?): String? {
         return uuid?.toString()
     }
+
     @TypeConverter
     fun fromIntList(value: List<Int>?): String? {
         // List<Int>를 문자열로 변환
@@ -38,4 +42,17 @@ class CustomConverter {
         return value?.split(",")?.map { it.toInt() }
     }
 
+    // Bitmap -> ByteArray 변환
+    @TypeConverter
+    fun toByteArray(bitmap : Bitmap?) : ByteArray?{
+        val outputStream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        return outputStream.toByteArray()
+    }
+
+    // ByteArray -> Bitmap 변환
+    @TypeConverter
+    fun toBitmap(bytes : ByteArray?) : Bitmap?{
+        return bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+    }
 }
