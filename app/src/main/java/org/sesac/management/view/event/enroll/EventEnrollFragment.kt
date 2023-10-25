@@ -43,7 +43,9 @@ class EventEnrollFragment :
 
     override fun onViewCreated() {
         with(binding) {
-            tbScheduleEnroll.setToolbarMenu("행사 등록", true)
+            tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
+                // 작성
+            }
             ivSchedule.setOnClickListener {
                 getContent.launch("image/*")
             }

@@ -10,12 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistBinding
-import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnFinishInputFlow
 import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
