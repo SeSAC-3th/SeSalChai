@@ -1,11 +1,15 @@
 package org.sesac.management.view.artist.detail
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
@@ -27,6 +31,39 @@ class ArtistDetailFragment :
 
     override fun onViewCreated() {
         observeData()
+        initView()
+    }
+
+    private fun observeData() {
+        Log.d(ARTIST, "2. getArtistById: ${viewModel.getArtistDetail}")
+        viewModel.getArtistDetail.value?.let { getViewToData(it) }
+
+        viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
+            Log.d(ARTIST, "getArtistById: ${artist}")
+        }
+    }
+
+    private fun getViewToData(artist: Artist) {
+        Log.d(ARTIST, "3. getArtistById: ${artist}")
+
+        val memberInfo = convertMemberInfo(artist.memberInfo)
+        with(binding) {
+            tvArtist.text = "${artist.name}\n${artist.debutDay}\n${memberInfo.size}"
+            ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+            memberInfo.forEach {
+                tvMember.text = "${binding.tvMember.text}\n$it"
+            }
+        }
+
+    }
+
+    private fun convertMemberInfo(memberInfo: String): List<String> {
+        val delimiter = "," // 구분자, 여기서는 쉼표
+        val stringList = memberInfo.split(delimiter)
+        val resultList = stringList.map { it.trim() }
+        return resultList
+    }
+    private fun initView(){
         with(binding) {
             layoutToolbar.setToolbarMenu("아티스트 상세", true)
 
@@ -59,31 +96,6 @@ class ArtistDetailFragment :
             })
         }
     }
-
-    private fun observeData() {
-        viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            getViewToData(artist)
-        }
-    }
-
-    private fun getViewToData(artist: Artist) {
-        val memberInfo = convertMemberInfo(artist.memberInfo)
-        with(binding) {
-            tvArtist.text = "${artist.name}\n${artist.debutDay}\n${memberInfo.size}"
-            ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
-            memberInfo.forEach {
-                tvMember.text = "${binding.tvMember.text}\n$it"
-            }
-        }
-    }
-
-    private fun convertMemberInfo(memberInfo: String): List<String> {
-        val delimiter = "," // 구분자, 여기서는 쉼표
-        val stringList = memberInfo.split(delimiter)
-        val resultList = stringList.map { it.trim() }
-        return resultList
-    }
-
     /* viewpager2 adapter 연결 및 margin 설정 */
     private fun initialiseViewPager() = viewPager.apply {
         /* 여백, 너비에 대한 정의 */

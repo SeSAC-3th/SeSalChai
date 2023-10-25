@@ -40,6 +40,10 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             layoutManager = GridLayoutManager(activity, 2)
             artistAdapter = ArtistRecyclerAdapter(
                 artistList,
+                onDelete = {
+                    viewModel.deleteArtist(it)
+//                    viewModel.getAllArtist()
+                },
                 onClick = {
                     viewModel.getArtistById(it)
                     childFragmentManager

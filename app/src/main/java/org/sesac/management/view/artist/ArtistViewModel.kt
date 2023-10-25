@@ -1,6 +1,7 @@
 package org.sesac.management.view.artist
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
+import org.sesac.management.util.common.ARTIST
 
 class ArtistViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = ArtistRepository(application)
@@ -67,6 +69,14 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
     fun getArtistById(id: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             getArtistDetail.value = repository.getArtistById(id)
+            Log.d(ARTIST, "getArtistById: ${getArtistDetail.value}")
+        }
+    }
+
+    fun deleteArtist(artist: Artist) {
+        CoroutineScope(Dispatchers.Main).launch {
+            repository.deleteArtist(artist)
+            Log.d(ARTIST, "getArtistById: ${getArtistDetail.value}")
         }
     }
 }
