@@ -75,10 +75,10 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip_group"
-        android:layout_marginBottom="?attr/actionBarSize">
+        app:layout_constraintTop_toBottomOf="@id/chip_group">
         <!-- artist recyclerview -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_artist"

@@ -1,12 +1,15 @@
 package org.sesac.management.view.event.enroll
 
+import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {
+    val viewModel: EventViewModel by viewModels({ requireParentFragment() })
 
     override fun onViewCreated() {
         with(binding) {
