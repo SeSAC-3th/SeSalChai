@@ -41,7 +41,7 @@ class EventEnrollFragment :
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 Log.d(ARTIST, "uri: $uri")
-                binding.ivSchedule.setImageURI(uri)
+                binding.ivEvent.setImageURI(uri)
                 context?.let { it1 ->
                     var tmpBitmap = convertUriToBitmap(uri, it1)
                     tmpBitmap?.let { it2 -> bitmap = it2 }
