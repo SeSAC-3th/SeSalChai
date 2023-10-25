@@ -48,6 +48,7 @@ class RateBottomSheet : BottomSheetDialogFragment() {
 
                     viewModel.insertRateWithArtist(
                         Rate(
+                            0f,
                             earnings,
                             popularity,
                             sing,

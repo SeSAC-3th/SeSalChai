@@ -1,7 +1,10 @@
 package org.sesac.management.view.adapter.recyclerview
 
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.local.Artist
@@ -19,7 +22,7 @@ class ArtistRecyclerAdapter(
             itemBinding.root.setOnClickListener {
                 onClick(items[absoluteAdapterPosition].artistId)
             }
-            itemBinding.btnDelete.setOnClickListener{
+            itemBinding.btnDelete.setOnClickListener {
                 onDelete(items[absoluteAdapterPosition])
             }
         }
@@ -37,7 +40,11 @@ class ArtistRecyclerAdapter(
     override fun onBindViewHolder(holder: ArtistInfo, position: Int) {
         val agencyInfo = items[position]
         with(holder.itemBinding) {
-            ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            agencyInfo.imgUri?.let {
+                ivThumbnail.setImageBitmap(it)
+            } ?: {
+                ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            }
             tvTitle.text = agencyInfo.name
             tvContents.text = agencyInfo.type.toString()
 

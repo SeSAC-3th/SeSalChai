@@ -47,13 +47,6 @@ class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
         repository.insertRateWithArtist(rate, artistId)
     }
 
-    fun getAllRate() = viewModelScope.launch {
-        _rateList.value = repository.getAllRate()
-    }
-
-    fun getRate(rateId: Int) = viewModelScope.launch {
-        repository.getRate(rateId)
-    }
 
     fun getSearchResult(keyword: String) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -84,6 +77,8 @@ class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
             repository.deleteArtist(artist)
         }
     }
+
+
     class ArtistViewModelFactory(private val artistRepository: ArtistRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
