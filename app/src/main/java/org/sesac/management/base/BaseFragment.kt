@@ -190,7 +190,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     fun LayoutToolbarBinding.setToolbarMenu(
         title: String, // 툴바 제목
         backBT: Boolean = false, // true 안해주면, 기본 false
-        hamburgerListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
+        editListener: (() -> Unit)? = null, // hamburger 클릭 이벤트 처리, 기본 null
     ) {
         with(this) {
             tvTitle.text = title // 툴바 제목은 무조건
@@ -198,10 +198,10 @@ abstract class BaseFragment<VB : ViewBinding>(
             ivBack.setOnAvoidDuplicateClick { // backBT 클릭 이벤트
                 backPress()
             }
-            if (hamburgerListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
-                ivHamburger.setImageResource(R.drawable.baseline_menu_24) // hamburger 버튼이 있다.
+            if (editListener != null) { // hamburger 버튼 클릭 이벤트가 있을 경우
+                ivHamburger.setImageResource(R.drawable.baseline_edit_24) // hamburger 버튼이 있다.
                 ivHamburger.setOnAvoidDuplicateClick { // hamburger 클릭 이벤트
-                    hamburgerListener()
+                    editListener()
                 }
             }
         }

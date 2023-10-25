@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    tools:context=".view.notice.NoticeFragment">
+    tools:context=".view.notice.NoticeFragment"
+    android:focusable="true">
 
     <include
         android:id="@+id/toolbar_notice"
         layout="@layout/layout_toolbar" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_event"
@@ -23,6 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_notice" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_notice_enroll_navigation"
         android:layout_width="wrap_content"

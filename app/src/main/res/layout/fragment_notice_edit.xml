@@ -10,7 +10,7 @@
     tools:context=".view.notice.enroll.NoticeEnrollFragment">
 
     <include
-        android:id="@+id/toolbar_notice_enroll"
+        android:id="@+id/toolbar_notice_edit"
         layout="@layout/layout_toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -26,7 +26,7 @@
         app:hintTextColor="@color/primary1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_notice_enroll">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_notice_edit">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_title"
@@ -75,7 +75,7 @@
         android:layout_height="50dp"
         android:layout_margin="8dp"
         android:background="@drawable/drawable_round_search"
-        android:text="저장"
+        android:text="수정"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
