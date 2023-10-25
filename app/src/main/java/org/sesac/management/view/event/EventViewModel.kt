@@ -11,23 +11,9 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Event
 import org.sesac.management.repository.EventRepository
 
-<<<<<<< HEAD
-class EventViewModel(application: Application) : AndroidViewModel(application) {
-    val TAG: String = "로그"
-    private var eventDAO: EventDAO
-    private val repository = EventRepository(application)
-    var eventListLiveData = MutableLiveData<List<Event>>()
-    var eventLiveData = MutableLiveData<Event>()
 
-    init {
-        eventDAO = AgencyRoomDB.getInstance(application).generateEventDAO()
-    }
-
-    /* C : 임시 이벤트 등록 메서드 */
-=======
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
 
->>>>>>> main
     fun insertEvent(event: Event) {
         viewModelScope.launch {
             eventRepository.insertEvent(event)

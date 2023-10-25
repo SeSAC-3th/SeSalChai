@@ -1,14 +1,11 @@
 package org.sesac.management.view.event
 
-import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
-<<<<<<< HEAD
-=======
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
->>>>>>> main
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.model.eventList
 import org.sesac.management.databinding.FragmentEventBinding
@@ -17,10 +14,6 @@ import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.recyclerview.EventRecyclerAdapter
 import org.sesac.management.view.event.detail.EventDetailFragment
 import org.sesac.management.view.event.enroll.EventEnrollFragment
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
@@ -28,10 +21,8 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
         EventViewModel.EventViewModelFactory(getApplicationContext().eventRepository)
     }
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated() {
-<<<<<<< HEAD
-=======
+
         // flow-flow
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -65,7 +56,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 //            //INSERT INTO artist (name, member_info, debut_day, type, rate_id, img_uri)
 //            //VALUES ('르세라핌', '신진혁, 함우빈, 최종혁', '2023-10-23', 'SINGER', 1, '이미지 URI');
 //        }
->>>>>>> main
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {
