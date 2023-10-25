@@ -18,7 +18,6 @@ class NoticeDetailFragment() :
             by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onViewCreated() {
-
         with(binding) {
             toolbarNoticeDetail.setToolbarMenu("공지사항 상세", true) {
                 binding.layoutNoticeDetail.changeFragment(
@@ -42,7 +41,8 @@ class NoticeDetailFragment() :
             tvNoticeTitle.text = notice.title
             tvContent.text = notice.content
             tvDate.text = SimpleDateFormat(
-                "yyyy년 MMM dd일 ", Locale.KOREA).format(notice.createdAt)
+                "yyyy년 MMM dd일 ", Locale.KOREA
+            ).format(notice.createdAt)
         }
     }
 }
