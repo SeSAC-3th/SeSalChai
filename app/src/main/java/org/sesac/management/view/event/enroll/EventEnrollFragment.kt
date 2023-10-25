@@ -14,10 +14,8 @@ class EventEnrollFragment :
             /* Enroll Button Click */
             with(ivAdd) {
                 setOnAvoidDuplicateClick {
-                    eventEnrollLayout.changeFragment(
-                        this@EventEnrollFragment,
-                        ArtistAddDialogFragment()
-                    )
+                    val addDialog= ArtistAddDialogFragment()
+                    activity?.let { addDialog.show(childFragmentManager, "artistDialogFragment") }
                 }
             }
         }
