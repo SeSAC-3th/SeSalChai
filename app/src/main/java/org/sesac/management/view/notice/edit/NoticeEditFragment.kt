@@ -21,8 +21,8 @@ class NoticeEditFragment
         with(binding) {
             toolbarNoticeEdit.setToolbarMenu("공지사항 수정", true) {
                 binding.toolbarNoticeEdit.ivHamburger.setImageResource(R.drawable.baseline_edit_24)
-                val title = etTitle.text.toString()
-                val content = etContent.text.toString()
+                val title = layoutInputTitle.tilEt.text.toString()
+                val content = layoutInputContent.tilEt.text.toString()
                 sharedViewModel.update(
                     Notice(
                         title,
@@ -47,8 +47,8 @@ class NoticeEditFragment
 
     private fun updateUI() {
         with(binding) {
-            etTitle.setText(selectedNotice.title)
-            etContent.setText(selectedNotice.content)
+            layoutInputTitle.tilEt.setText(selectedNotice.title)
+            layoutInputContent.tilEt.setText(selectedNotice.content)
         }
     }
 }

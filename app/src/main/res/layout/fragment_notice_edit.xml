@@ -13,47 +13,25 @@
         android:id="@+id/toolbar_notice_edit"
         layout="@layout/layout_toolbar" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <include
         android:id="@+id/layout_input_title"
+        layout="@layout/layout_textinput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="제목을 입력해주세요"
-        app:boxStrokeColor="@color/primary1"
-        app:circularflow_radiusInDP="20dp"
-        app:helperText="Supporting text"
-        app:helperTextTextColor="@color/primary1"
-        app:hintTextColor="@color/primary1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_notice_edit">
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_notice_edit" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToOutline="true"
-            app:strokeColor="@color/primary1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <include
         android:id="@+id/layout_input_content"
+        layout="@layout/layout_textinput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:hint="본문을 입력해주세요"
-        app:boxStrokeColor="@color/primary1"
-        app:helperText="Supporting text"
-        app:helperTextTextColor="@color/primary1"
-        app:hintTextColor="@color/primary1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_input_title">
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_title" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToOutline="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,13 +21,19 @@ class NoticeEnrollFragment() :
             toolbarNoticeEnroll.setToolbarMenu("공지사항 등록", true) {
                 binding.toolbarNoticeEnroll.ivHamburger.setImageResource(R.drawable.baseline_edit_24)
                 val notice = Notice(
-                    binding.etTitle.text.toString(),
-                    binding.etContent.text.toString(),
+                    binding.layoutInputTitle.tilEt.text.toString(),
+                    binding.layoutInputContent.tilEt.text.toString(),
                     Date(),
                 )
                 noticeViewModel.insertNoticeInfo(notice)
                 backPress()
             }
+        }
+    }
+
+    private fun initView() {
+        with(binding) {
+
         }
     }
 
