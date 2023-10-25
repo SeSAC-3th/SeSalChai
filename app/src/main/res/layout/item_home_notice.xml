@@ -45,14 +45,16 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_notice_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:text="dadfadfa"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_notice_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_circle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

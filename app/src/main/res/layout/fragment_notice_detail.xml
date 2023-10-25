@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textSize="17sp"
         android:text="작성일시 : "
         app:layout_constraintStart_toStartOf="@id/tv_notice_title"
         app:layout_constraintTop_toBottomOf="@id/tv_notice_title" />
@@ -43,19 +44,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2023.09.10"
+        android:textSize="15sp"
         android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@id/tv_date_header"
         app:layout_constraintTop_toTopOf="@id/tv_date_header" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="18sp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:background="@drawable/background_notice_content_r16"
         android:paddingHorizontal="20dp"
         android:text="Two-line snackbar with longer action and close affordanceTwo-line snackbar with longer action and close affordance"
+        app:layout_constraintStart_toStartOf="@+id/tv_notice_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_date_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
