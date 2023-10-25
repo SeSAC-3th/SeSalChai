@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primary3"
     android:layout_gravity="bottom"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/primary3">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_company_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/tv_company_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="SesalChai"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_business_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:text="상호명 및 호스팅 서비스 제공 : 세살차이 (주)\n 대표이사 : 신진혁 \n 서울시 강남구 강남대로 369 \n 1577-1234 \n
-사업자 등록번호 : 123-43-05124 \n 통신판매업 신고 : 2023-서울금천-1234"
-        app:layout_constraintStart_toEndOf="@id/tv_company_name"
-        app:layout_constraintTop_toTopOf="@id/tv_company_name" />
-
+        android:gravity="center"
+        android:text="상호명 및 호스팅 서비스 제공 : 세살차이 (주) | 대표이사 : 신진혁 \n
+    사업자 등록번호 : 123-43-05124 | 통신판매업 신고 : 2023-서울금천-1234 \n
+\n 서울시 강남구 강남대로 369 \n 1577-1234 \n\n (주) 세살차이는 잘생긴 대표 신진혁이 이끄는 IT 중심 기업으로
+\n 엘리트 개발자들로 구성되어 있습니다. 세살차이의 모든 지적 재산권은 \n 신진혁 대표에게 귀속 되어있으며 무단 배포시 법적 처벌을 받을 수 있습니다.
+\n Copyright (c) SesalChai Corp. 2023 - 2100 All Rights Reserved"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
