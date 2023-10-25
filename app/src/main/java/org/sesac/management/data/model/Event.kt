@@ -13,20 +13,20 @@ data class Event(
     val imgUri: String,
 )
 
-val eventList = listOf(
-    ArtistThumbnail(
-        thumbnail = R.drawable.twice_chaeyeong,
-        title = "행사1",
-        content = "23.08.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_all,
-        title = "행사2",
-        content = "23.12.22"
-    ),
-    ArtistThumbnail(
-        thumbnail = R.drawable.girls_generation_hyoyeon,
-        title = "행사3",
-        content = "23.11.08"
-    ),
-)
+//val eventList = listOf(
+//    ArtistThumbnail(
+//        thumbnail = R.drawable.twice_chaeyeong,
+//        title = "행사1",
+//        content = "23.08.22"
+//    ),
+//    ArtistThumbnail(
+//        thumbnail = R.drawable.girls_generation_all,
+//        title = "행사2",
+//        content = "23.12.22"
+//    ),
+//    ArtistThumbnail(
+//        thumbnail = R.drawable.girls_generation_hyoyeon,
+//        title = "행사3",
+//        content = "23.11.08"
+//    ),
+//)

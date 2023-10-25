@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_edit_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/tb_schedule_enroll"
+        layout="@layout/layout_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_schedule_enroll">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?actionBarSize"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_schedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toTopOf="@id/gl_iv_schedule_bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_iv_schedule_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="219dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50121653" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="행사명을 입력해주세요"
+                app:boxStrokeColor="@color/primary1"
+                app:circularflow_radiusInDP="20dp"
+                app:helperText="Supporting text"
+                app:helperTextTextColor="@color/primary1"
+                app:hintTextColor="@color/primary1"
+                app:layout_constraintTop_toBottomOf="@id/gl_iv_schedule_bottom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_schedule_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToOutline="true"
+                    app:strokeColor="@color/primary1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="행사명을 입력해주세요"
+                app:boxStrokeColor="@color/primary1"
+                app:circularflow_radiusInDP="20dp"
+                app:helperText="Supporting text"
+                app:helperTextTextColor="@color/primary1"
+                app:hintTextColor="@color/primary1"
+                app:layout_constraintTop_toBottomOf="@id/layout_input_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_schedule_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToOutline="true"
+                    app:strokeColor="@color/primary1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="행사명을 입력해주세요"
+                app:boxStrokeColor="@color/primary1"
+                app:circularflow_radiusInDP="20dp"
+                app:helperText="Supporting text"
+                app:helperTextTextColor="@color/primary1"
+                app:hintTextColor="@color/primary1"
+                app:layout_constraintTop_toBottomOf="@id/layout_input_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_schedule_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToOutline="true"
+                    app:strokeColor="@color/primary1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_input_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="행사명을 입력해주세요"
+                app:boxStrokeColor="@color/primary1"
+                app:circularflow_radiusInDP="20dp"
+                app:helperText="Supporting text"
+                app:helperTextTextColor="@color/primary1"
+                app:hintTextColor="@color/primary1"
+                app:layout_constraintTop_toBottomOf="@id/layout_input_place">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_schedule_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToOutline="true"
+                    app:strokeColor="@color/primary1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_join_artist"
+                style="@style/content_textView_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="참여 아티스트"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_input_description" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/baseline_add_24"
+                android:tint="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_join_artist"
+                app:layout_constraintStart_toEndOf="@id/tv_join_artist"
+                app:layout_constraintTop_toTopOf="@id/tv_join_artist" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

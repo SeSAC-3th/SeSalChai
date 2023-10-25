@@ -14,10 +14,12 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.util.common.ARTIST
+import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.MainActivity
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
+import org.sesac.management.view.artist.edit.ArtistEditFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
@@ -79,7 +81,9 @@ class ArtistDetailFragment :
 
     private fun initView() {
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true)
+            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
+                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            }
 
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
