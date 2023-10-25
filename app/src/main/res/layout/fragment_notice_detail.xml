@@ -2,10 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_notice_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.notice.detail.NoticeDetailFragment">
+    android:clickable="true"
+    tools:context=".view.notice.detail.NoticeDetailFragment"
+    android:focusable="true">
 
     <include
         android:id="@+id/toolbar_notice_detail"

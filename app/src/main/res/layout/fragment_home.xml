@@ -11,8 +11,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_home"
         android:layout_width="match_parent"
-        app:elevation="0dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -86,6 +86,16 @@
                 layout="@layout/layout_home_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/included_layout_home_description"
+        layout="@layout/layout_home_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
