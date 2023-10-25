@@ -10,7 +10,6 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
@@ -28,7 +27,27 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
             layoutRateToolbar.setToolbarMenu("평가", true)
 
             chipRateAverage.setOnAvoidDuplicateClick {
-                binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
+
+            }
+
+            chipRateIncome.setOnAvoidDuplicateClickFlow {
+
+            }
+
+            chipRatePopularity.setOnAvoidDuplicateClick {
+
+            }
+
+            chipRateSing.setOnAvoidDuplicateClick {
+
+            }
+
+            chipRateDance.setOnAvoidDuplicateClick {
+
+            }
+
+            chipRatePerformance.setOnAvoidDuplicateClick {
+
             }
         }
 
@@ -57,7 +76,6 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
                 setDrawGridLines(false)
                 setDrawBarShadow(false)
                 textSize = 12f
-//                valueFormatter = MyXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
             }
 
 
@@ -75,65 +93,27 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
 
         binding.recyclerRateRanking.layoutManager = manager
 
-        viewModel.getAllArtist()
-
         viewModel.getAllArtist.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.recyclerRateRanking.adapter = RateAdapter(it) {
+                val result = it.sortedByDescending { it.rate?.average ?: 0f }
+
+                binding.recyclerRateRanking.adapter = RateAdapter(result) {
+
                     viewModel.getArtistById(it.artistId)
-                    binding.layoutRateMain.changeFragment(
-                        this@RateFragment,
-                        ArtistDetailFragment()
-                    )
+
+                    binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
                 }
-                binding.barChartRateCompare.xAxis.valueFormatter = MyXAxisFormatter(it)
+                binding.barChartRateCompare.xAxis.valueFormatter = MyXAxisFormatter(result)
 
-                binding.chipRateIncome.setOnAvoidDuplicateClickFlow {
-
-                }
-
-                binding.chipRatePopularity.setOnAvoidDuplicateClick {
-
-                }
-
-                binding.chipRateSing.setOnAvoidDuplicateClick {
-
-                }
-
-                binding.chipRateDance.setOnAvoidDuplicateClick {
-
-                }
-
-                binding.chipRatePerformance.setOnAvoidDuplicateClick {
-
-                }
-            }
-        }
-
-//        (
-//                BarEntry(1.2f, 20.0f),
-//        BarEntry(2.2f, 70.0f),
-//        BarEntry(3.2f, 30.0f),
-//        BarEntry(4.2f, 90.0f),
-//        BarEntry(5.2f, 70.0f),
-//        BarEntry(6.2f, 30.0f),
-//        BarEntry(7.2f, 90.0f)
-//        )
-
-        viewModel.rateList.observe(viewLifecycleOwner) {
-            if (it != null) {
                 val entries = arrayListOf<BarEntry>()
-                for ((idx, value) in it.withIndex()) {
-                    val avg =
-                        (value.dance + value.income + value.performance + value.popularity + value.sing) / 5f
-                    entries.add(BarEntry((idx + 1) + 0.2f, avg))
+                for ((idx, value) in result.withIndex()) {
+                    if (value.rate != null)
+                        entries.add(BarEntry((idx + 1) + 0.2f, value.rate!!.average))
                 }
-                entries.sortByDescending { it.y }
 
                 val set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
                 set.color =
                     ContextCompat.getColor(requireContext(), R.color.primary2) // 바 그래프 색 설정
-                set.colors
 
                 set.setColors(
                     Color.parseColor("#FFF78B"),
@@ -149,9 +129,9 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
                 )
 
 
-                val dataSet: ArrayList<IBarDataSet> = ArrayList()
-                dataSet.add(set)
-                val data = BarData(dataSet)
+//                val dataSet: ArrayList<IBarDataSet> = ArrayList()
+//                dataSet.add(set)
+                val data = BarData(listOf(set))
                 data.barWidth = 0.7f //막대 너비 설정
                 binding.barChartRateCompare.run {
                     this.data = data //차트의 데이터를 data로 설정해줌.

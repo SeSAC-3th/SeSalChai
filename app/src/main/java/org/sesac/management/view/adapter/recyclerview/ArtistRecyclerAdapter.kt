@@ -44,7 +44,6 @@ class ArtistRecyclerAdapter(
             }
             tvTitle.text = agencyInfo.name
             tvContents.text = agencyInfo.type.toString()
-
         }
     }
 
