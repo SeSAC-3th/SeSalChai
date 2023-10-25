@@ -7,7 +7,6 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.model.toModelArtist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
@@ -18,7 +17,8 @@ class ArtistDetailFragment :
     private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
-    private lateinit var artistBundle: org.sesac.management.data.model.Artist
+    private var artistId = 0
+    private var rateId = 0
 
     /* events 임시 데이터 */
     private var events: List<Event> = listOf()
@@ -30,7 +30,8 @@ class ArtistDetailFragment :
 
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            artistBundle = artist.toModelArtist()
+            artistId = artist.artistId
+            rateId = artist.rateId ?: -1
             getViewToData(artist)
         }
     }
@@ -68,7 +69,8 @@ class ArtistDetailFragment :
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
-                bundle.putSerializable("artistBundle", artistBundle)
+                bundle.putInt("artistId", artistId)
+                bundle.putInt("rateId", rateId)
                 val rateBottomSheet = RateBottomSheet()
                 rateBottomSheet.arguments = bundle
                 childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")

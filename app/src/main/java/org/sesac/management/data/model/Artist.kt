@@ -3,7 +3,6 @@ package org.sesac.management.data.model
 import android.graphics.Bitmap
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
-import java.io.Serializable
 import java.util.Date
 
 enum class ArtistType {
@@ -23,7 +22,7 @@ data class Artist(
     val type: ArtistType,
     val rateId: Int?,
     val imgUri: Bitmap?,
-) : Serializable
+)
 
 data class ArtistThumbnail(
     val thumbnail: Int,

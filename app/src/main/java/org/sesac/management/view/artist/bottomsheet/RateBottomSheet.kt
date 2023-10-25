@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.sesac.management.R
 import org.sesac.management.data.local.Rate
-import org.sesac.management.data.model.Artist
 import org.sesac.management.databinding.FragmentRateBottomSheetBinding
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
@@ -33,37 +32,30 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = arguments?.getSerializable("artistBundle", Artist::class.java)
-        with(binding) {
-            btnSave.setOnAvoidDuplicateClickFlow {
-                val earnings = sliderRevenue.value.toInt()
-                val popularity = sliderPopularity.value.toInt()
-                val dance = sliderDance.value.toInt()
-                val performance = sliderPerform.value.toInt()
-                val sing = sliderSing.value.toInt()
+        val artistId = arguments?.getInt("artistId") ?: -1
+        val rateId = arguments?.getInt("rateId") ?: -1
+        if (rateId != -1) {
+            showToastMessage(resources.getString(R.string.artist_enroll_rate))
+        } else {
+            with(binding) {
+                btnSave.setOnAvoidDuplicateClickFlow {
+                    val earnings = sliderRevenue.value.toInt()
+                    val popularity = sliderPopularity.value.toInt()
+                    val dance = sliderDance.value.toInt()
+                    val performance = sliderPerform.value.toInt()
+                    val sing = sliderSing.value.toInt()
 
-                if (bundle != null) {
-                    if (bundle.rateId == null) {
-                        bundle.rateId?.let {
-                            viewModel.insertRateWithArtist(
-                                Rate(
-                                    earnings,
-                                    popularity,
-                                    sing,
-                                    dance,
-                                    performance,
-                                    0
-                                ), it
-                            )
-                        }
-                        showToastMessage(resources.getString(R.string.artist_enroll_success))
-                        dismiss()
-                    } else {
-                        showToastMessage(resources.getString(R.string.artist_enroll_rate))
-                        dismiss()
-                    }
-                } else {
-                    showToastMessage(resources.getString(R.string.artist_enroll_fail))
+                    viewModel.insertRateWithArtist(
+                        Rate(
+                            earnings,
+                            popularity,
+                            sing,
+                            dance,
+                            performance,
+                            0
+                        ), artistId
+                    )
+                    showToastMessage(resources.getString(R.string.artist_enroll_success))
                     dismiss()
                 }
             }
