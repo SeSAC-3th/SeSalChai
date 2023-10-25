@@ -21,9 +21,40 @@ class EventViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = EventRepository(application)
     var eventListLiveData = MutableLiveData<List<Event>>()
     var eventLiveData = MutableLiveData<Event>()
+    private val coroutineIOScope = CoroutineScope(Dispatchers.IO)
 
     init {
         eventDAO = AgencyRoomDB.getInstance(application).generateEventDAO()
+        coroutineIOScope.launch {
+            insertEvent(
+                Event(
+                    name = "쇼!새싹중심", place = "상암MBC", date = Date(), description = "아이즈원",
+                    imgUri = null
+                )
+            )
+            insertEvent(
+                Event(
+                    name = "새싹가요", place = "상암SBS", date = Date(), description = "르세라핌",
+                    imgUri = null
+                )
+            )
+            insertEvent(
+                Event(
+                    name = "새싹뱅크", place = "KBS 별관", date = Date(), description = "뉴진스",
+                    imgUri = null
+                )
+            )
+            insertManager(
+                Manager(1, 11)
+            )
+            eventDAO.getAllEvent().forEach {
+                Log.d(TAG, "getAllEvent : $it ")
+            }
+            getSearchByEventID(1)
+            getSearchEvent("새싹뱅크")
+//            deleteEvent(3)
+//            getSearchByEventID(3)
+        }
     }
 
     /* C : 임시 이벤트 등록 메서드 */
