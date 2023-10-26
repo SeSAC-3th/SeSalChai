@@ -25,6 +25,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
+
     companion object {
         @Volatile
         private var instance: ArtistRepository? = null
@@ -33,6 +34,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
                 instance ?: ArtistRepository(artistDAO).also { instance = it }
             }
     }
+
     init {
         coroutineIOScope.launch {
             artistDAO.getAllArtist().forEach {
@@ -71,27 +73,18 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
-    suspend fun updateArtist(artist: Artist): Unit? {
-        updateResult = asyncUpdateArtist(artist)
-        return updateResult.value
+    fun updateArtist(artist: Artist) {
+        ioScope.launch {
+            artistDAO.updateArtist(artist)
+        }
     }
 
-    private suspend fun asyncUpdateArtist(artist: Artist): MutableLiveData<Unit> {
-        val updateReturn = coroutineIOScope.async(IO) {
-            return@async artistDAO.updateArtist(artist)
-        }.await()
-        return mainScope.async {
-            updateResult.value = updateReturn
-            updateResult
-        }.await()
-    }
-
-//    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
+    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
 //    suspend fun getAllRate(): MutableLiveData<MutableList<Rate>> {
 //        getRateResult = asyncGetAllRate()
 //        return getRateResult
 //    }
-//
+
 //    suspend fun asyncGetAllRate(): MutableLiveData<MutableList<Rate>> {
 //        val getDetailValue = coroutineIOScope.async(IO) {
 //            return@async artistDAO.getAllArtist()
@@ -135,12 +128,12 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     }
 
 
-    suspend fun getArtistByName(keyword:String): List<Artist>? {
+    suspend fun getArtistByName(keyword: String): List<Artist>? {
         getAllResult = asyncgetArtistByName(keyword)
         return getAllResult.value
     }
 
-    private suspend fun asyncgetArtistByName(keyword:String): MutableLiveData<List<Artist>> {
+    private suspend fun asyncgetArtistByName(keyword: String): MutableLiveData<List<Artist>> {
         val searchResult = coroutineIOScope.async(IO) {
             return@async artistDAO.getSearchArtistByName(keyword)
         }.await()

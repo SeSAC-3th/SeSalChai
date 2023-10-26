@@ -80,6 +80,7 @@
 
     <string name="artist_enroll_error">아티스트 정보를 모두 입력해주세요.</string>
     <string name="artist_enroll_success">등록되었습니다.</string>
+    <string name="artist_enroll_update">수정되었습니다.</string>
     <string name="artist_enroll_fail">등록에 실패했습니다.</string>
 
     <string name="artist_enroll_rate">이미 평점이 등록된 아티스트 입니다.</string>
