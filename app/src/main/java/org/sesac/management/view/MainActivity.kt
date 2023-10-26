@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import org.sesac.management.R
 import org.sesac.management.databinding.ActivityMainBinding
 import org.sesac.management.util.common.ARTIST
@@ -21,7 +20,9 @@ import org.sesac.management.util.common.RATE
 import org.sesac.management.view.artist.ArtistFragment
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.event.EventFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.home.HomeFragment
+import org.sesac.management.view.notice.NoticeViewModel
 import org.sesac.management.view.rate.RateFragment
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,13 @@ class MainActivity : AppCompatActivity() {
          ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
      }
 
+    val noticeViewModel : NoticeViewModel by viewModels() {
+        NoticeViewModel.NoticeViewModelFactory(ApplicationClass.getApplicationContext().noticeRepository)
+    }
+
+    val eventViewModel : EventViewModel by viewModels() {
+        EventViewModel.EventViewModelFactory(ApplicationClass.getApplicationContext().eventRepository)
+    }
     private lateinit var currentFragmentTag: String // 현재 보고 있는 fragment의 tag
 
     // 화면을 회전했을 때 지금까지 보고 있던 fragment의 tag로 해당 fragment를 찾아서 보여준다.
@@ -47,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         artistViewModel.getAllArtist()
+        noticeViewModel.getHomeNotice()
 
         if (savedInstanceState == null) { // 화면을 회전했을 경우 savedInstatnceState가 null이 아니다. 즉 내부 코드는 한번만 실행된다.
             supportFragmentManager

@@ -1,13 +1,7 @@
 package org.sesac.management.view.notice
 
 import android.app.AlertDialog
-import android.app.ProgressDialog.show
-import android.content.DialogInterface
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
-import android.os.Bundle
-import android.util.Log
-import androidx.core.view.children
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.sesac.management.R
@@ -24,7 +18,7 @@ private const val TAG = "NoticeFragment"
 
 class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding::inflate) {
 
-    private val sharedViewModel: NoticeViewModel by viewModels()
+    private val noticeViewModel: NoticeViewModel by activityViewModels()
 
     private var adapter: NoticeRecyclerAdapter = NoticeRecyclerAdapter(emptyList(), { }) { }
 
@@ -49,7 +43,7 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
     }
 
     private fun observerSetup() {
-        sharedViewModel.getAllNotice()?.observe(viewLifecycleOwner) { notices ->
+        noticeViewModel.getAllNotice()?.observe(viewLifecycleOwner) { notices ->
             notices?.let {
                 updateUI(notices)
             }
@@ -64,7 +58,7 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
                 setPositiveButton(
                     "ok",
                 ) { _, _ ->
-                    sharedViewModel.deleteNotice(noticeId)
+                    noticeViewModel.deleteNotice(noticeId)
                 }
                 create()
                 show()
@@ -74,8 +68,8 @@ class NoticeFragment : BaseFragment<FragmentNoticeBinding>(FragmentNoticeBinding
     }
 
     private fun onItemClick(): (Int) -> Unit = { noticeId ->
-        sharedViewModel.selectedNoticeId = noticeId
-        sharedViewModel.getNotice(noticeId)
+        noticeViewModel.selectedNoticeId = noticeId
+        noticeViewModel.getNotice(noticeId)
         binding.noticeLayout.changeFragment(this@NoticeFragment, NoticeDetailFragment())
     }
 }

@@ -36,7 +36,7 @@ class EventDetailFragment
     val TAG: String = "로그"
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
-    val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
     private val artistViewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistIdList: List<Int>
     private var eventId = 0
@@ -53,21 +53,23 @@ class EventDetailFragment
             eventId = event.eventId
             getEventDetail(event)
         }
-
-
+    }
+    private fun observerSetup() {
         /* Manager artist_id 값 확인 후 vp 연결 */
         //TODO : Manager 검색이 안되어서 전체 아티스트 목록으로 넣어주었습니다.
         artistViewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-            Log.d(TAG, "참여 아티스트 : $artist")
+            artist?.let {
+                Log.d(TAG, "참여 아티스트 : $artist")
+                getSelectArtist(it)
+            }
         }
-
     }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated() {
         getArtistInfo()
         observeData()
-        getSelectArtist()
+        observerSetup()
 
         with(binding) {
             tbEvent.setToolbarMenu("행사 상세", true) {
@@ -103,14 +105,14 @@ class EventDetailFragment
         }
     }
 
-    private fun getSelectArtist() {
+    private fun getSelectArtist(artist: List<Artist>) {
         /* viewPager2 */
         with(binding) {
             viewPager = vpArtist
-            val adapter = EventSelectArtistViewPagerAdapter(artists, onClick = {
+            val adapter = EventSelectArtistViewPagerAdapter(artist, onClick = {
                 childFragmentManager
                     .beginTransaction()
-                    //TODO: EventDetailFragment로 이동
+                    //TODO: ArtistDetailFragment로 이동
                     .add(binding.eventDetailLayout.id, ArtistDetailFragment())
                     .addToBackStack(null)
                     .commitAllowingStateLoss()

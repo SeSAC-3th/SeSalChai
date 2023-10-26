@@ -2,6 +2,7 @@ package org.sesac.management.view.adapter.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.ItemHomeArtistBinding
@@ -28,6 +29,9 @@ class HomeArtistAdapter(val artists: List<Artist>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Artist) {
             with(binding) {
+                item.imgUri?.let {
+                    ivArtist.setImageBitmap(it)
+                }
                 tvArtistName.text = item.name
             }
         }
