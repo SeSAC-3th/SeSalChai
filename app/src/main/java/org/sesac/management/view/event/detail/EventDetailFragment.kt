@@ -68,8 +68,8 @@ class EventDetailFragment
 
     private fun updateUI(event : Event) {
         with(binding) {
-            event.imgUri?.let {
-                ivEvent.setImageBitmap(it)
+            ivEvent.let {
+                ivEvent.setImageBitmap(event.imgUri)
             }
             tvEventTitle.text=event.name
             tvEventTime.text=event.date.toString()
