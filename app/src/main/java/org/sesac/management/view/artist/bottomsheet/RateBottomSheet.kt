@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.sesac.management.R
+import org.sesac.management.data.local.Rate
 import org.sesac.management.databinding.FragmentRateBottomSheetBinding
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
@@ -44,17 +45,17 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                     val performance = sliderPerform.value.toInt()
                     val sing = sliderSing.value.toInt()
 
-//                    viewModel.insertRateWithArtist(
-//                        Rate(
-//                            0f,
-//                            earnings,
-//                            popularity,
-//                            sing,
-//                            dance,
-//                            performance,
-//                            0
-//                        ), artistId
-//                    )
+                    viewModel.insertRateWithArtist(
+                        Rate(
+                            0f,
+                            earnings,
+                            popularity,
+                            sing,
+                            dance,
+                            performance,
+                            0
+                        ), artistId
+                    )
                     showToastMessage(resources.getString(R.string.artist_enroll_success))
                     dismiss()
                 }
