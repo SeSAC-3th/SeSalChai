@@ -23,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/tv_artist_name"
             android:src="@drawable/ic_launcher_background"/>
 
