@@ -79,15 +79,6 @@
                     android:layout_marginStart="@dimen/horizontal_margin"
                     android:layout_marginTop="@dimen/content_title_margin_top"
                     android:layout_marginEnd="@dimen/horizontal_margin" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_join_artist"
-                    style="@style/content_textView_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/event_artist"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_input_date" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

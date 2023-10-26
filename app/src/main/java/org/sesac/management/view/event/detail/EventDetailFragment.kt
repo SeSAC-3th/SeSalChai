@@ -42,32 +42,33 @@ class EventDetailFragment
     private var eventId = 0
     private var artists: List<Artist> = listOf()
 
-    /* Manager에서 가져오는 걸로 수정 필요 */
-    private fun getArtistInfo() {
-        artistViewModel.getAllArtist()
-    }
+//    /* Manager에서 가져오는 걸로 수정 필요 */
+//    private fun getArtistInfo() {
+//        artistViewModel.getAllArtist()
+//    }
 
     private fun observeData() {
         /* event 데이터 가져오기 */
         eventViewModel.getEventDetail.observe(viewLifecycleOwner) { event ->
             eventId = event.eventId
             getEventDetail(event)
+            eventViewModel.getArtistFromEvent(eventId)
         }
     }
+
     private fun observerSetup() {
-        /* Manager artist_id 값 확인 후 vp 연결 */
-        //TODO : Manager 검색이 안되어서 전체 아티스트 목록으로 넣어주었습니다.
-        artistViewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-            artist?.let {
-                Log.d(TAG, "참여 아티스트 : $artist")
-                getSelectArtist(it)
+        eventViewModel.getArtistFromEvent.observe(viewLifecycleOwner) { artist ->
+            artist.forEach {
+                Log.d(TAG, "참여 아티스트 : $it")
+                getSelectArtist(artist)
             }
         }
+
     }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated() {
-        getArtistInfo()
+//        getArtistInfo()
         observeData()
         observerSetup()
 
@@ -109,6 +110,7 @@ class EventDetailFragment
         /* viewPager2 */
         with(binding) {
             viewPager = vpArtist
+            Log.d(TAG, "getSelectArtist: 어댑터 값 $artist")
             val adapter = EventSelectArtistViewPagerAdapter(artist, onClick = {
                 childFragmentManager
                     .beginTransaction()
@@ -174,6 +176,7 @@ class EventDetailFragment
             outRect.right = space
         }
     }
+
     /* viewpager2 adapter 연결 및 margin 설정 */
     private fun initialiseViewPager() = viewPager.apply {
         /* 여백, 너비에 대한 정의 */
