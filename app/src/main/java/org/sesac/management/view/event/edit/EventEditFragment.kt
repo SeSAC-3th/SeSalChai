@@ -26,11 +26,9 @@ import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class EventEditFragment :
-    BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate),
-    DialogDataListener {
-    val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
+    val eventViewModel: EventViewModel by viewModels({ requireParentFragment().requireParentFragment() })
     private var selectedArtists = mutableListOf<DialogItem>()
-    val TAG: String = "로그"
     private var eventDescription: String = ""
 
     /* 선택한 이미지 절대경로 가져오기 */
@@ -54,26 +52,16 @@ class EventEditFragment :
         initTextWatcher()
         with(binding) {
             tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
-                enrollEvent()
+
             }
 
             ivEvent.setOnClickListener {
                 getContent.launch("image/*")
             }
-            /* 참여 아티스트 */
-            with(tvJoinArtist) {
-                setOnAvoidDuplicateClick {
-                    requireActivity().let {
-                        val addDialog = ArtistAddDialogFragment()
-                        addDialog.onDialogDataSelected(this@EventEditFragment)
-                        addDialog.show(childFragmentManager, "artistDialogFragment")
-                    }
-                }
-            }
         }
     }
 
-    private fun enrollEvent() {
+    private fun updateEvent() {
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
@@ -82,7 +70,7 @@ class EventEditFragment :
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
                 // TODO : 여기를 updateEvent로 변경
-                eventViewModel.insertEvent(
+                eventViewModel.updateEvent(
                     Event(
                         eventName,
                         eventPlace,
@@ -174,15 +162,4 @@ class EventEditFragment :
     private val hasFocus =
         { layout: TextInputLayout, hasFocus: Boolean -> if (hasFocus) layout.error = null }
 
-
-    /**
-     * ArtistAddDialogFragment로 부터 넘겨온 Artist 목록 List
-     *
-     * @param checkedList
-     */
-    override fun onDialogDataSelected(checkedList: MutableList<DialogItem>) {
-        selectedArtists = checkedList
-        val artistNameList: List<String> = selectedArtists.map { it.artistName }
-        eventDescription = artistNameList.joinToString(", ")
-    }
 }
