@@ -10,7 +10,6 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
-import org.sesac.management.data.local.Rate
 
 @Dao
 interface ArtistDAO {

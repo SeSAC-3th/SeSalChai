@@ -115,7 +115,7 @@ class EventEnrollFragment :
         eventName: String,
         eventPlace: String,
         eventDate: List<String>,
-        eventDescription: String
+        eventDescription: String,
     ) =
         !(eventName.isEmpty() || eventPlace.isEmpty() || eventDate.isEmpty() || eventDescription.isEmpty())
 
