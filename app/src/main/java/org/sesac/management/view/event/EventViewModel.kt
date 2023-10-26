@@ -17,7 +17,7 @@ import org.sesac.management.repository.EventRepository
 
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     var getEventDetail = MutableLiveData<Event>()
-    private var getArtistFromEvent = MutableLiveData<List<Artist>>()
+    var getArtistFromEvent = MutableLiveData<List<Artist>>()
 
     fun insertEvent(event: Event) {
         viewModelScope.launch {

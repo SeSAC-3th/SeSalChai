@@ -31,13 +31,9 @@ class ArtistDetailFragment :
     private lateinit var tempArtist: org.sesac.management.data.model.Artist
     private var rateId = 0
 
-    /* events 임시 데이터 */
-    private var events: List<Event> = listOf()
-
     override fun onViewCreated() {
         observeData()
         initView()
-        chartSettings()
     }
 
     private fun observeData() {
@@ -60,12 +56,12 @@ class ArtistDetailFragment :
                     "이름:${artist.name}\n 데뷔 일: ${SimpleDateFormat("yyyy-MM-dd").format(artist.debutDay)}\n 인원 수:${memberInfo.size}명"
             }
 
-            //이미지
+            // 이미지
             artist.imgUri?.let {
                 ivArtist.setImageBitmap(it)
             } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
 
-            //멤버 정보
+            // 멤버 정보
             tvMember.text = ""
             memberInfo.forEach {
                 if (tvMember.text.isNotEmpty()) {
@@ -74,9 +70,22 @@ class ArtistDetailFragment :
                     tvMember.text = it
                 }
             }
-            events = viewModel.getEventFromArtist.value ?: listOf()
+            // 행사 정보
+            observeEvents()
+
+            // 평가 정보
+            chartSettings(artist)
         }
     }
+
+    private fun observeEvents() {
+        viewModel.getEventFromArtist.observe(viewLifecycleOwner) {
+            if (it != null) {
+                initViewPager(it)
+            }
+        }
+    }
+
 
     private fun convertMemberInfo(memberInfo: String): List<String> {
         val delimiter = "," // 구분자, 여기서는 쉼표
@@ -102,28 +111,6 @@ class ArtistDetailFragment :
                 childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
                     .commitAllowingStateLoss()
             }
-
-            /* viewPager2 */
-            viewPager = vpSchedule
-            viewPager = initialiseViewPager()
-            bannerPosition = Int.MAX_VALUE / 2 - Math.ceil(events.size.toDouble() / 2).toInt()
-            viewPager.setCurrentItem(0, false)
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int,
-                ) {
-                }
-
-                //사용자가 스크롤 했을때 position 수정
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    bannerPosition = position
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {}
-            })
         }
     }
 
@@ -161,6 +148,83 @@ class ArtistDetailFragment :
             entries.add(RadarEntry(4f))
             entries.add(RadarEntry(5f))
 
+    private fun initViewPager(data: List<Event>) {
+        /* viewPager2 */
+        viewPager = binding.vpSchedule
+        viewPager = initialiseViewPager(data)
+        bannerPosition = Int.MAX_VALUE / 2 - Math.ceil(data.size.toDouble() / 2).toInt()
+        viewPager.setCurrentItem(0, false)
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
+            ) {
+            }
+
+            //사용자가 스크롤 했을때 position 수정
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                bannerPosition = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
+    }
+
+    /* viewpager2 adapter 연결 및 margin 설정 */
+    private fun initialiseViewPager(data: List<Event>) = viewPager.apply {
+        /* 여백, 너비에 대한 정의 */
+        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
+        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pageWidth)
+        val screenWidth = resources.displayMetrics.widthPixels
+        val offsetPx = screenWidth - pageMarginPx - pagerWidth
+        viewPager.offscreenPageLimit = 3
+
+        viewPager.setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
+        }
+
+        adapter = ArtistEventViewPagerAdapter(data, onClick = {
+            childFragmentManager
+                .beginTransaction()
+                //TODO: EventDetailFragment로 이동
+                .add(binding.artistDetailLayout.id, EventFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }).apply {
+            notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * MPAndroidChart Settings Method
+     * rate 항목에 맞게 라벨을 추가하였습니다.
+     */
+    private fun chartSettings(artist: Artist) {
+        with(binding) {
+            val labels = listOf(
+                getString(R.string.rate_income),
+                getString(R.string.rate_popularity),
+                getString(R.string.rate_sing),
+                getString(R.string.rate_dance),
+                getString(R.string.rate_performance)
+            )
+            radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+            radarChart.xAxis.labelCount = labels.size
+            radarChart.yAxis.axisMaximum = 5f
+            radarChart.yAxis.axisMinimum = 0f
+
+            /* Chart 데이터 */
+            val entries = ArrayList<RadarEntry>()
+            if (artist.rate != null) {
+                entries.add(RadarEntry(artist.rate?.income?.toFloat()!!))
+                entries.add(RadarEntry(artist.rate?.popularity?.toFloat()!!))
+                entries.add(RadarEntry(artist.rate?.sing?.toFloat()!!))
+                entries.add(RadarEntry(artist.rate?.dance?.toFloat()!!))
+                entries.add(RadarEntry(artist.rate?.performance?.toFloat()!!))
+            }
+
             val dataSet = RadarDataSet(entries, "평가")
             dataSet.color = resources.getColor(R.color.primary1)
             dataSet.setDrawFilled(true)
@@ -173,30 +237,4 @@ class ArtistDetailFragment :
             radarChart.setTouchEnabled(false)
         }
     }
-
-    /* viewpager2 adapter 연결 및 margin 설정 */
-    private fun initialiseViewPager() = viewPager.apply {
-        /* 여백, 너비에 대한 정의 */
-        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
-        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pageWidth)
-        val screenWidth = resources.displayMetrics.widthPixels
-        val offsetPx = screenWidth - pageMarginPx - pagerWidth
-        viewPager.offscreenPageLimit = 3
-
-        viewPager.setPageTransformer { page, position ->
-            page.translationX = position * -offsetPx
-        }
-
-        adapter = ArtistEventViewPagerAdapter(events, onClick = {
-            childFragmentManager
-                .beginTransaction()
-                //TODO: EventDetailFragment로 이동
-                .add(binding.artistDetailLayout.id, EventFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        }).apply {
-            notifyDataSetChanged()
-        }
-    }
-
 }

@@ -39,8 +39,10 @@ class EventSelectArtistViewPagerAdapter(
     override fun onBindViewHolder(holder: SelectArtistViewHolder, position: Int) {
         val artistInfo = items[position]
         with(holder.itemBinding) {
-            ivEvent.apply {
-                setImageResource((artistInfo.imgUri ?: R.drawable.ic_launcher_background) as Int)
+            artistInfo.imgUri?.let {
+                ivEvent.setImageBitmap(it)
+            } ?: {
+                ivEvent.setImageResource(R.drawable.girls_generation_hyoyeon)
             }
             tvTitle.apply {
                 text = artistInfo.name

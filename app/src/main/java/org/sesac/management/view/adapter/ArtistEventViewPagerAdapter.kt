@@ -3,7 +3,6 @@ package org.sesac.management.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.sesac.management.R
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.ItemArtistEventBinding
 
@@ -31,8 +30,8 @@ class ArtistEventViewPagerAdapter(
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val eventInfo = items[position]
         with(holder.itemBinding) {
-            ivEvent.apply {
-                setImageResource((eventInfo.imgUri ?: R.drawable.ic_launcher_background) as Int)
+            eventInfo.imgUri?.let {
+                ivEvent.setImageBitmap(it)
             }
             tvTitle.apply {
                 text = eventInfo.name
