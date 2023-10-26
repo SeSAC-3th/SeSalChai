@@ -22,7 +22,7 @@ import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
-import java.util.Date
+import java.text.SimpleDateFormat
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
@@ -60,6 +60,10 @@ class ArtistEnrollFragment :
             else -> ArtistType.NONE
         }
 
+        val dateFormat =
+            SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(binding.layoutInputDebut.tilEt.text.toString())
+
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             ioScope.launch {
@@ -67,7 +71,7 @@ class ArtistEnrollFragment :
                     Artist(
                         groupName,
                         memberListString,
-                        Date(),
+                        date,
                         artistType,
                         null,
                         bitmap,

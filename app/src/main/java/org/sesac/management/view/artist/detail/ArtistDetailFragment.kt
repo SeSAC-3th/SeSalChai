@@ -20,11 +20,13 @@ import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.detail.EventDetailFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()
+    private val eventVieModel: EventViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
@@ -43,7 +45,6 @@ class ArtistDetailFragment :
             if (artist != null) {
                 artistId = artist.artistId
                 tempArtist = artist.toModelArtist()
-                Log.e("tempArtist", tempArtist.toString())
                 getViewToData(artist)
             }
         }
@@ -122,32 +123,6 @@ class ArtistDetailFragment :
             .commitAllowingStateLoss()
     }
 
-    /**
-     * MPAndroidChart Settings Method
-     * rate 항목에 맞게 라벨을 추가하였습니다.
-     */
-    private fun chartSettings() {
-        with(binding) {
-            val labels = listOf(
-                getString(R.string.rate_income),
-                getString(R.string.rate_popularity),
-                getString(R.string.rate_sing),
-                getString(R.string.rate_dance),
-                getString(R.string.rate_performance)
-            )
-            radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-            radarChart.xAxis.labelCount = labels.size
-            radarChart.yAxis.axisMaximum = 5f
-            radarChart.yAxis.axisMinimum = 0f
-
-            /* Chart 데이터 */
-            val entries = ArrayList<RadarEntry>()
-            entries.add(RadarEntry(5f))
-            entries.add(RadarEntry(2f))
-            entries.add(RadarEntry(3f))
-            entries.add(RadarEntry(4f))
-            entries.add(RadarEntry(5f))
-
     private fun initViewPager(data: List<Event>) {
         /* viewPager2 */
         viewPager = binding.vpSchedule
@@ -186,6 +161,7 @@ class ArtistDetailFragment :
         }
 
         adapter = ArtistEventViewPagerAdapter(data, onClick = {
+            eventVieModel.eventByID(it)
             binding.artistDetailLayout.changeFragment(
                 this@ArtistDetailFragment,
                 EventDetailFragment()
@@ -236,3 +212,4 @@ class ArtistDetailFragment :
         }
     }
 }
+

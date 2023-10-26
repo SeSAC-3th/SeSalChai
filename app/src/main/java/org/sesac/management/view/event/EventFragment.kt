@@ -1,5 +1,6 @@
 package org.sesac.management.view.event
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +19,7 @@ import org.sesac.management.view.event.enroll.EventEnrollFragment
 
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
-    val viewModel: EventViewModel by viewModels() {
+    val viewModel: EventViewModel by activityViewModels() {
         EventViewModel.EventViewModelFactory(getApplicationContext().eventRepository)
     }
 
