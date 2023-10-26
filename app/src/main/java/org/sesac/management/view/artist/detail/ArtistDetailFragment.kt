@@ -2,7 +2,6 @@ package org.sesac.management.view.artist.detail
 
 import android.icu.text.SimpleDateFormat
 import android.os.Build
-import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.github.mikephil.charting.data.RadarData
@@ -14,12 +13,13 @@ import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
+import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
-import org.sesac.management.view.event.EventFragment
+import org.sesac.management.view.event.detail.EventDetailFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
@@ -31,6 +31,8 @@ class ArtistDetailFragment :
 
     override fun onViewCreated() {
         observeData()
+        // 행사 정보
+        observeEvents()
         initView()
     }
 
@@ -66,8 +68,6 @@ class ArtistDetailFragment :
                     tvMember.text = it
                 }
             }
-            // 행사 정보
-            observeEvents()
 
             // 평가 정보
             chartSettings(artist)
@@ -98,13 +98,20 @@ class ArtistDetailFragment :
 
             /* Bottom Sheet show*/
             radarChart.setOnAvoidDuplicateClick {
-                val bundle = Bundle()
-                bundle.putInt("artistId", artistId)
-                bundle.putInt("rateId", rateId)
-                val rateBottomSheet = RateBottomSheet()
-                rateBottomSheet.arguments = bundle
-                childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
-                    .commitAllowingStateLoss()
+//                val bundle = Bundle()
+//                bundle.putInt("artistId", artistId)
+//                bundle.putInt("rateId", rateId)
+//                val rateBottomSheet = RateBottomSheet()
+//                rateBottomSheet.arguments = bundle
+//                childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
+//                    .commitAllowingStateLoss()
+                if (viewModel.getArtistDetail.value?.rate == null) {
+                    RateBottomSheet().show(
+                        childFragmentManager,
+                        "artistDialogFragment")
+                } else {
+                    showToastMessage(resources.getString(R.string.artist_enroll_rate))
+                }
             }
         }
     }
@@ -147,12 +154,16 @@ class ArtistDetailFragment :
         }
 
         adapter = ArtistEventViewPagerAdapter(data, onClick = {
-            childFragmentManager
-                .beginTransaction()
-                //TODO: EventDetailFragment로 이동
-                .add(binding.artistDetailLayout.id, EventFragment())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+//            childFragmentManager
+//                .beginTransaction()
+//                //TODO: EventDetailFragment로 이동
+//                .add(binding.artistDetailLayout.id, EventFragment())
+//                .addToBackStack(null)
+//                .commitAllowingStateLoss()
+            binding.artistDetailLayout.changeFragment(
+                this@ArtistDetailFragment,
+                EventDetailFragment()
+            )
         }).apply {
             notifyDataSetChanged()
         }

@@ -10,7 +10,6 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
-import org.sesac.management.data.local.Rate
 
 @Dao
 interface ArtistDAO {
@@ -23,10 +22,17 @@ interface ArtistDAO {
     fun insertArtist(vararg artist: Artist): List<Long>
 
 
-//    //Artist 객체에 Rate 객체 id 업데이트
-//    @Query("UPDATE artist SET performance =:performance, income =:income , income =:income WHERE artist_id =:artistId")
-//    fun insertRateWithArtist()
-//
+    //Artist 객체에 Rate 객체 id 업데이트
+    @Query("UPDATE artist SET performance =:performance, income =:income , dance =:dance, popularity =:popularity, sing =:sing, average =:average WHERE artist_id =:artistId")
+    fun insertRateWithArtist(
+        performance: Int,
+        income: Int,
+        dance: Int,
+        popularity: Int,
+        sing: Int,
+        average: Float,
+        artistId: Int,
+    )
 //    // TODO: artist에 포함된 event List 반환하기
 
     /**

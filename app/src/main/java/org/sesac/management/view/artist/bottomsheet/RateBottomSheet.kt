@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.sesac.management.R
 import org.sesac.management.data.local.Rate
@@ -33,8 +32,8 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val artistId = arguments?.getInt("artistId") ?: -1
-        val rateId = arguments?.getInt("rateId") ?: -1
+        val artistId = viewModel.getArtistDetail.value?.artistId ?: -1
+        val rateId = viewModel.getArtistDetail.value?.rate ?: -1
         if (rateId != -1) {
             showToastMessage(resources.getString(R.string.artist_enroll_rate))
         } else {
@@ -57,8 +56,10 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                             0
                         ), artistId
                     )
+
                     showToastMessage(resources.getString(R.string.artist_enroll_success))
-                    dismiss()
+
+                    this@RateBottomSheet.dismiss()
                 }
             }
         }
