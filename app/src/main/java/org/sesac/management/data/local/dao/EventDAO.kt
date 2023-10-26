@@ -37,7 +37,7 @@ interface EventDAO {
      * @return event
      */
     @Query("""SELECT * FROM event WHERE name=:eventName""")
-    fun getSearchEvent(eventName: String): LiveData<Event>
+    fun getSearchEvent(eventName: String): LiveData<List<Event>>
 
 
     /**

@@ -1,5 +1,6 @@
 package org.sesac.management.repository
 
+import androidx.lifecycle.LiveData
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.data.local.dao.ArtistDAO
@@ -42,7 +43,7 @@ class EventRepository(
     fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId) // id로 검색
 
     // livedata - livedata
-    fun getSearchEvent(eventName: String) = eventDAO.getSearchEvent(eventName) // 이름으로 검색
+    fun getSearchEvent(eventName: String): LiveData<List<Event>> = eventDAO.getSearchEvent(eventName) // 이름으로 검색
 
     // 행사 정보를 갱신할 때 사용
     suspend fun updateEvent(event: Event) {

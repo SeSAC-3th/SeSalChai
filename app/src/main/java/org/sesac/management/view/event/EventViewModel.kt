@@ -1,5 +1,6 @@
 package org.sesac.management.view.event
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -30,7 +31,7 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
     }
 
     fun eventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
-    fun eventByName(eventName: String) = eventRepository.getSearchEvent(eventName)
+    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {

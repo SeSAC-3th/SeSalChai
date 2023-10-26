@@ -1,8 +1,5 @@
 package org.sesac.management.view.artist
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +13,6 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
-import org.sesac.management.repository.EventRepository
-import org.sesac.management.util.common.ARTIST
-import org.sesac.management.view.event.EventViewModel
 
 class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
 
