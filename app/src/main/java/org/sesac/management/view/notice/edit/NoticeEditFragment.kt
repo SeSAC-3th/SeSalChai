@@ -5,6 +5,7 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeEditBinding
+import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.notice.NoticeViewModel
 import java.util.Date
 
@@ -17,6 +18,7 @@ class NoticeEditFragment
     private lateinit var selectedNotice: Notice
 
     override fun onViewCreated() {
+        initView()
         with(binding) {
             toolbarNoticeEdit.setToolbarMenu("공지사항 수정", true) {
                 binding.toolbarNoticeEdit.ivHamburger.setImageResource(R.drawable.baseline_edit_24)
@@ -48,6 +50,20 @@ class NoticeEditFragment
         with(binding) {
             layoutInputTitle.tilEt.setText(selectedNotice.title)
             layoutInputContent.tilEt.setText(selectedNotice.content)
+        }
+    }
+
+    private fun initView() {
+        with(binding) {
+            layoutInputTitle.tilLayout.initInFlow(
+                resources.getString(R.string.notice_title),
+                resources.getString(R.string.notice_helper_text)
+            )
+
+            layoutInputContent.tilLayout.initInFlow(
+                resources.getString(R.string.notice_content),
+                resources.getString(R.string.notice_helper_text)
+            )
         }
     }
 }
