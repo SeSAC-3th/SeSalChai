@@ -14,6 +14,13 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.FragmentRateBinding
+import org.sesac.management.util.common.Referecne
+import org.sesac.management.util.common.Referecne.AVERAGE
+import org.sesac.management.util.common.Referecne.DANCE
+import org.sesac.management.util.common.Referecne.INCOME
+import org.sesac.management.util.common.Referecne.PERFORMACE
+import org.sesac.management.util.common.Referecne.POPULARITY
+import org.sesac.management.util.common.Referecne.SING
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 import org.sesac.management.view.adapter.RateAdapter
@@ -27,27 +34,33 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
             layoutRateToolbar.setToolbarMenu("평가", true)
 
             chipRateAverage.setOnAvoidDuplicateClick {
-
+                viewModel.getAllArtist()
+                observeArtistRate(AVERAGE)
             }
 
             chipRateIncome.setOnAvoidDuplicateClickFlow {
-
+                viewModel.getAllArtist()
+                observeArtistRate(INCOME)
             }
 
             chipRatePopularity.setOnAvoidDuplicateClick {
-
+                viewModel.getAllArtist()
+                observeArtistRate(POPULARITY)
             }
 
             chipRateSing.setOnAvoidDuplicateClick {
-
+                viewModel.getAllArtist()
+                observeArtistRate(SING)
             }
 
             chipRateDance.setOnAvoidDuplicateClick {
-
+                viewModel.getAllArtist()
+                observeArtistRate(DANCE)
             }
 
             chipRatePerformance.setOnAvoidDuplicateClick {
-
+                viewModel.getAllArtist()
+                observeArtistRate(PERFORMACE)
             }
         }
 
@@ -93,50 +106,78 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
 
         binding.recyclerRateRanking.layoutManager = manager
 
-        viewModel.getAllArtist.observe(viewLifecycleOwner) {
-            if (it != null) {
-                val result = it.sortedByDescending { it.rate?.average ?: 0f }
+    }
 
-                binding.recyclerRateRanking.adapter = RateAdapter(result) {
+    fun observeArtistRate(reference: Referecne) {
+        viewModel.getAllArtist.observe(viewLifecycleOwner) { list ->
+            if (list != null) {
+                var result: List<Artist>
+                when (reference) {
+                    AVERAGE -> {
+                        result = list.sortedByDescending { it.rate?.average ?: 0f }
+                    }
 
-                    viewModel.getArtistById(it.artistId)
+                    INCOME -> {
+                        result = list.sortedByDescending { it.rate?.income ?: 0 }
+                    }
 
-                    binding.layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
+                    POPULARITY -> {
+                        result = list.sortedByDescending { it.rate?.popularity ?: 0 }
+                    }
+
+                    SING -> {
+                        result = list.sortedByDescending { it.rate?.sing ?: 0 }
+                    }
+
+                    DANCE -> {
+                        result = list.sortedByDescending { it.rate?.dance ?: 0 }
+                    }
+
+                    PERFORMACE -> {
+                        result = list.sortedByDescending { it.rate?.performance ?: 0 }
+                    }
+
+                    else -> {
+                        result = listOf<Artist>()
+                    }
                 }
-                binding.barChartRateCompare.xAxis.valueFormatter = MyXAxisFormatter(result)
 
-                val entries = arrayListOf<BarEntry>()
-                for ((idx, value) in result.withIndex()) {
-                    if (value.rate != null)
-                        entries.add(BarEntry((idx + 1) + 0.2f, value.rate!!.average))
-                }
+                with(binding){
+                    recyclerRateRanking.adapter = RateAdapter(result) {
 
-                val set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
-                set.color =
-                    ContextCompat.getColor(requireContext(), R.color.primary2) // 바 그래프 색 설정
+                        viewModel.getArtistById(it.artistId)
 
-                set.setColors(
-                    Color.parseColor("#FFF78B"),
-                    Color.parseColor("#FFD38C"),
-                    Color.parseColor("#8DEBFF"),
-                    Color.parseColor("#FF8E9C"),
-                    Color.parseColor("#C5FF8C"),
-                    //            R.color.rateBar1,
-                    //            R.color.rateBar2,
-                    //            R.color.rateBar3,
-                    //            R.color.rateBar4,
-                    //            R.color.rateBar5
-                )
+                        layoutRateMain.changeFragment(this@RateFragment, ArtistDetailFragment())
+                    }
+                    barChartRateCompare.xAxis.valueFormatter = MyXAxisFormatter(result)
 
+                    val entries = arrayListOf<BarEntry>()
+                    for ((idx, value) in result.withIndex()) {
+                        if (value.rate != null)
+                            entries.add(BarEntry((idx + 1) + 0.2f, value.rate!!.average))
+                    }
 
-//                val dataSet: ArrayList<IBarDataSet> = ArrayList()
-//                dataSet.add(set)
-                val data = BarData(listOf(set))
-                data.barWidth = 0.7f //막대 너비 설정
-                binding.barChartRateCompare.run {
-                    this.data = data //차트의 데이터를 data로 설정해줌.
-                    setFitBars(true)
-                    invalidate()
+                    val set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
+                    set.color =
+                        ContextCompat.getColor(requireContext(), R.color.primary2) // 바 그래프 색 설정
+
+                    set.setColors(
+                        Color.parseColor("#FFF78B"),
+                        Color.parseColor("#FFD38C"),
+                        Color.parseColor("#8DEBFF"),
+                        Color.parseColor("#FF8E9C"),
+                        Color.parseColor("#C5FF8C")
+                    )
+
+                    val data = BarData(listOf(set))
+
+                    data.barWidth = 0.7f //막대 너비 설정
+
+                    barChartRateCompare.run {
+                        this.data = data //차트의 데이터를 data로 설정해줌.
+                        setFitBars(true)
+                        invalidate()
+                    }
                 }
             }
         }

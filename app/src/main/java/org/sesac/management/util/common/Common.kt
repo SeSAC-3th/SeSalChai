@@ -39,3 +39,8 @@ const val NOTICE_DB_NAME = "tb_notice"
 fun showToastMessage(message: String) {
     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show()
 }
+
+// rate 정렬 평가 기준
+enum class Referecne {
+    AVERAGE, INCOME, POPULARITY, SING, DANCE, PERFORMACE
+}
