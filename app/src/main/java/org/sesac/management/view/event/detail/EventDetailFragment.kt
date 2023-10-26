@@ -53,6 +53,7 @@ class EventDetailFragment
             eventId = event.eventId
             getEventDetail(event)
             eventViewModel.getArtistFromEvent(eventId)
+            updateUI(event)
         }
     }
 
@@ -63,7 +64,16 @@ class EventDetailFragment
                 getSelectArtist(artist)
             }
         }
+    }
 
+    private fun updateUI(event : Event) {
+        with(binding) {
+            ivEvent.setImageBitmap(event.imgUri)
+            tvEventTitle.text=event.name
+            tvEventTime.text=event.date.toString()
+            tvEventPlace.text=event.place
+            tvEventDescription.text=event.description
+        }
     }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
