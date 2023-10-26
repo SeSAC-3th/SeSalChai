@@ -45,29 +45,9 @@ class ArtistEnrollFragment :
         }
 
     override fun onViewCreated() {
-        Log.d("ArtistEnrollFragment arguemnts", arguments.toString())
-        if (arguments == null) {
-            initView()
-        } else {
-            initEditView()
-        }
+        initView()
         initTextWatcher()
         observeData()
-
-        /* 취소 버튼 */
-        binding.btnCancel.setOnClickListener {
-            backPress()
-        }
-
-        /* 저장 버튼 */
-        binding.btnSave.setOnClickListener {
-//                enrollArtist()
-            if (arguments == null) {
-                enrollArtist()
-            } else {
-                updateArtist()
-            }
-        }
     }
 
     private fun enrollArtist() {
@@ -119,10 +99,6 @@ class ArtistEnrollFragment :
         }
     }
 
-    private fun updateArtist() {
-
-    }
-
     // 각각의 입력값이 비어있거나 기본 값이면 false 반환
     private fun checkValidationAndEnroll(
         debutDate: List<String>,
@@ -164,45 +140,15 @@ class ArtistEnrollFragment :
                 R.array.artist_types,
                 android.R.layout.simple_list_item_1
             )
-        }
-    }
 
-    private fun initEditView() {
-        with(binding) {
-            /* toolbar 아이콘, 텍스트 설정 */
-            layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_title), true)
-            layoutInputDebut.tilLayout.initInFlow(
-                resources.getString(R.string.artist_debut_date),
-                resources.getString(R.string.artist_debut_helper)
-            )
-            layoutInputDebut.tilEt.text =
-                Editable.Factory.getInstance()
-                    .newEditable(arguments?.getString("artistDebut") ?: "")
+            /* 취소 버튼 */
+            binding.btnCancel.setOnClickListener {
+                backPress()
+            }
 
-            layoutInputName.tilLayout.initInFlow(
-                resources.getString(R.string.artist_name),
-                resources.getString(R.string.artist_name_helper)
-            )
-            layoutInputName.tilEt.text =
-                Editable.Factory.getInstance().newEditable(arguments?.getString("artistName") ?: "")
-
-            layoutInputMember.tilLayout.initInFlow(
-                resources.getString(R.string.artist_member),
-                resources.getString(R.string.artist_member_helper)
-            )
-            layoutInputMember.tilEt.text =
-                Editable.Factory.getInstance()
-                    .newEditable(arguments?.getString("artistMember") ?: "")
-
-            spinnerArtistType.adapter = ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.artist_types,
-                android.R.layout.simple_list_item_1
-            )
-
-            /* image 설정 */
-            ivArtist.setOnClickListener {
-                getContent.launch("image/*")
+            /* 저장 버튼 */
+            binding.btnSave.setOnClickListener {
+                enrollArtist()
             }
         }
     }

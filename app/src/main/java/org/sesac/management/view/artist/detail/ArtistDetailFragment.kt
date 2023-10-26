@@ -16,13 +16,11 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.model.toModelArtist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
 import org.sesac.management.view.event.EventFragment
-import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
@@ -89,28 +87,15 @@ class ArtistDetailFragment :
 
     private fun initView() {
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
-                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
-            }
+            layoutToolbar.setToolbarMenu("아티스트 상세", true)
             ivArtistEdit.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putInt("artistId", tempArtist.artistId)
-                bundle.putString("artistDebut", tempArtist.debutDay.toString())
-                bundle.putString("artistName", tempArtist.name)
-                bundle.putString("artistMember", tempArtist.memberInfo)
-                bundle.putString("artistType", tempArtist.type.toString())
-                val artistEditFragment = ArtistEnrollFragment()
-                artistEditFragment.arguments = bundle
-                childFragmentManager.beginTransaction()
-                    .add(binding.artistDetailLayout.id, artistEditFragment)
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss()
+                editArtist()
             }
 
             /* Bottom Sheet show*/
             radarChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
-                bundle.putInt("artistId", artistId)
+                bundle.putInt("artistId", tempArtist.artistId)
                 bundle.putInt("rateId", rateId)
                 val rateBottomSheet = RateBottomSheet()
                 rateBottomSheet.arguments = bundle
@@ -142,13 +127,27 @@ class ArtistDetailFragment :
         }
     }
 
+    private fun editArtist() {
+        val artistEditFragment = ArtistEditFragment()
+        childFragmentManager.beginTransaction()
+            .add(binding.artistDetailLayout.id, artistEditFragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
     /**
      * MPAndroidChart Settings Method
      * rate 항목에 맞게 라벨을 추가하였습니다.
      */
     private fun chartSettings() {
-        with(binding){
-            val labels = listOf(getString(R.string.rate_income), getString(R.string.rate_popularity), getString(R.string.rate_sing), getString(R.string.rate_dance), getString(R.string.rate_performance))
+        with(binding) {
+            val labels = listOf(
+                getString(R.string.rate_income),
+                getString(R.string.rate_popularity),
+                getString(R.string.rate_sing),
+                getString(R.string.rate_dance),
+                getString(R.string.rate_performance)
+            )
             radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
             radarChart.xAxis.labelCount = labels.size
             radarChart.yAxis.axisMaximum = 5f
