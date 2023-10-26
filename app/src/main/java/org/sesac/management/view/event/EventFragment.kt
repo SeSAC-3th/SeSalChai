@@ -42,12 +42,12 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
 
-        // livedata-flow
-        viewModel.eventByID(1).observe(viewLifecycleOwner) {
-            if (it != null) {
-
-            }
-        }
+//        // livedata-flow
+//        viewModel.eventByID(1).observe(viewLifecycleOwner) {
+//            if (it != null) {
+//
+//            }
+//        }
 
 
     }
@@ -86,6 +86,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     viewModel.deleteEvent(it.eventId)
                 },
                 onClick = {
+                    viewModel.eventByID(it)
                     binding.eventLayout.changeFragment(
                         this@EventFragment,
                         EventDetailFragment()

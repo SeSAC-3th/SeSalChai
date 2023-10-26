@@ -1,11 +1,16 @@
 package org.sesac.management.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.data.local.dao.EventDAO
 import org.sesac.management.data.local.dao.ManagerDAO
+import org.sesac.management.util.common.ioScope
 
 class EventRepository(
     private val eventDAO: EventDAO,
@@ -15,6 +20,7 @@ class EventRepository(
     companion object {
         @Volatile
         private var instance: EventRepository? = null
+        var getEventDetail = MutableLiveData<Event>()
 
         fun getInstance(eventDAO: EventDAO, manageDAO: ManagerDAO, artistDAO: ArtistDAO) =
             instance ?: synchronized(this) {
@@ -39,11 +45,15 @@ class EventRepository(
     // flow - flow
     fun getAllEvent() = eventDAO.getAllEvent()
 
+    // 가장 최근에 만들어진 데이터를 가져옵니다.
+    suspend fun getMostRecentEvent() = eventDAO.getMostRecentEvent()
+
     // livedata - flow
-    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId) // id로 검색
+//    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId) // id로 검색
 
     // livedata - livedata
-    fun getSearchEvent(eventName: String): LiveData<List<Event>> = eventDAO.getSearchEvent(eventName) // 이름으로 검색
+    fun getSearchEvent(eventName: String): LiveData<List<Event>> =
+        eventDAO.getSearchEvent(eventName) // 이름으로 검색
 
     // 행사 정보를 갱신할 때 사용
     suspend fun updateEvent(event: Event) {
@@ -64,7 +74,7 @@ class EventRepository(
     // 행사 정보 등록시 아티스트 목록을 보여주기 위한 메서드
     suspend fun getAllArtist() = artistDAO.getAllArtist()
 
-//    /**
+    //    /**
 //     * R : 전체 Event를 조회하는 메서드
 //     * async를 통해 상태 관리 및 결과 값이 필요한 작업을 한다.
 //     * suspend function : 코루틴 전용 메서드, 이전 코드의 실행을 중단하고 suspend 함수 처리가
@@ -81,20 +91,20 @@ class EventRepository(
 //     * @param eventId
 //     * @author 혜원
 //     */
-//    suspend fun getSearchByEventID(eventId: Int): Event {
-//        eventLiveData = asyncGetSearchByEventId(eventId)
-//        return eventLiveData.value!!
-//    }
-//
-//    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
-//        val returnedId = coroutineIOScope.async(Dispatchers.IO) {
-//            return@async eventDAO.getSearchByEventID(eventId)
-//        }.await()
-//        return CoroutineScope(Dispatchers.Main).async {
-//            eventLiveData.value = returnedId
-//            eventLiveData
-//        }.await()
-//    }
+    suspend fun getSearchByEventID(eventId: Int): Event {
+        getEventDetail = asyncGetSearchByEventId(eventId)
+        return getEventDetail.value!!
+    }
+
+    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
+        val returnedId = ioScope.async(Dispatchers.IO) {
+            return@async eventDAO.getSearchByEventID(eventId)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getEventDetail.value = returnedId
+            getEventDetail
+        }.await()
+    }
 //
 //    /**
 //     * R : EventFragment 상단의 Search layout을 통해 결과값을 가져오는 메서드

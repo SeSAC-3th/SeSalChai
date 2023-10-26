@@ -13,7 +13,7 @@ import org.sesac.management.databinding.ItemCommonItemBinding
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 
 class EventRecyclerAdapter(
-    private val items: List<Event>, private val onClick: () -> Unit,
+    private val items: List<Event>, private val onClick: (Int) -> Unit,
     private val onDelete: (Event) -> Unit
 ) :
     RecyclerView.Adapter<EventRecyclerAdapter.EventInfo>() {
@@ -22,7 +22,7 @@ class EventRecyclerAdapter(
         init {
             // 아이템 뷰 클릭 시 Fragment로 이동
             itemBinding.root.setOnClickListener {
-                onClick()
+                onClick(items[absoluteAdapterPosition].eventId)
             }
             itemBinding.btnDelete.setOnClickListener {
                 Toast.makeText(getApplicationContext(),"데이터가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
