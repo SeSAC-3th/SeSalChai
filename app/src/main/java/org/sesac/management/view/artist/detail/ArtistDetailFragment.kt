@@ -3,6 +3,7 @@ package org.sesac.management.view.artist.detail
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.github.mikephil.charting.data.RadarData
@@ -13,6 +14,7 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.model.toModelArtist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
@@ -20,6 +22,7 @@ import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
 import org.sesac.management.view.event.EventFragment
+import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
@@ -27,6 +30,7 @@ class ArtistDetailFragment :
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
+    private lateinit var tempArtist: org.sesac.management.data.model.Artist
     private var rateId = 0
 
     /* events 임시 데이터 */
@@ -42,6 +46,8 @@ class ArtistDetailFragment :
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             if (artist != null) {
                 artistId = artist.artistId
+                tempArtist = artist.toModelArtist()
+                Log.e("tempArtist", tempArtist.toString())
                 getViewToData(artist)
             }
         }
@@ -85,6 +91,20 @@ class ArtistDetailFragment :
         with(binding) {
             layoutToolbar.setToolbarMenu("아티스트 상세", true) {
                 artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            }
+            ivArtistEdit.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("artistId", tempArtist.artistId)
+                bundle.putString("artistDebut", tempArtist.debutDay.toString())
+                bundle.putString("artistName", tempArtist.name)
+                bundle.putString("artistMember", tempArtist.memberInfo)
+                bundle.putString("artistType", tempArtist.type.toString())
+                val artistEditFragment = ArtistEnrollFragment()
+                artistEditFragment.arguments = bundle
+                childFragmentManager.beginTransaction()
+                    .add(binding.artistDetailLayout.id, artistEditFragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss()
             }
 
             /* Bottom Sheet show*/

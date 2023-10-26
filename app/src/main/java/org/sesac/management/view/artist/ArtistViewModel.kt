@@ -30,15 +30,6 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
     fun getAllArtist() {
         viewModelScope.launch {
             getAllArtist.value = repository.getAllArtist()
-//            getAllArtist.value = listOf(
-//                Artist("a", "d", Date(), ArtistType.SINGER, Rate(4f, 4, 1, 1, 3, 2, 1)),
-//                Artist("b", "d", Date(), ArtistType.SINGER, Rate(3f, 1, 4, 2, 2, 4, 5)),
-//                Artist("c", "d", Date(), ArtistType.SINGER, Rate(2f, 2, 3, 4, 1, 3, 3)),
-//                Artist("d", "d", Date(), ArtistType.SINGER, Rate(1f, 3, 2, 3, 4, 1, 2)),
-//                Artist("e", "d", Date(), ArtistType.SINGER, Rate(2.5f, 3, 4, 2, 1, 4, 7)),
-//                Artist("f", "d", Date(), ArtistType.SINGER, Rate(3.5f, 1, 4, 4, 3, 2, 6))
-//
-//            )
         }
     }
 
@@ -109,7 +100,7 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
     }
 
     fun insertRateWithArtist(rate: Rate, artistId: Int) = viewModelScope.launch {
-//        repository.insertRateWithArtist(rate, artistId)
+        repository.insertRateWithArtist(rate, artistId)
     }
 
     fun getSearchResult(keyword: String) {
