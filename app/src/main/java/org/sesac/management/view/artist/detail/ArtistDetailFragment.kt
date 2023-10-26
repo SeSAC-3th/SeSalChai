@@ -123,6 +123,32 @@ class ArtistDetailFragment :
             .commitAllowingStateLoss()
     }
 
+    /**
+     * MPAndroidChart Settings Method
+     * rate 항목에 맞게 라벨을 추가하였습니다.
+     */
+    private fun chartSettings() {
+        with(binding) {
+            val labels = listOf(
+                getString(R.string.rate_income),
+                getString(R.string.rate_popularity),
+                getString(R.string.rate_sing),
+                getString(R.string.rate_dance),
+                getString(R.string.rate_performance)
+            )
+            radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+            radarChart.xAxis.labelCount = labels.size
+            radarChart.yAxis.axisMaximum = 5f
+            radarChart.yAxis.axisMinimum = 0f
+
+            /* Chart 데이터 */
+            val entries = ArrayList<RadarEntry>()
+            entries.add(RadarEntry(5f))
+            entries.add(RadarEntry(2f))
+            entries.add(RadarEntry(3f))
+            entries.add(RadarEntry(4f))
+            entries.add(RadarEntry(5f))
+
     private fun initViewPager(data: List<Event>) {
         /* viewPager2 */
         viewPager = binding.vpSchedule
@@ -212,4 +238,3 @@ class ArtistDetailFragment :
         }
     }
 }
-
