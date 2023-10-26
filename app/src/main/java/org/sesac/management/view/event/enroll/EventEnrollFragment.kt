@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ import java.util.Date
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate){
-    val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    val eventViewModel: EventViewModel by activityViewModels()
     val TAG: String = "로그"
 
     /* 선택한 이미지 절대경로 가져오기 */

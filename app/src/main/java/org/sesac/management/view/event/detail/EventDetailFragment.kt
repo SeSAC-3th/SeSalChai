@@ -36,7 +36,7 @@ class EventDetailFragment
     val TAG: String = "로그"
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
-    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    private val eventViewModel: EventViewModel by activityViewModels()
     private val artistViewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistIdList: List<Int>
     private var eventId = 0
@@ -62,6 +62,18 @@ class EventDetailFragment
                 Log.d(TAG, "참여 아티스트 : $it")
                 getSelectArtist(artist)
             }
+        }
+
+
+    private fun updateUI(event : Event) {
+        with(binding) {
+            event.imgUri?.let {
+                ivEvent.setImageBitmap(it)
+            }
+            tvEventTitle.text=event.name
+            tvEventTime.text=event.date.toString()
+            tvEventPlace.text=event.place
+            tvEventDescription.text=event.description
         }
 
     }

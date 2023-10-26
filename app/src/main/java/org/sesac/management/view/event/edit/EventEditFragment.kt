@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -26,11 +27,17 @@ import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class EventEditFragment :
+
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate),
     DialogDataListener {
     val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
     private var selectedArtists = mutableListOf<DialogItem>()
     val TAG: String = "로그"
+
+    BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
+    val eventViewModel: EventViewModel by activityViewModels()
+    private lateinit var selectedEvent : Event
+
     private var eventDescription: String = ""
 
     /* 선택한 이미지 절대경로 가져오기 */
@@ -53,8 +60,11 @@ class EventEditFragment :
 //        getArtistInfo()
         initTextWatcher()
         with(binding) {
-            tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
-                enrollEvent()
+
+
+            tbScheduleEnroll.setToolbarMenu("행사 수정", true) {
+                updateEvent()
+
             }
 
             ivEvent.setOnClickListener {
@@ -88,7 +98,8 @@ class EventEditFragment :
                         eventPlace,
                         Date(),
                         eventDescription,
-                        bitmap
+                        bitmap,
+                        eventViewModel.getEventDetail.value!!.eventId
                     )
                 )
             }

@@ -20,11 +20,13 @@ import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.detail.EventDetailFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()
+    private val eventVieModel: EventViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
@@ -43,7 +45,6 @@ class ArtistDetailFragment :
             if (artist != null) {
                 artistId = artist.artistId
                 tempArtist = artist.toModelArtist()
-                Log.e("tempArtist", tempArtist.toString())
                 getViewToData(artist)
             }
         }
@@ -186,6 +187,7 @@ class ArtistDetailFragment :
         }
 
         adapter = ArtistEventViewPagerAdapter(data, onClick = {
+            eventVieModel.eventByID(it)
             binding.artistDetailLayout.changeFragment(
                 this@ArtistDetailFragment,
                 EventDetailFragment()
