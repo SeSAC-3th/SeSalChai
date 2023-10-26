@@ -137,5 +137,4 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             }
         }
     }
-
 }
