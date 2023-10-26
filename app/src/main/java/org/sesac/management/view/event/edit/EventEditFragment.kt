@@ -50,7 +50,7 @@ class EventEditFragment :
         initView()
         initTextWatcher()
         with(binding) {
-            tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
+            tbScheduleEnroll.setToolbarMenu("행사 수정", true) {
                 updateEvent()
             }
 
