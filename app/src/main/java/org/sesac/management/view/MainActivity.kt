@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
          ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
      }
 
-
     private lateinit var currentFragmentTag: String // 현재 보고 있는 fragment의 tag
 
     // 화면을 회전했을 때 지금까지 보고 있던 fragment의 tag로 해당 fragment를 찾아서 보여준다.
@@ -46,7 +45,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+
         artistViewModel.getAllArtist()
+
         if (savedInstanceState == null) { // 화면을 회전했을 경우 savedInstatnceState가 null이 아니다. 즉 내부 코드는 한번만 실행된다.
             supportFragmentManager
                 .beginTransaction()
@@ -54,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
             currentFragmentTag = HOME // 현재 보고 있는 fragmet의 Tag
         }
-
         clickBottomNavigationView()
     }
 

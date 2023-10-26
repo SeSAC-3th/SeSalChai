@@ -1,6 +1,5 @@
 package org.sesac.management.data.local.dao
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -65,6 +64,13 @@ interface EventDAO {
      */
     @Query("""SELECT * FROM event WHERE name=:eventName""")
     fun getSearchEvent(eventName: String): LiveData<List<Event>>
+
+    /**
+     * R: 가장 최근에 만들어진 event를 불러오는 함수
+     * @return
+     */
+    @Query("SELECT * FROM event ORDER BY event_id DESC LIMIT 1")
+    fun getMostRecentEvent(): Event?
 
     /**
      * U: Event 객체를 기존 속성을 복사하여, 객체르 만들고 변경하고자 하는 속성만 수정한후,

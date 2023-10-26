@@ -1,6 +1,5 @@
 package org.sesac.management.view.artist.detail
 
-import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -41,9 +40,10 @@ class ArtistDetailFragment :
 
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            artistId = artist.artistId
-//            rateId = artist.rateId ?: -1
-            getViewToData(artist)
+            if (artist != null) {
+                artistId = artist.artistId
+                getViewToData(artist)
+            }
         }
     }
 
@@ -64,9 +64,9 @@ class ArtistDetailFragment :
             //멤버 정보
             tvMember.text = ""
             memberInfo.forEach {
-                if(tvMember.text.isNotEmpty()){
+                if (tvMember.text.isNotEmpty()) {
                     tvMember.text = "${binding.tvMember.text}\n$it"
-                }else{
+                } else {
                     tvMember.text = it
                 }
             }
@@ -86,6 +86,7 @@ class ArtistDetailFragment :
             layoutToolbar.setToolbarMenu("아티스트 상세", true) {
                 artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
             }
+
             /* Bottom Sheet show*/
             radarChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
@@ -155,7 +156,6 @@ class ArtistDetailFragment :
     }
 
     /* viewpager2 adapter 연결 및 margin 설정 */
-    @SuppressLint("NotifyDataSetChanged")
     private fun initialiseViewPager() = viewPager.apply {
         /* 여백, 너비에 대한 정의 */
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)

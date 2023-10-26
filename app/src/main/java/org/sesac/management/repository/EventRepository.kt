@@ -95,6 +95,13 @@ class EventRepository(
 //     * @param eventId
 //     * @author 혜원
 //     */
+    /**
+     * R : EventFragment에서 RecyclerView의 item을 클릭했을 때,
+     * 클릭한 position의 eventId를 기준으로, EventDetailFragment에 일치하는 데이터를 불러오기 위한 메서드
+     * eventId로 Event 테이블에 저장된 값을 가져온다.
+     * @param eventId
+     * @author 혜원
+     */
     suspend fun getSearchByEventID(eventId: Int): Event {
         getEventDetail = asyncGetSearchByEventId(eventId)
         return getEventDetail.value!!
