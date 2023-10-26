@@ -29,7 +29,6 @@ class ArtistRepository(artistDAO: ArtistDAO) {
     companion object {
         @Volatile
         private var instance: ArtistRepository? = null
-
         fun getInstance(artistDAO: ArtistDAO) =
             instance ?: synchronized(this) {
                 instance ?: ArtistRepository(artistDAO).also { instance = it }
@@ -108,7 +107,7 @@ class ArtistRepository(artistDAO: ArtistDAO) {
     // Rate용
     fun insertRateWithArtist(rate: Rate, artistId: Int) {
         ioScope.launch {
-//            artistDAO.insertArtist(artist = )
+//            artistDAO.insertRateWithArtist(rate, artistId)
         }
     }
 

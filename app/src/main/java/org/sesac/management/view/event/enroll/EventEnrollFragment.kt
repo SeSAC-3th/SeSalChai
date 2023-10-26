@@ -10,27 +10,32 @@ import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Manager
+import org.sesac.management.data.model.DialogItem
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
+import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
+import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
-import org.sesac.management.view.event.dialog.CustomDialogListener
+import org.sesac.management.view.event.dialog.DialogDataListener
+import org.sesac.management.view.event.edit.EventEditFragment
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate),
-    CustomDialogListener {
+    DialogDataListener {
     val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
-
-    //    val artistViewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
-    private lateinit var eventDescription: String
+    private var selectedArtists = mutableListOf<DialogItem>()
+    private lateinit var artistIdList: List<Int>
+    val TAG: String = "로그"
 
     /* 선택한 이미지 절대경로 가져오기 */
     //* bitmap을 insert할때 넘겨주면 됩니다
@@ -55,14 +60,16 @@ class EventEnrollFragment :
             tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
                 enrollEvent()
             }
+
             ivEvent.setOnClickListener {
                 getContent.launch("image/*")
             }
             /* 참여 아티스트 */
             with(tvJoinArtist) {
                 setOnAvoidDuplicateClick {
-                    val addDialog = ArtistAddDialogFragment()
-                    requireActivity()?.let {
+                    requireActivity().let {
+                        val addDialog = ArtistAddDialogFragment()
+                        addDialog.onDialogDataSelected(this@EventEnrollFragment)
                         addDialog.show(childFragmentManager, "artistDialogFragment")
                     }
                 }
@@ -74,8 +81,9 @@ class EventEnrollFragment :
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
+        val eventDescription = binding.layoutInputDate.tilEt.text.toString()
 
-        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성layoutInputDate 검사
+        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 layoutInputDate 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
                 eventViewModel.insertEvent(
@@ -84,13 +92,11 @@ class EventEnrollFragment :
                         eventPlace,
                         Date(),
                         eventDescription,
-//                        bitmap,
-                        null
+                        bitmap
                     )
                 )
             }
             showToastMessage(resources.getString(R.string.event_enroll_success))
-            // DB에 저장하고 popBackStack()
             backPress()
         } else {
             with(binding) {
@@ -100,6 +106,12 @@ class EventEnrollFragment :
                 } else if (layoutInputName.tilEt.text.toString().isEmpty()) {
                     layoutInputName.tilLayout.error =
                         resources.getString(R.string.event_error_name_empty)
+                } else if (layoutInputPlace.tilEt.text.toString().isEmpty()) {
+                    layoutInputPlace.tilLayout.error =
+                        resources.getString(R.string.event_error_place_empty)
+                } else if (layoutInputDescription.tilEt.text.toString().isEmpty()) {
+                    layoutInputDescription.tilLayout.error =
+                        resources.getString(R.string.event_error_discription_empty)
                 } else {
                     // 스피너를 선택 안했을 때
                 }
@@ -124,16 +136,19 @@ class EventEnrollFragment :
             layoutInputName.tilLayout.afterTextChangesInFlow(inputName)
             layoutInputName.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputDebut)
+            layoutInputDate.tilLayout.afterTextChangesInFlow(inputDate)
+            layoutInputDate.tilLayout.focusChangesInFlow(hasFocus)
+
+            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputPlace)
             layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputDate.tilLayout.afterTextChangesInFlow(inputMember)
-            layoutInputDate.tilLayout.focusChangesInFlow(hasFocus)
+            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputDescription)
+            layoutInputDescription.tilLayout.focusChangesInFlow(hasFocus)
         }
 
     }
 
-    private val inputDebut = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+    private val inputDate = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()
         val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
         if (inputText.isEmpty()) {
@@ -159,7 +174,7 @@ class EventEnrollFragment :
         }
     }
 
-    private val inputMember = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+    private val inputPlace = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()
         if (inputText.isEmpty()) {
             layout.initInFlow(
@@ -168,16 +183,26 @@ class EventEnrollFragment :
         }
     }
 
+    private val inputDescription = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+        val inputText = event.editable.toString()
+        if (inputText.isEmpty()) {
+            layout.initInFlow(
+                resources.getString(R.string.event_description), ""
+            )
+        }
+    }
+
     private val hasFocus =
         { layout: TextInputLayout, hasFocus: Boolean -> if (hasFocus) layout.error = null }
 
-    /**
-     * Dialog에서 Callback
-     *
-     * @param selectedArtists
-     */
-    override fun onArtistsSelected(selectedArtists: List<String>) {
-        eventDescription = selectedArtists.joinToString(", ")
-    }
 
+    /**
+     * ArtistAddDialogFragment로 부터 넘겨온 Artist 목록 List
+     *
+     * @param checkedList
+     */
+    override fun onDialogDataSelected(checkedList: MutableList<DialogItem>) {
+        selectedArtists = checkedList
+        artistIdList = selectedArtists.map { it.artistId }
+    }
 }

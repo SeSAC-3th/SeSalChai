@@ -8,10 +8,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
+<<<<<<< HEAD
+import org.sesac.management.data.model.eventList
+=======
 import org.sesac.management.data.local.Event
+>>>>>>> 79b8fddb51bbd1750d5d29c1da760f08097e3bf3
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.extension.setOnFinishInputFlow
 import org.sesac.management.view.adapter.recyclerview.EventRecyclerAdapter
 import org.sesac.management.view.event.detail.EventDetailFragment
 import org.sesac.management.view.event.enroll.EventEnrollFragment
@@ -23,6 +28,8 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
     }
 
     override fun onViewCreated() {
+        initView()
+
         // flow-flow
         /**
          * R : 전체 이벤트 데이터 정보 읽기 메서드
@@ -38,19 +45,17 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
 
-        // livedata-flow
-        viewModel.getEventByID(1).observe(viewLifecycleOwner) {
-            if (it != null) {
+//        // livedata-flow
+//        viewModel.eventByID(1).observe(viewLifecycleOwner) {
+//            if (it != null) {
+//
+//            }
+//        }
 
-            }
-        }
 
-        // livedata-livedata
-        viewModel.getEventByName("").observe(viewLifecycleOwner) {
-            if (it != null) {
-            }
-        }
+    }
 
+    private fun initView() {
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {
@@ -58,8 +63,22 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     eventLayout.changeFragment(this@EventFragment, EventEnrollFragment())
                 }
             }
+            with(tbEvent) {
+                etSearch.setOnFinishInputFlow { text ->
+                    if (text.isNotEmpty()) {
+                        // livedata-livedata
+                        viewModel.eventByName(text).observe(viewLifecycleOwner) {
+                            makeList(it)
+                        }
+                    } else {
+                        viewModel.getSearch()
+                    }
+                }
+            }
         }
+
     }
+
     private fun makeList(eventList: List<Event>) {
         /* RecyclerView */
         with(binding.rvEvent) {
@@ -70,6 +89,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     viewModel.deleteEvent(it.eventId)
                 },
                 onClick = {
+                    viewModel.eventByID(it)
                     binding.eventLayout.changeFragment(
                         this@EventFragment,
                         EventDetailFragment()
