@@ -10,12 +10,14 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
 class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var getAllResult = MutableLiveData<List<Artist>>()
+    private val coroutineIOScope = CoroutineScope(IO)
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
     private var getEventResult = MutableLiveData<List<Event>>()

@@ -22,6 +22,7 @@ import org.sesac.management.view.artist.ArtistFragment
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.event.EventFragment
 import org.sesac.management.view.home.HomeFragment
+import org.sesac.management.view.notice.NoticeViewModel
 import org.sesac.management.view.rate.RateFragment
 
 class MainActivity : AppCompatActivity() {
