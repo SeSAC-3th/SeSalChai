@@ -1,5 +1,6 @@
 package org.sesac.management.view.notice.enroll
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.R
@@ -20,7 +21,7 @@ import java.util.Locale
 class NoticeEnrollFragment() :
     BaseFragment<FragmentNoticeEnrollBinding>(FragmentNoticeEnrollBinding::inflate) {
 
-    private val noticeViewModel: NoticeViewModel by viewModels()
+    private val noticeViewModel: NoticeViewModel by activityViewModels()
 
     private var message: String = ""
     override fun onViewCreated() {

@@ -1,6 +1,7 @@
 package org.sesac.management.view.notice.edit
 
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.R
@@ -18,12 +19,11 @@ import java.util.Date
 class NoticeEditFragment
     : BaseFragment<FragmentNoticeEditBinding>(FragmentNoticeEditBinding::inflate) {
 
-    private val sharedViewModel: NoticeViewModel
-            by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
+    private val noticeViewModel: NoticeViewModel by activityViewModels()
 
     private lateinit var selectedNotice: Notice
 
-    private var message : String=""
+    private var message: String = ""
 
     override fun onViewCreated() {
         initView()
@@ -36,19 +36,19 @@ class NoticeEditFragment
                 } else {
                     val title = layoutInputTitle.tilEt.text.toString()
                     val content = layoutInputContent.tilEt.text.toString()
-                    sharedViewModel.update(
+                    noticeViewModel.update(
                         Notice(
                             title,
                             content,
                             Date(),
-                            sharedViewModel.selectedNoticeId
+                            noticeViewModel.selectedNoticeId
                         )
                     )
                     backPress()
                 }
             }
 
-            sharedViewModel.selectedNotice?.observe(
+            noticeViewModel.selectedNotice?.observe(
                 viewLifecycleOwner
             ) { notice ->
                 notice?.let {
@@ -81,10 +81,10 @@ class NoticeEditFragment
     }
 
     private fun checkInput(): Boolean {
-       val flag=binding.layoutInputTitle.tilEt.text.toString().isEmpty() ||
-               binding.layoutInputContent.tilEt.text.toString().isEmpty()
+        val flag = binding.layoutInputTitle.tilEt.text.toString().isEmpty() ||
+                binding.layoutInputContent.tilEt.text.toString().isEmpty()
         if (flag) {
-            message="제목, 내용을 모두 입력해주세요"
+            message = "제목, 내용을 모두 입력해주세요"
         }
         return flag
     }

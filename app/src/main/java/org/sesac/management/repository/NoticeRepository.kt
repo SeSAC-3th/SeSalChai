@@ -8,13 +8,11 @@ import org.sesac.management.data.local.Notice
 import org.sesac.management.data.local.dao.NoticeDAO
 import org.sesac.management.util.common.ioScope
 
-class NoticeRepository(application: Application) {
-    private var noticeDao: NoticeDAO
+class NoticeRepository(private val noticeDao: NoticeDAO) {
     val allNotices: LiveData<List<Notice>>?
     val homeNotices: LiveData<List<Notice>>?
 
     init {
-        noticeDao = AgencyRoomDB.getInstance(application).generateNoticeDAO()
         allNotices = noticeDao.getAllNotice()
         homeNotices = noticeDao.getHomeNotice()
     }
@@ -40,16 +38,11 @@ class NoticeRepository(application: Application) {
     }
 
     companion object {
+        @Volatile
         private var INSTANCE: NoticeRepository? = null
 
-        fun initialize(application: Application) {
-            if (INSTANCE == null) {
-                INSTANCE = NoticeRepository(application)
-            }
-        }
-
-        fun getInstance(): NoticeRepository {
-            return INSTANCE ?: throw IllegalStateException("Please Initialize Repo")
+        fun getInstance(noticeDao: NoticeDAO) = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: NoticeRepository(noticeDao).also { INSTANCE = it }
         }
     }
 }
