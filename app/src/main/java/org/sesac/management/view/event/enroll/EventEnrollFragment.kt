@@ -9,19 +9,15 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.util.convertUriToBitmap
-import org.sesac.management.data.local.Artist
-import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.common.ARTIST
-import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
-import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 import org.sesac.management.view.event.dialog.CustomDialogListener
@@ -32,8 +28,10 @@ class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate),
     CustomDialogListener {
     val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
-//    val artistViewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
+
+    //    val artistViewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var eventDescription: String
+
     /* 선택한 이미지 절대경로 가져오기 */
     //* bitmap을 insert할때 넘겨주면 됩니다
     private var bitmap: Bitmap? = null
@@ -63,7 +61,7 @@ class EventEnrollFragment :
             /* 참여 아티스트 */
             with(tvJoinArtist) {
                 setOnAvoidDuplicateClick {
-                    val addDialog= ArtistAddDialogFragment()
+                    val addDialog = ArtistAddDialogFragment()
                     requireActivity()?.let {
                         addDialog.show(childFragmentManager, "artistDialogFragment")
                     }
@@ -115,7 +113,7 @@ class EventEnrollFragment :
         eventName: String,
         eventPlace: String,
         eventDate: List<String>,
-        eventDescription: String
+        eventDescription: String,
     ) =
         !(eventName.isEmpty() || eventPlace.isEmpty() || eventDate.isEmpty() || eventDescription.isEmpty())
 

@@ -6,8 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.databinding.FragmentEventDetailBinding
-import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.edit.EventEditFragment
 
 class EventDetailFragment
@@ -33,6 +33,4 @@ class EventDetailFragment
             outRect.right = space
         }
     }
-
-
 }

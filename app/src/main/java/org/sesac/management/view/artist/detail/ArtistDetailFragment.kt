@@ -1,21 +1,16 @@
 package org.sesac.management.view.artist.detail
 
-import android.os.Bundle
 import android.icu.text.SimpleDateFormat
 import android.os.Build
-import android.text.format.DateFormat
-import android.util.Log
+import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.extension.changeFragment
-import org.sesac.management.view.MainActivity
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
@@ -40,7 +35,6 @@ class ArtistDetailFragment :
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             artistId = artist.artistId
-//            rateId = artist.rateId ?: -1
             getViewToData(artist)
         }
     }

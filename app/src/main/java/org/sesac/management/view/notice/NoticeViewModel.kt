@@ -42,7 +42,7 @@ class NoticeViewModel(application: Application) : AndroidViewModel(application) 
         noticeRepository.deleteNotice(noticeId)
     }
 
-    fun update(notice : Notice) {
+    fun update(notice: Notice) {
         noticeRepository.updateNotice(notice)
     }
 }

@@ -1,8 +1,5 @@
 package org.sesac.management.view.artist
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,11 +13,8 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
-import org.sesac.management.repository.EventRepository
-import org.sesac.management.util.common.ARTIST
-import org.sesac.management.view.event.EventViewModel
 
-class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
+class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
 
     var getAllArtist = MutableLiveData<List<Artist>>()
     var getArtistDetail = MutableLiveData<Artist>()
@@ -43,10 +37,15 @@ class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
         }
     }
 
-    fun insertRateWithArtist(rate: Rate, artistId: Int) = viewModelScope.launch {
-        repository.insertRateWithArtist(rate, artistId)
-    }
-
+//    fun insertRateWithArtist(rate: Rate, artistId: Int) = viewModelScope.launch {
+//        repository.insertRateWithArtist(rate, artistId)
+//    }
+//    fun getAllRate() = viewModelScope.launch {
+//        _rateList.value = repository.getAllRate()
+//    }
+//    fun getRate(rateId: Int) = viewModelScope.launch {
+//        repository.getRate(rateId)
+//    }
 
     fun getSearchResult(keyword: String) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -77,7 +76,6 @@ class ArtistViewModel(private val repository : ArtistRepository) : ViewModel() {
             repository.deleteArtist(artist)
         }
     }
-
 
     class ArtistViewModelFactory(private val artistRepository: ArtistRepository) :
         ViewModelProvider.Factory {
