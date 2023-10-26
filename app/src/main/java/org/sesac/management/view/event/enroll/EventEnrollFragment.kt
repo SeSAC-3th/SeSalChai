@@ -63,7 +63,7 @@ class EventEnrollFragment :
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
-        val eventDescription = binding.layoutInputDate.tilEt.text.toString()
+        val eventDescription = binding.layoutInputDescription.tilEt.text.toString()
 
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 layoutInputDate 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
