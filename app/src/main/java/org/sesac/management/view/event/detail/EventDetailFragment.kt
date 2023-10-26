@@ -96,11 +96,9 @@ class EventDetailFragment
             /* 참여 아티스트 */
             with(tvEventArtistTitle) {
                 setOnAvoidDuplicateClick {
-                    requireActivity().let {
-                        val addDialog = ArtistAddDialogFragment()
-                        addDialog.onDialogDataSelected(this@EventDetailFragment)
-                        addDialog.show(childFragmentManager, "artistDialogFragment")
-                    }
+                    val addDialog = ArtistAddDialogFragment()
+                    addDialog.onDialogDataSelected(this@EventDetailFragment)
+                    addDialog.show(childFragmentManager, "artistDialogFragment")
                 }
             }
         }
