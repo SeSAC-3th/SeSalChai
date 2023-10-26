@@ -98,13 +98,6 @@ class ArtistDetailFragment :
 
             /* Bottom Sheet show*/
             radarChart.setOnAvoidDuplicateClick {
-//                val bundle = Bundle()
-//                bundle.putInt("artistId", artistId)
-//                bundle.putInt("rateId", rateId)
-//                val rateBottomSheet = RateBottomSheet()
-//                rateBottomSheet.arguments = bundle
-//                childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
-//                    .commitAllowingStateLoss()
                 if (viewModel.getArtistDetail.value?.rate == null) {
                     RateBottomSheet().show(
                         childFragmentManager,
@@ -154,12 +147,6 @@ class ArtistDetailFragment :
         }
 
         adapter = ArtistEventViewPagerAdapter(data, onClick = {
-//            childFragmentManager
-//                .beginTransaction()
-//                //TODO: EventDetailFragment로 이동
-//                .add(binding.artistDetailLayout.id, EventFragment())
-//                .addToBackStack(null)
-//                .commitAllowingStateLoss()
             binding.artistDetailLayout.changeFragment(
                 this@ArtistDetailFragment,
                 EventDetailFragment()
