@@ -1,14 +1,23 @@
 package org.sesac.management.view.artist.edit
 
+import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
+import android.os.Build
+import android.text.Editable
+import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.fragment.app.viewModels
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
+import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentArtistEditBinding
+import org.sesac.management.util.common.ARTIST
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
@@ -20,9 +29,22 @@ import java.util.Date
 
 class ArtistEditFragment :
     BaseFragment<FragmentArtistEditBinding>(FragmentArtistEditBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels()
+    private val viewModel: ArtistViewModel by activityViewModels()
 
+    private var artistId = 0
     private var insertValue = emptyList<Long>()
+    private var bitmap: Bitmap? = null
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                Log.d(ARTIST, "uri: $uri")
+                binding.ivArtist.setImageURI(uri)
+                context?.let { it1 ->
+                    var tmpBitmap = convertUriToBitmap(uri, it1)
+                    tmpBitmap?.let { it2 -> bitmap = it2 }
+                }
+            }
+        }
 
     override fun onViewCreated() {
         initView()
@@ -30,7 +52,7 @@ class ArtistEditFragment :
         observeData()
     }
 
-    private fun enrollArtist() {
+    private fun updateArtist() {
         val debutDate = binding.layoutInputDebut.tilEt.text.toString().split('-')
         val groupName = binding.layoutInputName.tilEt.text.toString()
         val memberListString = binding.layoutInputMember.tilEt.text.toString()
@@ -45,19 +67,19 @@ class ArtistEditFragment :
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             ioScope.launch {
-//                viewModel.insertArtist(
-//                    Artist(
-//                        groupName,
-//                        memberListString,
-//                        Date(),
-//                        artistType,
-//                        null,
-//                        "Url",
-//                        0
-//                    )
-//                )
+                viewModel.updateArtist(
+                    Artist(
+                        groupName,
+                        memberListString,
+                        Date(),
+                        artistType,
+                        null,
+                        bitmap,
+                        artistId
+                    )
+                )
             }
-            showToastMessage(resources.getString(R.string.artist_enroll_success))
+            showToastMessage(resources.getString(R.string.artist_enroll_update))
             // DB에 저장하고 popBackStack()
             backPress()
         } else {
@@ -88,27 +110,52 @@ class ArtistEditFragment :
     ) =
         !(debutDate.isEmpty() || groupName.isEmpty() || memberListString.isEmpty() || artistType == ArtistType.NONE)
 
-
     private fun observeData() {
         viewModel.insertArtist.observe(viewLifecycleOwner) {
             insertValue = it
+        }
+        viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
+            if (artist != null) {
+                setView(artist)
+            }
+        }
+    }
+
+    private fun setView(artist: Artist) {
+        with(binding) {
+            //이미지
+            artist.imgUri?.let {
+                ivArtist.setImageBitmap(it)
+            } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                layoutInputDebut.tilEt.text = Editable.Factory.getInstance()
+                    .newEditable(SimpleDateFormat("yyyy-MM-dd").format(artist.debutDay))
+            }
+
+            layoutInputName.tilEt.text = Editable.Factory.getInstance().newEditable(artist.name)
+            layoutInputMember.tilEt.text =
+                Editable.Factory.getInstance().newEditable(artist.memberInfo)
+            artistId = artist.artistId
+            bitmap = artist.imgUri
         }
     }
 
     private fun initView() {
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
-            layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_edit_title), true) {
-                // 클릭 이벤트
-            }
+            layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_title), true)
+
             layoutInputDebut.tilLayout.initInFlow(
                 resources.getString(R.string.artist_debut_date),
                 resources.getString(R.string.artist_debut_helper)
             )
+
             layoutInputName.tilLayout.initInFlow(
                 resources.getString(R.string.artist_name),
                 resources.getString(R.string.artist_name_helper)
             )
+
             layoutInputMember.tilLayout.initInFlow(
                 resources.getString(R.string.artist_member),
                 resources.getString(R.string.artist_member_helper)
@@ -119,6 +166,21 @@ class ArtistEditFragment :
                 R.array.artist_types,
                 android.R.layout.simple_list_item_1
             )
+
+            /* image 설정 */
+            ivArtist.setOnClickListener {
+                getContent.launch("image/*")
+            }
+
+            /* 취소 버튼 */
+            binding.btnCancel.setOnClickListener {
+                backPress()
+            }
+
+            /* 저장 버튼 */
+            binding.btnSave.setOnClickListener {
+                updateArtist()
+            }
         }
     }
 

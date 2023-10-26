@@ -73,19 +73,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
-    suspend fun updateArtist(artist: Artist): Unit? {
-        updateResult = asyncUpdateArtist(artist)
-        return updateResult.value
-    }
-
-    private suspend fun asyncUpdateArtist(artist: Artist): MutableLiveData<Unit> {
-        val updateReturn = coroutineIOScope.async(IO) {
-            return@async artistDAO.updateArtist(artist)
-        }.await()
-        return mainScope.async {
-            updateResult.value = updateReturn
-            updateResult
-        }.await()
+    fun updateArtist(artist: Artist) {
+        ioScope.launch {
+            artistDAO.updateArtist(artist)
+        }
     }
 
     ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
@@ -120,6 +111,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
             )
         }
     }
+
 
     suspend fun getArtistById(id: Int): Artist? {
         getDetail = asyncgetArtistById(id)
