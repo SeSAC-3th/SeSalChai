@@ -10,14 +10,11 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
-class ArtistRepository(artistDAO: ArtistDAO) {
-    private var artistDAO: ArtistDAO = artistDAO
-    private val coroutineIOScope = CoroutineScope(IO)
+class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var getAllResult = MutableLiveData<List<Artist>>()
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
@@ -87,29 +84,38 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         }.await()
     }
 
-    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
-    suspend fun getAllRate():MutableLiveData<MutableList<Rate>>{
-        getRateResult = asyncGetAllRate()
-        return getRateResult
-    }
-    suspend fun asyncGetAllRate():MutableLiveData<MutableList<Rate>>{
-        val getDetailValue = coroutineIOScope.async(IO) {
-            return@async artistDAO.getAllArtist()
-        }.await()
-        getDetailValue.forEach { it->
-            it.rate?.let { it1 -> getRateResult.value?.add(it1) }
-        }
-        return mainScope.async {
-            getRateResult
-        }.await()
-    }
-
-    // Rate용
-    fun insertRateWithArtist(rate: Rate, artistId: Int) {
-        ioScope.launch {
+//    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
+//    suspend fun getAllRate(): MutableLiveData<MutableList<Rate>> {
+//        getRateResult = asyncGetAllRate()
+//        return getRateResult
+//    }
+//
+//    suspend fun asyncGetAllRate(): MutableLiveData<MutableList<Rate>> {
+//        val getDetailValue = coroutineIOScope.async(IO) {
+//            return@async artistDAO.getAllArtist()
+//        }.await()
+//        getDetailValue.forEach { it ->
+//            it.rate?.let { it1 -> getRateResult.value?.add(it1) }
+//        }
+//        return CoroutineScope(Dispatchers.Main).async {
+//            getRateResult
+//        }.await()
+//    }
+//
+//    // Rate용
+//    fun insertRateWithArtist(rate: Rate, artistId: Int) {
+//        ioScope.launch {
 //            artistDAO.insertRateWithArtist(rate, artistId)
-        }
-    }
+//        }
+//    }
+//
+//    fun getAllRate() = artistDAO.getAllRate()
+//    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
+//    fun insertRateWithArtist(rate: Rate, artistId: Int) {
+//        ioScope.launch {
+////            artistDAO.insertArtist(artist = )
+//        }
+//    }
 
     suspend fun getArtistById(id: Int): Artist? {
         getDetail = asyncgetArtistById(id)

@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import org.sesac.management.R
 import org.sesac.management.databinding.ActivityMainBinding
 import org.sesac.management.util.common.ARTIST

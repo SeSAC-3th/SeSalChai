@@ -6,6 +6,7 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeEnrollBinding
+import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
@@ -20,19 +21,25 @@ class NoticeEnrollFragment() :
     BaseFragment<FragmentNoticeEnrollBinding>(FragmentNoticeEnrollBinding::inflate) {
 
     private val noticeViewModel: NoticeViewModel by viewModels()
+
+    private var message: String = ""
     override fun onViewCreated() {
         initView()
-        initTextWatcher()
         with(binding) {
             toolbarNoticeEnroll.setToolbarMenu("공지사항 등록", true) {
                 binding.toolbarNoticeEnroll.ivHamburger.setImageResource(R.drawable.baseline_edit_24)
-                val notice = Notice(
-                    binding.layoutInputTitle.tilEt.text.toString(),
-                    binding.layoutInputContent.tilEt.text.toString(),
-                    Date(),
-                )
-                noticeViewModel.insertNoticeInfo(notice)
-                backPress()
+
+                if (checkInput()) {
+                    showToastMessage(message)
+                } else {
+                    val notice = Notice(
+                        binding.layoutInputTitle.tilEt.text.toString(),
+                        binding.layoutInputContent.tilEt.text.toString(),
+                        Date(),
+                    )
+                    noticeViewModel.insertNoticeInfo(notice)
+                    backPress()
+                }
             }
         }
     }
@@ -41,48 +48,22 @@ class NoticeEnrollFragment() :
         with(binding) {
             layoutInputTitle.tilLayout.initInFlow(
                 resources.getString(R.string.notice_title),
-                resources.getString(R.string.notice_helper_text)
+                resources.getString(R.string.notice_error_title_empty)
             )
 
             layoutInputContent.tilLayout.initInFlow(
                 resources.getString(R.string.notice_content),
-                resources.getString(R.string.notice_helper_text)
+                resources.getString(R.string.notice_error_content_empty)
             )
         }
     }
 
-    private fun initTextWatcher() {
-        with(binding) {
-            layoutInputTitle.tilLayout.afterTextChangesInFlow(inputTitle)
-            layoutInputTitle.tilLayout.focusChangesInFlow(focus)
-
-            layoutInputContent.tilLayout.afterTextChangesInFlow(inputContent)
-            layoutInputTitle.tilLayout.focusChangesInFlow(focus)
+    private fun checkInput(): Boolean {
+        val flag = binding.layoutInputTitle.tilEt.text.toString().isEmpty() ||
+                binding.layoutInputContent.tilEt.text.toString().isEmpty()
+        if (flag) {
+            message = "제목, 내용을 모두 입력해주세요"
         }
+        return flag
     }
-
-    private val inputTitle = { layout: TextInputLayout, title: AfterTextChangeEvent ->
-        val inputTitle = title.editable.toString()
-        if (inputTitle.isEmpty()) {
-            layout.initInFlow(
-                resources.getString(R.string.notice_title),
-                resources.getString(R.string.notice_error_title_empty),
-            )
-        }
-    }
-
-    private val inputContent = { layout: TextInputLayout, title: AfterTextChangeEvent ->
-        val inputContent = title.editable.toString()
-        if (inputContent.isEmpty()) {
-            layout.initInFlow(
-                resources.getString(R.string.notice_content),
-                resources.getString(R.string.notice_error_content_empty),
-            )
-        }
-    }
-
-    private val focus = { layout: TextInputLayout, hasFocus: Boolean ->
-        if (hasFocus) layout.error = null
-    }
-
 }
