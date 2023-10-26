@@ -94,9 +94,9 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
 
             with(tbArtist) {
                 etSearch.setOnFinishInputFlow {
-                    if(it.isNotEmpty()){
+                    if (it.isNotEmpty()) {
                         viewModel.getSearchResult(it)
-                    }else{
+                    } else {
                         viewModel.getAllArtist()
                     }
                 }
@@ -130,9 +130,9 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            if(!s.toString().isEmpty()){
+            if (!s.toString().isEmpty()) {
                 viewModel.getSearchResult(s.toString())
-            }else{
+            } else {
                 viewModel.getAllArtist()
             }
         }

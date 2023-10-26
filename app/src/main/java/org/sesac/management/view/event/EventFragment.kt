@@ -37,7 +37,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                 viewModel.getSearch()
                 viewModel.event.collect { event ->
                     makeList(event)
-                    Log.d(TAG, "EventFragment: $event")
                 }
             }
         }

@@ -33,7 +33,7 @@ class EventRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): EventInfo {
         val binding =
             ItemCommonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

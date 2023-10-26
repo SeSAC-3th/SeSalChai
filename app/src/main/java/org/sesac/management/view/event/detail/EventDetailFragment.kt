@@ -10,8 +10,8 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentEventDetailBinding
-import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.edit.EventEditFragment
 
 class EventDetailFragment
@@ -61,6 +61,4 @@ class EventDetailFragment
             outRect.right = space
         }
     }
-
-
 }

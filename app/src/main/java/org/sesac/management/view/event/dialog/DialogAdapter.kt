@@ -22,7 +22,11 @@ class DialogAdapter(private val itemList: List<DialogItem>, private val customDi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
-        val binding = ItemEventEnrollAddArtistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemEventEnrollAddArtistBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return DialogViewHolder(binding)
     }
 

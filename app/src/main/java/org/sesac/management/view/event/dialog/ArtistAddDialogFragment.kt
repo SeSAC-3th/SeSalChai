@@ -1,5 +1,6 @@
 package org.sesac.management.view.event.dialog
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -36,6 +37,7 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
      * 선택한 아티스트의 데이터 값을 넘겨줍니다.
      * @author 혜원
      */
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.binding = FragmentArtistAddDialogBinding.inflate(LayoutInflater.from(requireContext()))
         val dialogLayout = this.binding.root

@@ -104,6 +104,7 @@ fun TextInputLayout.afterTextChangesInFlow(actionInMainThread: (TextInputLayout,
             .launchIn(mainScope)
     }
 }
+
 // editText의 포커스가 바꼈을 때 동작을 설정하는 메서드
 fun TextInputLayout.focusChangesInFlow(actionInMainThread: (TextInputLayout, Boolean) -> Unit) {
     if (this.editText != null) {
@@ -113,6 +114,7 @@ fun TextInputLayout.focusChangesInFlow(actionInMainThread: (TextInputLayout, Boo
             }.launchIn(mainScope)
     }
 }
+
 // TextInputLayout의 hint와 helperText를 설정하는 메서드
 fun TextInputLayout.initInFlow(hint: String, helperText: String) {
     this.hint = hint
