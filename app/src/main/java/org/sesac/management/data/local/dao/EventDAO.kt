@@ -1,5 +1,6 @@
 package org.sesac.management.data.local.dao
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -7,7 +8,9 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Manager
 
 @Dao
 interface EventDAO {
@@ -29,8 +32,32 @@ interface EventDAO {
      * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
      * @return event
      */
+    @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")
+    fun getSearchByArtistID(artistId: Int): Artist
+
+    /**
+     * R: eventId로 참여중인 artist 반환하기
+     */
+    @Query("""SELECT * FROM manager WHERE :eventId==manager.event_id""")
+    fun searchAllArtistByEvent(eventId: Int): List<Manager>
+    @Transaction
+    suspend fun getEventsFromArtist(eventId: Int): MutableList<Artist> {
+        var managerList: List<Manager> = searchAllArtistByEvent(eventId)
+        var tmpEventList: MutableList<Artist> = mutableListOf()
+        managerList.forEach { manager ->
+            var events: Artist = getSearchByArtistID(manager.artistId)
+            tmpEventList.add(events)
+        }
+        return tmpEventList
+    }
+
+
+    /**
+     * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
+     * @return event
+     */
     @Query("""SELECT * FROM event WHERE event_id=:eventId""")
-    fun getSearchByEventID(eventId: Int): Flow<Event>
+    fun getSearchByEventID(eventId: Int): Event
 
     /**
      * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
@@ -38,7 +65,6 @@ interface EventDAO {
      */
     @Query("""SELECT * FROM event WHERE name=:eventName""")
     fun getSearchEvent(eventName: String): LiveData<List<Event>>
-
 
     /**
      * U: Event 객체를 기존 속성을 복사하여, 객체르 만들고 변경하고자 하는 속성만 수정한후,

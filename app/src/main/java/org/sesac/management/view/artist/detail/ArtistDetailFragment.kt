@@ -1,10 +1,15 @@
 package org.sesac.management.view.artist.detail
 
+import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.github.mikephil.charting.data.RadarData
+import com.github.mikephil.charting.data.RadarDataSet
+import com.github.mikephil.charting.data.RadarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
@@ -15,6 +20,7 @@ import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
 import org.sesac.management.view.artist.edit.ArtistEditFragment
+import org.sesac.management.view.event.EventFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
@@ -30,11 +36,13 @@ class ArtistDetailFragment :
     override fun onViewCreated() {
         observeData()
         initView()
+        chartSettings()
     }
 
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             artistId = artist.artistId
+//            rateId = artist.rateId ?: -1
             getViewToData(artist)
         }
     }
@@ -78,9 +86,8 @@ class ArtistDetailFragment :
             layoutToolbar.setToolbarMenu("아티스트 상세", true) {
                 artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
             }
-
             /* Bottom Sheet show*/
-            ivChart.setOnAvoidDuplicateClick {
+            radarChart.setOnAvoidDuplicateClick {
                 val bundle = Bundle()
                 bundle.putInt("artistId", artistId)
                 bundle.putInt("rateId", rateId)
@@ -114,7 +121,41 @@ class ArtistDetailFragment :
         }
     }
 
+    /**
+     * MPAndroidChart Settings Method
+     * rate 항목에 맞게 라벨을 추가하였습니다.
+     */
+    private fun chartSettings() {
+        with(binding){
+            val labels = listOf(getString(R.string.rate_income), getString(R.string.rate_popularity), getString(R.string.rate_sing), getString(R.string.rate_dance), getString(R.string.rate_performance))
+            radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+            radarChart.xAxis.labelCount = labels.size
+            radarChart.yAxis.axisMaximum = 5f
+            radarChart.yAxis.axisMinimum = 0f
+
+            /* Chart 데이터 */
+            val entries = ArrayList<RadarEntry>()
+            entries.add(RadarEntry(5f))
+            entries.add(RadarEntry(2f))
+            entries.add(RadarEntry(3f))
+            entries.add(RadarEntry(4f))
+            entries.add(RadarEntry(5f))
+
+            val dataSet = RadarDataSet(entries, "평가")
+            dataSet.color = resources.getColor(R.color.primary1)
+            dataSet.setDrawFilled(true)
+            dataSet.fillColor = resources.getColor(R.color.primary2)
+
+            val data = RadarData(dataSet)
+            radarChart.data = data
+            radarChart.description.isEnabled = false
+            radarChart.yAxis.setDrawLabels(false)
+            radarChart.setTouchEnabled(false)
+        }
+    }
+
     /* viewpager2 adapter 연결 및 margin 설정 */
+    @SuppressLint("NotifyDataSetChanged")
     private fun initialiseViewPager() = viewPager.apply {
         /* 여백, 너비에 대한 정의 */
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
@@ -127,7 +168,14 @@ class ArtistDetailFragment :
             page.translationX = position * -offsetPx
         }
 
-        adapter = ArtistEventViewPagerAdapter(events).apply {
+        adapter = ArtistEventViewPagerAdapter(events, onClick = {
+            childFragmentManager
+                .beginTransaction()
+                //TODO: EventDetailFragment로 이동
+                .add(binding.artistDetailLayout.id, EventFragment())
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
+        }).apply {
             notifyDataSetChanged()
         }
     }

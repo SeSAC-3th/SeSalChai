@@ -49,7 +49,7 @@
                 android:layout_marginStart="30dp"
                 android:elevation="8dp"
                 android:src="@drawable/ic_launcher_background"
-                app:layout_constraintBottom_toBottomOf="@id/iv_chart"
+                app:layout_constraintBottom_toBottomOf="@id/radar_chart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_artist" />
 
@@ -67,10 +67,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- MPAndroidChart -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_chart"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+            <com.github.mikephil.charting.charts.RadarChart
+                android:id="@+id/radar_chart"
+                android:layout_width="160dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="@dimen/vertical_margin"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/tv_member"
                 app:layout_constraintStart_toStartOf="@id/iv_artist"
-                app:layout_constraintTop_toBottomOf="@id/iv_chart" />
+                app:layout_constraintTop_toBottomOf="@id/radar_chart" />
 
             <!-- 멤버 Body -->
             <com.google.android.material.textview.MaterialTextView

@@ -1,14 +1,11 @@
 package org.sesac.management.view.event.dialog
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.fragment.app.DialogFragment
@@ -18,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.model.DialogItem
 import org.sesac.management.databinding.FragmentArtistAddDialogBinding
+import org.sesac.management.view.adapter.DialogAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 
 class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
@@ -37,7 +35,6 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
      * 선택한 아티스트의 데이터 값을 넘겨줍니다.
      * @author 혜원
      */
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.binding = FragmentArtistAddDialogBinding.inflate(LayoutInflater.from(requireContext()))
         val dialogLayout = this.binding.root
@@ -50,7 +47,7 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
         rvArtist.layoutManager = LinearLayoutManager(requireContext())
         // artists를 DialogItem으로 변환
         val dialogItems = allArtist?.map { artist ->
-            DialogItem(artist.name, artist.artistId, selectedItems.contains(artist.name))
+            DialogItem(artist.name , artist.artistId, selectedItems.contains(artist.name))
         }
 
         val adapter = dialogItems?.let { DialogAdapter(it, this) }

@@ -40,10 +40,6 @@ android {
 }
 
 dependencies {
-    // fragment ktx
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
-
-
     // lifecycle
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

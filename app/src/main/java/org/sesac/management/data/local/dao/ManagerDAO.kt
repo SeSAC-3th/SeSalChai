@@ -1,7 +1,9 @@
 package org.sesac.management.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.Query
 import org.sesac.management.data.local.Manager
 
 @Dao
@@ -12,5 +14,6 @@ interface ManagerDAO {
      * @return event
      */
     @Insert
-    fun insertManager(vararg manager: Manager): List<Long>
+    suspend fun insertManager(vararg manager: Manager): List<Long>
+
 }

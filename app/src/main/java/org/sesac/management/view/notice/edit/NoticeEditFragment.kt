@@ -1,5 +1,6 @@
 package org.sesac.management.view.notice.edit
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment

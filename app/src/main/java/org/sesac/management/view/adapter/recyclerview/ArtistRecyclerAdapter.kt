@@ -12,7 +12,7 @@ import org.sesac.management.databinding.ItemCommonItemBinding
 
 class ArtistRecyclerAdapter(
     private val items: List<Artist>, private val onClick: (Int) -> Unit,
-    private val onDelete: (Artist) -> Unit,
+    private val onDelete: (Artist) -> Unit
 ) :
     RecyclerView.Adapter<ArtistRecyclerAdapter.ArtistInfo>() {
     inner class ArtistInfo(val itemBinding: ItemCommonItemBinding) :
@@ -30,7 +30,7 @@ class ArtistRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ArtistInfo {
         val binding =
             ItemCommonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -47,6 +47,7 @@ class ArtistRecyclerAdapter(
             }
             tvTitle.text = agencyInfo.name
             tvContents.text = agencyInfo.type.toString()
+
         }
     }
 

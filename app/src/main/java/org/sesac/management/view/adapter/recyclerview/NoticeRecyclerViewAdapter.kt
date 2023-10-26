@@ -21,9 +21,7 @@ class NoticeRecyclerAdapter(
             with(itemBinding) {
                 tvTitle.text = item.title
                 tvDate.text = SimpleDateFormat(
-                    "yyyy년 MMM dd일", Locale.KOREA
-                ).format(item.createdAt)
-
+                    "yyyy년 MMM dd일", Locale.KOREA).format(item.createdAt)
 
                 root.setOnAvoidDuplicateClickFlow {
                     onClick(item.noticeId)
@@ -38,7 +36,7 @@ class NoticeRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): NoticeInfo {
         val binding =
             ItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)

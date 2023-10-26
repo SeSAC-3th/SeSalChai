@@ -32,12 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         LinearLayoutManager.VERTICAL,
                         false
                     )
-                addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(),
-                        LinearLayoutManager.VERTICAL
-                    )
-                )
+                addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
                 observeSetUp()
 
             }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Rate
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
@@ -23,9 +24,6 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
-    companion object {
-        @Volatile
-        private var instance: ArtistRepository? = null
 
     companion object {
         @Volatile

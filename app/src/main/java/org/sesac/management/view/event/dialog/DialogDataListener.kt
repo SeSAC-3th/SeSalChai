@@ -1,5 +1,6 @@
 package org.sesac.management.view.event.dialog
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.sesac.management.data.model.DialogItem
 
 /**
