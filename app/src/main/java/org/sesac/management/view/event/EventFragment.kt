@@ -47,7 +47,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 //            }
 //        }
 
-
     }
 
     private fun initView() {

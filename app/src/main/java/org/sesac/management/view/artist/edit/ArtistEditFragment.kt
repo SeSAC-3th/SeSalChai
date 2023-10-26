@@ -6,6 +6,7 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.databinding.FragmentArtistEditBinding
 import org.sesac.management.util.common.ioScope
@@ -15,6 +16,7 @@ import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
+import java.util.Date
 
 class ArtistEditFragment :
     BaseFragment<FragmentArtistEditBinding>(FragmentArtistEditBinding::inflate) {

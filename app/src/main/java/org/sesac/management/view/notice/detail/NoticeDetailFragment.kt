@@ -1,7 +1,6 @@
 package org.sesac.management.view.notice.detail
 
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeDetailBinding

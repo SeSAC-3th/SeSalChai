@@ -4,10 +4,12 @@ import android.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeBinding
 import org.sesac.management.util.extension.changeFragment
+import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 import org.sesac.management.view.adapter.recyclerview.NoticeRecyclerAdapter
 import org.sesac.management.view.notice.detail.NoticeDetailFragment
 import org.sesac.management.view.notice.enroll.NoticeEnrollFragment

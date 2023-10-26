@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.data.local.dao.ArtistDAO
@@ -21,6 +23,7 @@ class EventRepository(
         @Volatile
         private var instance: EventRepository? = null
         var getEventDetail = MutableLiveData<Event>()
+        private var getArtistResult = MutableLiveData<List<Artist>>()
 
         fun getInstance(eventDAO: EventDAO, manageDAO: ManagerDAO, artistDAO: ArtistDAO) =
             instance ?: synchronized(this) {
@@ -45,6 +48,7 @@ class EventRepository(
     // flow - flow
     fun getAllEvent() = eventDAO.getAllEvent()
 
+
     // livedata - flow
 //    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId) // id로 검색
 
@@ -52,6 +56,45 @@ class EventRepository(
     fun getSearchEvent(eventName: String): LiveData<List<Event>> =
         eventDAO.getSearchEvent(eventName) // 이름으로 검색
 
+    // 행사 정보를 갱신할 때 사용
+    suspend fun updateEvent(event: Event) {
+        eventDAO.updateEvent(event)
+    }
+
+    // 행사 id로 삭제할 때 사용
+    suspend fun deleteEvent(eventId: Int) {
+        eventDAO.deleteEvent(eventId)
+    }
+
+
+    // 매니저에 하나로 mapping된 행사 정보와 아티스트 정보를 저장할 때 사용
+    suspend fun insertManager(manager: Manager) {
+        manageDAO.insertManager(manager)
+    }
+
+
+
+//    // 행사 정보 등록시 아티스트 목록을 보여주기 위한 메서드
+//    suspend fun getAllArtist() = artistDAO.getAllArtist()
+//
+
+    //    /**
+//     * R : 전체 Event를 조회하는 메서드
+//     * async를 통해 상태 관리 및 결과 값이 필요한 작업을 한다.
+//     * suspend function : 코루틴 전용 메서드, 이전 코드의 실행을 중단하고 suspend 함수 처리가
+//     * 완료된 후 먼춰있는 scope 코드가 실행된다.
+//     * @author 혜원
+//     */
+//    suspend fun getAllEvent() = eventDAO.getAllEvent()
+//
+//
+//    /**
+//     * R : EventFragment에서 RecyclerView의 item을 클릭했을 때,
+//     * 클릭한 position의 eventId를 기준으로, EventDetailFragment에 일치하는 데이터를 불러오기 위한 메서드
+//     * eventId로 Event 테이블에 저장된 값을 가져온다.
+//     * @param eventId
+//     * @author 혜원
+//     */
     /**
      * R : EventFragment에서 RecyclerView의 item을 클릭했을 때,
      * 클릭한 position의 eventId를 기준으로, EventDetailFragment에 일치하는 데이터를 불러오기 위한 메서드
@@ -74,27 +117,27 @@ class EventRepository(
         }.await()
     }
 
-    // 가장 최근에 만들어진 데이터를 가져옵니다.
-    suspend fun getMostRecentEvent() = eventDAO.getMostRecentEvent()
 
-    // 행사 정보를 갱신할 때 사용
-    suspend fun updateEvent(event: Event) {
-        eventDAO.updateEvent(event)
+    /**
+     * R: EventDetail에서 보여주는 참여 아티스트
+     *
+     * @param artistId
+     * @author 혜원
+     */
+    suspend fun getArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
+        getArtistResult = asyncGetArtistFromEvent(eventId)
+        return getArtistResult
     }
 
-    // 행사 id로 삭제할 때 사용
-    suspend fun deleteEvent(eventId: Int) {
-        eventDAO.deleteEvent(eventId)
+    private suspend fun asyncGetArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
+        val eventReturn = ioScope.async(Dispatchers.IO) {
+            return@async eventDAO.getEventsFromArtist(eventId)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getArtistResult.value = eventReturn
+            getArtistResult
+        }.await()
     }
-
-
-    // 매니저에 하나로 mapping된 행사 정보와 아티스트 정보를 저장할 때 사용
-    fun insertManager(manager: Manager) {
-        manageDAO.insertManager(manager)
-    }
-
-    // 행사 정보 등록시 아티스트 목록을 보여주기 위한 메서드
-    suspend fun getAllArtist() = artistDAO.getAllArtist()
 
 //
 //    /**

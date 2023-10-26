@@ -20,9 +20,8 @@ class ApplicationClass : Application() {
 
     val database by lazy { AgencyRoomDB.getInstance(this) }
 
-
     val eventRepository by lazy {
-        EventRepository.getInstance(
+        EventRepository(
             eventDAO = database.generateEventDAO(),
             manageDAO = database.generateManagerDAO(),
             artistDAO = database.generateArtistDAO()

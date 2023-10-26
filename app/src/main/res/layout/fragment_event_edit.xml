@@ -5,9 +5,9 @@
     android:id="@+id/event_enroll_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:clickable="true"
-    android:focusable="true"
-    android:background="@color/white">
+    android:focusable="true">
 
     <include
         android:id="@+id/tb_schedule_enroll"
@@ -31,9 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_event"
@@ -54,6 +54,15 @@
                     android:layout_marginEnd="@dimen/horizontal_margin" />
 
                 <include
+                    android:id="@+id/layout_input_date"
+                    layout="@layout/layout_textinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/horizontal_margin"
+                    android:layout_marginTop="@dimen/content_title_margin_top"
+                    android:layout_marginEnd="@dimen/horizontal_margin" />
+
+                <include
                     android:id="@+id/layout_input_place"
                     layout="@layout/layout_textinput"
                     android:layout_width="match_parent"
@@ -63,7 +72,7 @@
                     android:layout_marginEnd="@dimen/horizontal_margin" />
 
                 <include
-                    android:id="@+id/layout_input_date"
+                    android:id="@+id/layout_input_description"
                     layout="@layout/layout_textinput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +85,7 @@
                     style="@style/content_textView_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event_description"
+                    android:text="@string/event_artist"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_input_date" />
             </LinearLayout>

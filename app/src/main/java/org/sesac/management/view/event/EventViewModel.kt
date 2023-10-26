@@ -9,12 +9,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.repository.EventRepository
 
+
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     var getEventDetail = MutableLiveData<Event>()
+    private var getArtistFromEvent = MutableLiveData<List<Artist>>()
 
     fun insertEvent(event: Event) {
         viewModelScope.launch {
@@ -31,7 +34,8 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
 
     private val _event = MutableStateFlow<List<Event>>(emptyList())
     val event: StateFlow<List<Event>> = _event.asStateFlow()
-    fun getSearch() { // flow-flow
+
+    fun getSearch() {
         viewModelScope.launch {
             eventRepository.getAllEvent().collect {
                 _event.value = it
@@ -39,17 +43,13 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
-    // livedata-livedata
-    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
-
-    // livedata-flow
-//    fun eventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
-
     fun eventByID(eventId: Int) {
         viewModelScope.launch {
             getEventDetail.value = eventRepository.getSearchByEventID(eventId)
         }
     }
+
+    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {
@@ -60,6 +60,12 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
     fun deleteEvent(eventId: Int) {
         viewModelScope.launch {
             eventRepository.deleteEvent(eventId)
+        }
+    }
+
+    fun getArtistFromEvent(eventId: Int) {
+        viewModelScope.launch {
+            getArtistFromEvent = eventRepository.getArtistFromEvent(eventId)
         }
     }
 

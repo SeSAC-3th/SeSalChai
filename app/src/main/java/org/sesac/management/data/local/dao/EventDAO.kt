@@ -7,7 +7,9 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.local.Manager
 
 @Dao
 interface EventDAO {
@@ -26,11 +28,28 @@ interface EventDAO {
     fun getAllEvent(): Flow<List<Event>>
 
     /**
-     * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
+     * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
      * @return event
      */
-    @Query("""SELECT * FROM event WHERE name=:eventName""")
-    fun getSearchEvent(eventName: String): LiveData<List<Event>>
+    @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")
+    fun getSearchByArtistID(artistId: Int): Artist
+
+    /**
+     * R: eventId로 참여중인 artist 반환하기
+     */
+    @Query("""SELECT * FROM manager WHERE :eventId==manager.event_id""")
+    fun searchAllArtistByEvent(eventId: Int): List<Manager>
+    @Transaction
+    suspend fun getEventsFromArtist(eventId: Int): MutableList<Artist> {
+        var managerList: List<Manager> = searchAllArtistByEvent(eventId)
+        var tmpEventList: MutableList<Artist> = mutableListOf()
+        managerList.forEach { manager ->
+            var events: Artist = getSearchByArtistID(manager.artistId)
+            tmpEventList.add(events)
+        }
+        return tmpEventList
+    }
+
 
     /**
      * R: event table에 있는 객체중, id가 일치하는 event를 반환하는 함수
@@ -38,8 +57,13 @@ interface EventDAO {
      */
     @Query("""SELECT * FROM event WHERE event_id=:eventId""")
     fun getSearchByEventID(eventId: Int): Event
-//    @Query("""SELECT * FROM event WHERE event_id=:eventId""")
-//    fun getSearchByEventID(eventId: Int): Flow<Event>
+
+    /**
+     * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
+     * @return event
+     */
+    @Query("""SELECT * FROM event WHERE name=:eventName""")
+    fun getSearchEvent(eventName: String): LiveData<List<Event>>
 
     /**
      * R: 가장 최근에 만들어진 event를 불러오는 함수

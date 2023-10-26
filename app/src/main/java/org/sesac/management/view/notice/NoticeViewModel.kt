@@ -43,7 +43,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
         noticeRepository.deleteNotice(noticeId)
     }
 
-    fun update(notice: Notice) {
+    fun update(notice : Notice) {
         noticeRepository.updateNotice(notice)
     }
 

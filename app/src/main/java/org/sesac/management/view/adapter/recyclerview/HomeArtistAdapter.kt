@@ -11,7 +11,7 @@ class HomeArtistAdapter(val artists: List<Artist>) :
     RecyclerView.Adapter<HomeArtistAdapter.ArtistViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ArtistViewHolder {
         return ArtistViewHolder(
             ItemHomeArtistBinding.inflate(LayoutInflater.from(parent.context), parent, false)

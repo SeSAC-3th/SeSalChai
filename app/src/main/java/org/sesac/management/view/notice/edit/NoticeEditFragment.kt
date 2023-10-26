@@ -1,19 +1,13 @@
 package org.sesac.management.view.notice.edit
 
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.google.android.material.textfield.TextInputLayout
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeEditBinding
 import org.sesac.management.util.common.showToastMessage
-import org.sesac.management.util.extension.afterTextChangesInFlow
-import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.notice.NoticeViewModel
-import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class NoticeEditFragment

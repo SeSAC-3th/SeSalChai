@@ -14,7 +14,7 @@ import org.sesac.management.util.common.ApplicationClass.Companion.getApplicatio
 
 class EventRecyclerAdapter(
     private val items: List<Event>, private val onClick: (Int) -> Unit,
-    private val onDelete: (Event) -> Unit
+    private val onDelete: (Event) -> Unit,
 ) :
     RecyclerView.Adapter<EventRecyclerAdapter.EventInfo>() {
     inner class EventInfo(val itemBinding: ItemCommonItemBinding) :
@@ -33,7 +33,7 @@ class EventRecyclerAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): EventInfo {
         val binding =
             ItemCommonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

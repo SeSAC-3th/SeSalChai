@@ -1,12 +1,12 @@
-package org.sesac.management.view.event.dialog
+package org.sesac.management.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.model.DialogItem
 import org.sesac.management.databinding.ItemEventEnrollAddArtistBinding
+import org.sesac.management.view.event.dialog.CustomDialogListener
 
 class DialogAdapter(private val itemList: List<DialogItem>, private val customDialogListener: CustomDialogListener) : RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     private val checkedItems = mutableListOf<Boolean>()
@@ -22,11 +22,7 @@ class DialogAdapter(private val itemList: List<DialogItem>, private val customDi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
-        val binding = ItemEventEnrollAddArtistBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemEventEnrollAddArtistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DialogViewHolder(binding)
     }
 
