@@ -51,6 +51,7 @@ class EventRecyclerAdapter(
             } ?: {
                 ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
             }
+
             tvTitle.text = agencyInfo.name
             tvContents.text = date
         }
