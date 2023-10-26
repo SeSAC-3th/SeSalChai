@@ -83,4 +83,16 @@
     <string name="artist_enroll_fail">등록에 실패했습니다.</string>
 
     <string name="artist_enroll_rate">이미 평점이 등록된 아티스트 입니다.</string>
+
+    <!-- Notice Hint -->
+    <string name="notice_title">제목</string>
+    <string name="notice_content">내용</string>
+
+    <string name="notice_helper_text"> </string>
+
+    <!-- Notice  InputLayout -->
+    <string name="notice_error_title_empty">제목을 입력 하세요</string>
+    <string name="notice_error_content_empty">내용을 입력 하세요</string>
+
+
 </resources>

@@ -11,6 +11,7 @@ class ApplicationClass : Application() {
         private lateinit var appInstance: ApplicationClass
         fun getApplicationContext(): ApplicationClass = appInstance
     }
+
     val artistRepository by lazy {
         ArtistRepository.getInstance(
             artistDAO = database.generateArtistDAO()
@@ -27,9 +28,12 @@ class ApplicationClass : Application() {
             artistDAO = database.generateArtistDAO()
         )
     }
+    val noticeRepository by lazy {
+        NoticeRepository.getInstance(noticeDao = database.generateNoticeDAO())
+    }
+
     override fun onCreate() {
         super.onCreate()
         appInstance = this
-        NoticeRepository.initialize(appInstance)
     }
 }

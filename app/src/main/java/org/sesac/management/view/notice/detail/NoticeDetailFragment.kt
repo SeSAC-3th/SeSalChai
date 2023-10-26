@@ -1,5 +1,6 @@
 package org.sesac.management.view.notice.detail
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
@@ -12,8 +13,7 @@ import java.util.Locale
 
 class NoticeDetailFragment() :
     BaseFragment<FragmentNoticeDetailBinding>(FragmentNoticeDetailBinding::inflate) {
-    private val sharedViewModel: NoticeViewModel
-            by viewModels(ownerProducer = { requireParentFragment() })
+    private val noticeViewModel: NoticeViewModel by activityViewModels()
 
     override fun onViewCreated() {
         with(binding) {
@@ -25,7 +25,7 @@ class NoticeDetailFragment() :
             }
         }
 
-        sharedViewModel.selectedNotice?.observe(
+        noticeViewModel.selectedNotice?.observe(
             viewLifecycleOwner
         ) { notice ->
             notice?.let {
