@@ -1,36 +1,22 @@
 package org.sesac.management.view.event
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.local.Manager
 import org.sesac.management.repository.EventRepository
 
 
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
-    var getEventDetail = MutableLiveData<Event>()
-
     fun insertEvent(event: Event) {
         viewModelScope.launch {
             eventRepository.insertEvent(event)
-        }
-    }
-
-    /* C : 매니저 등록 메서드 */
-    fun insertManager(manager: Manager) {
-        viewModelScope.launch {
-            eventRepository.insertManager(manager)
         }
     }
 
@@ -44,12 +30,7 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
-    fun eventByID(eventId: Int) {
-        CoroutineScope(Dispatchers.Main).launch {
-            getEventDetail.value = eventRepository.getSearchByEventID(eventId)
-        }
-    }
-
+    fun eventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
     fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
@@ -109,6 +90,10 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
 //        repository.insertEvent(event)
 //    }
 //
+//    /* C : 임시 매니저 등록 메서드 */
+//    fun insertManager(manager: Manager) {
+//        repository.insertManager(manager)
+//    }
 //
 //    /* C : 임시 아티스트 등록 메서드 */
 //    fun insertArtist(artist: Artist) {
