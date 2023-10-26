@@ -1,6 +1,5 @@
 package org.sesac.management.view.event
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -8,11 +7,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
-<<<<<<< HEAD
-import org.sesac.management.data.model.eventList
-=======
 import org.sesac.management.data.local.Event
->>>>>>> 79b8fddb51bbd1750d5d29c1da760f08097e3bf3
 import org.sesac.management.databinding.FragmentEventBinding
 import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 import org.sesac.management.util.extension.changeFragment

@@ -66,7 +66,7 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         val insertReturn = coroutineIOScope.async(IO) {
             return@async artistDAO.insertArtist(artist)
         }.await()
-        return CoroutineScope(Dispatchers.Main).async {
+        return mainScope.async {
             insertResult.value = insertReturn
             insertResult
         }.await()
@@ -81,7 +81,7 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         val updateReturn = coroutineIOScope.async(IO) {
             return@async artistDAO.updateArtist(artist)
         }.await()
-        return CoroutineScope(Dispatchers.Main).async {
+        return mainScope.async {
             updateResult.value = updateReturn
             updateResult
         }.await()
@@ -99,7 +99,7 @@ class ArtistRepository(artistDAO: ArtistDAO) {
         getDetailValue.forEach { it->
             it.rate?.let { it1 -> getRateResult.value?.add(it1) }
         }
-        return CoroutineScope(Dispatchers.Main).async {
+        return mainScope.async {
             getRateResult
         }.await()
     }

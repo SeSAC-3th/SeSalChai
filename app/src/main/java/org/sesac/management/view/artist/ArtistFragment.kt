@@ -8,10 +8,6 @@ import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-<<<<<<< HEAD
-import com.google.android.material.textfield.TextInputEditText
-=======
->>>>>>> 79b8fddb51bbd1750d5d29c1da760f08097e3bf3
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
