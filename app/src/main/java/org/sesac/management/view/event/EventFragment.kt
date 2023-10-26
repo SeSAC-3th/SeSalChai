@@ -32,9 +32,9 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
          * getAllEvent의 메서드를 불러와 List<Event>를 RecyclerView에 추가한다.
          * @author 혜원
          */
+        viewModel.getSearch()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getSearch()
                 viewModel.event.collect { event ->
                     makeList(event)
                 }

@@ -42,24 +42,20 @@ class EventDetailFragment
     private var eventId = 0
     private var artists: List<Artist> = listOf()
 
-//    /* Manager에서 가져오는 걸로 수정 필요 */
-//    private fun getArtistInfo() {
-//        artistViewModel.getAllArtist()
-//    }
-
     private fun observeData() {
         /* event 데이터 가져오기 */
         eventViewModel.getEventDetail.observe(viewLifecycleOwner) { event ->
-            eventId = event.eventId
-            getEventDetail(event)
-            eventViewModel.getArtistFromEvent(eventId)
-            updateUI(event)
+            if (event != null) {
+                eventId = event.eventId
+                getEventDetail(event)
+                eventViewModel.getArtistFromEvent(eventId)
+            }
         }
     }
 
     private fun observerSetup() {
         eventViewModel.getArtistFromEvent.observe(viewLifecycleOwner) { artist ->
-            artist.forEach {
+            artist?.forEach {
                 Log.d(TAG, "참여 아티스트 : $it")
                 getSelectArtist(artist)
             }
@@ -78,15 +74,14 @@ class EventDetailFragment
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated() {
-//        getArtistInfo()
-        observeData()
-        observerSetup()
-
         with(binding) {
             tbEvent.setToolbarMenu("행사 상세", true) {
                 eventDetailLayout.changeFragment(this@EventDetailFragment, EventEditFragment())
             }
         }
+
+        observeData()
+        observerSetup()
     }
 
     private fun getEventDetail(event: Event) {
@@ -120,6 +115,7 @@ class EventDetailFragment
             viewPager = vpArtist
             Log.d(TAG, "getSelectArtist: 어댑터 값 $artist")
             val adapter = EventSelectArtistViewPagerAdapter(artist, onClick = {
+                artistViewModel.getArtistById(it)
                 childFragmentManager
                     .beginTransaction()
                     //TODO: ArtistDetailFragment로 이동
