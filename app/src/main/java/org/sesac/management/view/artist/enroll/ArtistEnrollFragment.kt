@@ -1,6 +1,5 @@
 package org.sesac.management.view.artist.enroll
 
-import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
@@ -139,18 +138,18 @@ class ArtistEnrollFragment :
                 R.array.artist_types,
                 android.R.layout.simple_list_item_1
             )
+
             /* 취소 버튼 */
-            btnCancel.setOnClickListener {
+            binding.btnCancel.setOnClickListener {
                 backPress()
             }
 
             /* 저장 버튼 */
-            btnSave.setOnClickListener {
+            binding.btnSave.setOnClickListener {
                 enrollArtist()
             }
         }
     }
-
 
     private fun initTextWatcher() {
         with(binding) {

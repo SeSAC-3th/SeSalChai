@@ -12,6 +12,7 @@ import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
+import org.sesac.management.data.model.toModelArtist
 import org.sesac.management.databinding.FragmentArtistDetailBinding
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.changeFragment
@@ -27,6 +28,7 @@ class ArtistDetailFragment :
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
     private var artistId = 0
+    private lateinit var tempArtist: org.sesac.management.data.model.Artist
     private var rateId = 0
 
     override fun onViewCreated() {
@@ -40,6 +42,8 @@ class ArtistDetailFragment :
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
             if (artist != null) {
                 artistId = artist.artistId
+                tempArtist = artist.toModelArtist()
+                Log.e("tempArtist", tempArtist.toString())
                 getViewToData(artist)
             }
         }
@@ -92,8 +96,9 @@ class ArtistDetailFragment :
 
     private fun initView() {
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
-                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            layoutToolbar.setToolbarMenu("아티스트 상세", true)
+            ivArtistEdit.setOnClickListener {
+                editArtist()
             }
 
             /* Bottom Sheet show*/
@@ -108,6 +113,40 @@ class ArtistDetailFragment :
             }
         }
     }
+
+    private fun editArtist() {
+        val artistEditFragment = ArtistEditFragment()
+        childFragmentManager.beginTransaction()
+            .add(binding.artistDetailLayout.id, artistEditFragment)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
+    }
+
+    /**
+     * MPAndroidChart Settings Method
+     * rate 항목에 맞게 라벨을 추가하였습니다.
+     */
+    private fun chartSettings() {
+        with(binding) {
+            val labels = listOf(
+                getString(R.string.rate_income),
+                getString(R.string.rate_popularity),
+                getString(R.string.rate_sing),
+                getString(R.string.rate_dance),
+                getString(R.string.rate_performance)
+            )
+            radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+            radarChart.xAxis.labelCount = labels.size
+            radarChart.yAxis.axisMaximum = 5f
+            radarChart.yAxis.axisMinimum = 0f
+
+            /* Chart 데이터 */
+            val entries = ArrayList<RadarEntry>()
+            entries.add(RadarEntry(5f))
+            entries.add(RadarEntry(2f))
+            entries.add(RadarEntry(3f))
+            entries.add(RadarEntry(4f))
+            entries.add(RadarEntry(5f))
 
     private fun initViewPager(data: List<Event>) {
         /* viewPager2 */
