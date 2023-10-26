@@ -1,7 +1,6 @@
 package org.sesac.management.view.artist.edit
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Build
@@ -10,7 +9,6 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R

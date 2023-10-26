@@ -25,6 +25,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
+
     companion object {
         @Volatile
         private var instance: ArtistRepository? = null
@@ -33,6 +34,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
                 instance ?: ArtistRepository(artistDAO).also { instance = it }
             }
     }
+
     init {
         coroutineIOScope.launch {
             artistDAO.getAllArtist().forEach {
@@ -126,12 +128,12 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     }
 
 
-    suspend fun getArtistByName(keyword:String): List<Artist>? {
+    suspend fun getArtistByName(keyword: String): List<Artist>? {
         getAllResult = asyncgetArtistByName(keyword)
         return getAllResult.value
     }
 
-    private suspend fun asyncgetArtistByName(keyword:String): MutableLiveData<List<Artist>> {
+    private suspend fun asyncgetArtistByName(keyword: String): MutableLiveData<List<Artist>> {
         val searchResult = coroutineIOScope.async(IO) {
             return@async artistDAO.getSearchArtistByName(keyword)
         }.await()

@@ -15,7 +15,6 @@ import org.sesac.management.data.local.Rate
 import org.sesac.management.repository.ArtistRepository
 import org.sesac.management.util.common.Referecne
 import org.sesac.management.util.common.defaultDispatcher
-import java.util.Date
 
 class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
 
@@ -103,7 +102,7 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
 //        repository.insertRateWithArtist(rate, artistId)
     }
 
-    fun updateArtist(artist: Artist){
+    fun updateArtist(artist: Artist) {
         repository.updateArtist(artist)
     }
 

@@ -1,9 +1,7 @@
 package org.sesac.management.view.artist.enroll
 
-import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.net.Uri
-import android.text.Editable
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
