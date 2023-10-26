@@ -53,6 +53,7 @@ class EventDetailFragment
             eventId = event.eventId
             getEventDetail(event)
             eventViewModel.getArtistFromEvent(eventId)
+            updateUI(event)
         }
     }
 
@@ -63,7 +64,7 @@ class EventDetailFragment
                 getSelectArtist(artist)
             }
         }
-
+    }
 
     private fun updateUI(event : Event) {
         with(binding) {
@@ -75,7 +76,6 @@ class EventDetailFragment
             tvEventPlace.text=event.place
             tvEventDescription.text=event.description
         }
-
     }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
