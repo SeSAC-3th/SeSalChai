@@ -45,15 +45,37 @@ class EventRepository(
     // flow - flow
     fun getAllEvent() = eventDAO.getAllEvent()
 
-    // 가장 최근에 만들어진 데이터를 가져옵니다.
-    suspend fun getMostRecentEvent() = eventDAO.getMostRecentEvent()
-
     // livedata - flow
 //    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId) // id로 검색
 
     // livedata - livedata
     fun getSearchEvent(eventName: String): LiveData<List<Event>> =
         eventDAO.getSearchEvent(eventName) // 이름으로 검색
+
+    /**
+     * R : EventFragment에서 RecyclerView의 item을 클릭했을 때,
+     * 클릭한 position의 eventId를 기준으로, EventDetailFragment에 일치하는 데이터를 불러오기 위한 메서드
+     * eventId로 Event 테이블에 저장된 값을 가져온다.
+     * @param eventId
+     * @author 혜원
+     */
+    suspend fun getSearchByEventID(eventId: Int): Event {
+        getEventDetail = asyncGetSearchByEventId(eventId)
+        return getEventDetail.value!!
+    }
+
+    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
+        val returnedId = ioScope.async(Dispatchers.IO) {
+            return@async eventDAO.getSearchByEventID(eventId)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getEventDetail.value = returnedId
+            getEventDetail
+        }.await()
+    }
+
+    // 가장 최근에 만들어진 데이터를 가져옵니다.
+    suspend fun getMostRecentEvent() = eventDAO.getMostRecentEvent()
 
     // 행사 정보를 갱신할 때 사용
     suspend fun updateEvent(event: Event) {
@@ -74,37 +96,6 @@ class EventRepository(
     // 행사 정보 등록시 아티스트 목록을 보여주기 위한 메서드
     suspend fun getAllArtist() = artistDAO.getAllArtist()
 
-    //    /**
-//     * R : 전체 Event를 조회하는 메서드
-//     * async를 통해 상태 관리 및 결과 값이 필요한 작업을 한다.
-//     * suspend function : 코루틴 전용 메서드, 이전 코드의 실행을 중단하고 suspend 함수 처리가
-//     * 완료된 후 먼춰있는 scope 코드가 실행된다.
-//     * @author 혜원
-//     */
-//    suspend fun getAllEvent() = eventDAO.getAllEvent()
-//
-//
-//    /**
-//     * R : EventFragment에서 RecyclerView의 item을 클릭했을 때,
-//     * 클릭한 position의 eventId를 기준으로, EventDetailFragment에 일치하는 데이터를 불러오기 위한 메서드
-//     * eventId로 Event 테이블에 저장된 값을 가져온다.
-//     * @param eventId
-//     * @author 혜원
-//     */
-    suspend fun getSearchByEventID(eventId: Int): Event {
-        getEventDetail = asyncGetSearchByEventId(eventId)
-        return getEventDetail.value!!
-    }
-
-    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
-        val returnedId = ioScope.async(Dispatchers.IO) {
-            return@async eventDAO.getSearchByEventID(eventId)
-        }.await()
-        return CoroutineScope(Dispatchers.Main).async {
-            getEventDetail.value = returnedId
-            getEventDetail
-        }.await()
-    }
 //
 //    /**
 //     * R : EventFragment 상단의 Search layout을 통해 결과값을 가져오는 메서드

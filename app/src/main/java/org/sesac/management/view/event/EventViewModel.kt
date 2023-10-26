@@ -4,19 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.repository.EventRepository
-
 
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     var getEventDetail = MutableLiveData<Event>()
@@ -36,7 +31,7 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
 
     private val _event = MutableStateFlow<List<Event>>(emptyList())
     val event: StateFlow<List<Event>> = _event.asStateFlow()
-    fun getSearch() {
+    fun getSearch() { // flow-flow
         viewModelScope.launch {
             eventRepository.getAllEvent().collect {
                 _event.value = it
@@ -44,13 +39,17 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
+    // livedata-livedata
+    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
+
+    // livedata-flow
+//    fun eventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
+
     fun eventByID(eventId: Int) {
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             getEventDetail.value = eventRepository.getSearchByEventID(eventId)
         }
     }
-
-    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {

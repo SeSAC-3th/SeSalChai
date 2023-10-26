@@ -1,6 +1,5 @@
 package org.sesac.management.view.event
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope

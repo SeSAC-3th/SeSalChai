@@ -28,9 +28,13 @@ const val CLICK_INTERVAL_TIME = 300L
 // Rx Event 텍스트 완성 시간
 const val INPUT_COMPLETE_TIME = 1000L
 
-val defaultScope = CoroutineScope(Dispatchers.Default)
-val ioScope = CoroutineScope(Dispatchers.IO)
-val mainScope = CoroutineScope(Dispatchers.Main)
+val defaultDispatcher = Dispatchers.Default
+val ioDispatcher = Dispatchers.IO
+val mainDispatcher = Dispatchers.Main
+
+val defaultScope = CoroutineScope(defaultDispatcher)
+val ioScope = CoroutineScope(ioDispatcher)
+val mainScope = CoroutineScope(mainDispatcher)
 
 //DB Table Name
 const val NOTICE_DB_NAME = "tb_notice"
@@ -38,4 +42,9 @@ const val NOTICE_DB_NAME = "tb_notice"
 //
 fun showToastMessage(message: String) {
     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+// rate 정렬 평가 기준
+enum class Referecne {
+    AVERAGE, INCOME, POPULARITY, SING, DANCE, PERFORMACE
 }

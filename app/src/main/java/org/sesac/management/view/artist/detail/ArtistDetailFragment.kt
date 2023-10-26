@@ -34,8 +34,10 @@ class ArtistDetailFragment :
 
     private fun observeData() {
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            artistId = artist.artistId
-            getViewToData(artist)
+            if (artist != null) {
+                artistId = artist.artistId
+                getViewToData(artist)
+            }
         }
     }
 
@@ -56,9 +58,9 @@ class ArtistDetailFragment :
             //멤버 정보
             tvMember.text = ""
             memberInfo.forEach {
-                if(tvMember.text.isNotEmpty()){
+                if (tvMember.text.isNotEmpty()) {
                     tvMember.text = "${binding.tvMember.text}\n$it"
-                }else{
+                } else {
                     tvMember.text = it
                 }
             }
