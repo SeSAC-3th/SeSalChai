@@ -44,16 +44,14 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         val allArtist = viewModel.getAllArtist.value
         // 아티스트 목록을 가져온 후 RecyclerView에 표시
-        Log.d(TAG, "getAllArtist : ${allArtist}")
         val rvArtist = dialogLayout.findViewById<RecyclerView>(R.id.rv_artist)
         rvArtist.layoutManager = LinearLayoutManager(requireContext())
         // artists를 DialogItem으로 변환
         val dialogItems = allArtist?.map { artist ->
             DialogItem(artist.name, artist.artistId, selectedItems.contains(artist.name))
         }
-        Log.d(TAG, "onCreateDialog: ${dialogItems}")
 
-        val adapter = dialogItems?.let { DialogAdapter(it,this) }
+        val adapter = dialogItems?.let { DialogAdapter(it, this) }
         rvArtist.adapter = adapter
 
         val builder = AlertDialog.Builder(requireContext())
@@ -88,7 +86,6 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
     // "확인" 버튼을 클릭했을 때 데이터 전송
     private fun sendDataToPreviousFragment(sendData: MutableList<DialogItem>) {
         dialogDataListener?.onDialogDataSelected(sendData)
-        Log.d(TAG, "ArtistAddDialogFragment - sendDataToPreviousFragment() called ${sendData}")
         dismiss() // Dialog 닫기
     }
 
@@ -103,11 +100,9 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
     override fun onItemSelected(artistName: String, artistId: Int, isChecked: Boolean) {
         // 체크박스 상태가 변경된 경우, 이 메서드가 호출됩니다.
         if (isChecked) {
-            Log.d(TAG, "여긴 Dialog dialogCheck: $artistName / $artistId / $isChecked")
             dialogCheck.add(DialogItem(artistName, artistId, isChecked))
         } else {
             // 선택이 해제된 아이템의 처리
-            Log.d(TAG, "여긴 Dialog dialogCheck: $artistName / $artistId / $isChecked")
             dialogCheck.remove(DialogItem(artistName, artistId, isChecked))
         }
     }

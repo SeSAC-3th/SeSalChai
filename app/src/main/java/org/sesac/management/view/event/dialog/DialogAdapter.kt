@@ -36,7 +36,6 @@ class DialogAdapter(private val itemList: List<DialogItem>, private val customDi
             // 체크박스 상태 변경 시, 데이터 모델 업데이트
             cbArtist.setOnCheckedChangeListener { _, isChecked ->
                 item.isChecked = isChecked
-                Log.d(TAG, "onBindViewHolder: ${ item.artistName} / ${item.artistId } / ${ item.isChecked}")
                 customDialogListener.onItemSelected(item.artistName, item.artistId, item.isChecked)
             }
         }

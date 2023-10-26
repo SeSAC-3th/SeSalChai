@@ -1,11 +1,16 @@
 package org.sesac.management.view.adapter.recyclerview
 
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.ItemCommonItemBinding
+import org.sesac.management.util.common.ApplicationClass.Companion.getApplicationContext
 
 class EventRecyclerAdapter(
     private val items: List<Event>, private val onClick: () -> Unit,
@@ -19,6 +24,10 @@ class EventRecyclerAdapter(
             itemBinding.root.setOnClickListener {
                 onClick()
             }
+            itemBinding.btnDelete.setOnClickListener {
+                Toast.makeText(getApplicationContext(),"데이터가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                onDelete(items[absoluteAdapterPosition])
+            }
         }
     }
 
@@ -31,12 +40,19 @@ class EventRecyclerAdapter(
         return EventInfo(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: EventInfo, position: Int) {
         val agencyInfo = items[position]
+        val date = SimpleDateFormat("yyyy-MM-dd").format(agencyInfo.date)
+
         with(holder.itemBinding) {
-            ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            agencyInfo.imgUri?.let {
+                ivThumbnail.setImageBitmap(it)
+            } ?: {
+                ivThumbnail.setImageResource(R.drawable.girls_generation_hyoyeon)
+            }
             tvTitle.text = agencyInfo.name
-            tvContents.text = agencyInfo.date.toString()
+            tvContents.text = date
         }
     }
 

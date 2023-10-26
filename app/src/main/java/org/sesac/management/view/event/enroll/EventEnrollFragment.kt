@@ -78,17 +78,17 @@ class EventEnrollFragment :
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
 
-        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성layoutInputDate 검사
+        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 layoutInputDate 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
+                // TODO : 여기를 updateEvent로 변경
                 eventViewModel.insertEvent(
                     Event(
                         eventName,
                         eventPlace,
                         Date(),
                         eventDescription,
-//                        bitmap,
-                        null
+                        bitmap
                     )
                 )
             }

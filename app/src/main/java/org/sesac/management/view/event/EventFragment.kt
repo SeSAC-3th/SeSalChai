@@ -52,15 +52,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
             }
         }
 
-
-//        lifecycleScope.launch {
-//            viewModel.insertEvent(
-//                Event(
-//                    name = "새싹카운트다운", place = "상암 Mnet", date = Date(), description = "새싹 3기",
-//                    imgUri = "이미지 URI"
-//                )
-//            )
-
         with(binding) {
             /* Enroll Button */
             with(btnEventEnroll) {
