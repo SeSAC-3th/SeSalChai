@@ -2,6 +2,7 @@ package org.sesac.management.data.local
 
 import android.graphics.Bitmap
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -73,14 +74,6 @@ data class Event(
 @Entity(
     tableName = "artist",
     indices = [Index(value = ["artist_id"], unique = true)],
-    foreignKeys = [
-        ForeignKey(
-            entity = Rate::class,
-            parentColumns = ["rate_id"],
-            childColumns = ["rate_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-    ]
 )
 data class Artist(
 
@@ -92,8 +85,9 @@ data class Artist(
     var debutDay: Date,
     var type: ArtistType,
 
-    @ColumnInfo(name = "rate_id")
-    var rateId: Int?,
+    @Embedded
+    var rate: Rate? = null,
+
     @ColumnInfo(name = "img_uri")
     var imgUri: Bitmap? = null,
 
@@ -111,22 +105,17 @@ enum class ArtistType {
     NONE
 }
 
-@Entity(
-    tableName = "rate",
-    indices = [Index(value = ["rate_id"], unique = true)],
-)
-data class Rate(
 
+data class Rate(
+    val average: Float,
     val income: Int,
     val popularity: Int,
     val sing: Int,
     val dance: Int,
     val performance: Int,
 
-    // primary key
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "rate_id")
-    var rateId: Int,
+    @ColumnInfo(name = "rateInfo")
+    val rateInfo: Int,
 )
 
 @Entity(

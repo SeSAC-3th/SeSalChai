@@ -1,11 +1,15 @@
 package org.sesac.management.view.notice.enroll
 
 import androidx.fragment.app.viewModels
+import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.FragmentNoticeEnrollBinding
 import org.sesac.management.view.notice.NoticeViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.Date
+import java.util.Locale
 
 class NoticeEnrollFragment() :
     BaseFragment<FragmentNoticeEnrollBinding>(FragmentNoticeEnrollBinding::inflate) {
@@ -14,21 +18,22 @@ class NoticeEnrollFragment() :
     override fun onViewCreated() {
 
         with(binding) {
-            toolbarNoticeEnroll.setToolbarMenu("공지사항 등록", true)
-
-            //취소 버튼 클릭시 backKey와 동일하게 작동
-            btnCancel.setOnAvoidDuplicateClick {
-                backPress()
-            }
-
-            btnSave.setOnAvoidDuplicateClick {
+            toolbarNoticeEnroll.setToolbarMenu("공지사항 등록", true) {
+                binding.toolbarNoticeEnroll.ivHamburger.setImageResource(R.drawable.baseline_edit_24)
                 val notice = Notice(
-                    binding.etTitle.text.toString(),
-                    binding.etContent.text.toString(),
+                    binding.layoutInputTitle.tilEt.text.toString(),
+                    binding.layoutInputContent.tilEt.text.toString(),
                     Date(),
                 )
                 noticeViewModel.insertNoticeInfo(notice)
+                backPress()
             }
+        }
+    }
+
+    private fun initView() {
+        with(binding) {
+
         }
     }
 

@@ -7,6 +7,8 @@
     android:layout_marginHorizontal="20dp"
     android:layout_marginVertical="20dp"
     app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -17,16 +19,15 @@
         android:layout_gravity="center_vertical"
         android:padding="16dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_rank"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_notice"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:adjustViewBounds="true"
-            android:background="@color/primary1"
+            android:src="@drawable/notice"
             android:gravity="center"
             android:scaleType="centerCrop"
-            android:text="1"
-            android:textColor="@color/white"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +41,7 @@
             android:gravity="start"
             android:text="쇼! 새싹중심"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/tv_rank"
+            app:layout_constraintStart_toEndOf="@id/iv_notice"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -52,7 +53,7 @@
             android:text="10/14 토요일 오후 5시"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_rank" />
+            app:layout_constraintStart_toEndOf="@id/iv_notice" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_delete_notice"

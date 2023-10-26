@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.local.Notice
 import org.sesac.management.databinding.ItemHomeNoticeBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HomeNoticeAdapter(val notices: List<Notice>) :
     RecyclerView.Adapter<HomeNoticeAdapter.NoticeViewHolder>() {
@@ -27,7 +29,9 @@ class HomeNoticeAdapter(val notices: List<Notice>) :
             with(binding) {
                 tvNoticeTitle.text = item.title
                 tvNoticeContent.text = item.content
-                tvNoticeDate.text = item.createdAt.toString()
+                tvNoticeDate.text = SimpleDateFormat(
+                    "yyyy년 MMM dd일", Locale.KOREA
+                ).format(item.createdAt)
             }
         }
     }

@@ -1,20 +1,13 @@
-package org.sesac.management.view.artist.enroll
+package org.sesac.management.view.artist.edit
 
-import android.graphics.Bitmap
-import android.net.Uri
-import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
-import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
-import org.sesac.management.data.util.convertUriToBitmap
-import org.sesac.management.databinding.FragmentArtistEnrollBinding
-import org.sesac.management.util.common.ARTIST
+import org.sesac.management.databinding.FragmentArtistEditBinding
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
@@ -22,25 +15,12 @@ import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
-import java.util.Date
 
-class ArtistEnrollFragment :
-    BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
-    private val viewModel: ArtistViewModel by activityViewModels()
+class ArtistEditFragment :
+    BaseFragment<FragmentArtistEditBinding>(FragmentArtistEditBinding::inflate) {
+    private val viewModel: ArtistViewModel by viewModels()
 
     private var insertValue = emptyList<Long>()
-    private var bitmap: Bitmap? = null
-    private val getContent =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                Log.d(ARTIST, "uri: $uri")
-                binding.ivArtist.setImageURI(uri)
-                context?.let { it1 ->
-                    var tmpBitmap = convertUriToBitmap(uri, it1)
-                    tmpBitmap?.let { it2 -> bitmap = it2 }
-                }
-            }
-        }
 
     override fun onViewCreated() {
         initView()
@@ -63,17 +43,17 @@ class ArtistEnrollFragment :
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             ioScope.launch {
-                viewModel.insertArtist(
-                    Artist(
-                        groupName,
-                        memberListString,
-                        Date(),
-                        artistType,
-                        null,
-                        bitmap,
-                        0
-                    )
-                )
+//                viewModel.insertArtist(
+//                    Artist(
+//                        groupName,
+//                        memberListString,
+//                        Date(),
+//                        artistType,
+//                        null,
+//                        "Url",
+//                        0
+//                    )
+//                )
             }
             showToastMessage(resources.getString(R.string.artist_enroll_success))
             // DB에 저장하고 popBackStack()
@@ -116,7 +96,9 @@ class ArtistEnrollFragment :
     private fun initView() {
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
-            layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_title), true)
+            layoutToolbar.setToolbarMenu(resources.getString(R.string.artist_edit_title), true) {
+                // 클릭 이벤트
+            }
             layoutInputDebut.tilLayout.initInFlow(
                 resources.getString(R.string.artist_debut_date),
                 resources.getString(R.string.artist_debut_helper)
@@ -129,24 +111,12 @@ class ArtistEnrollFragment :
                 resources.getString(R.string.artist_member),
                 resources.getString(R.string.artist_member_helper)
             )
-            /* image 설정 */
-            ivArtist.setOnClickListener {
-                getContent.launch("image/*")
-            }
+
             spinnerArtistType.adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.artist_types,
                 android.R.layout.simple_list_item_1
             )
-            /* 취소 버튼 */
-            btnCancel.setOnClickListener {
-                backPress()
-            }
-
-            /* 저장 버튼 */
-            btnSave.setOnClickListener {
-                enrollArtist()
-            }
         }
     }
 

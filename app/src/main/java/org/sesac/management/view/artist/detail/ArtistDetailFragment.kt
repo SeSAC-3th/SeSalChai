@@ -1,25 +1,28 @@
 package org.sesac.management.view.artist.detail
 
-import android.util.Log
-import androidx.fragment.app.viewModels
+import android.icu.text.SimpleDateFormat
+import android.os.Build
+import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.FragmentArtistDetailBinding
-import org.sesac.management.util.common.ARTIST
+import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.view.adapter.ArtistEventViewPagerAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.bottomsheet.RateBottomSheet
+import org.sesac.management.view.artist.edit.ArtistEditFragment
 
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
-    private val viewModel: ArtistViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
+    private var artistId = 0
+    private var rateId = 0
 
     /* events 임시 데이터 */
     private var events: List<Event> = listOf()
@@ -30,21 +33,20 @@ class ArtistDetailFragment :
     }
 
     private fun observeData() {
-        Log.d(ARTIST, "2. getArtistById: ${viewModel.getArtistDetail}")
-
         viewModel.getArtistDetail.observe(viewLifecycleOwner) { artist ->
-            Log.d(ARTIST, "getArtistById: ${artist}")
+            artistId = artist.artistId
             getViewToData(artist)
         }
     }
 
     private fun getViewToData(artist: Artist) {
-        Log.d(ARTIST, "3. getArtistById: ${artist}")
-
         val memberInfo = convertMemberInfo(artist.memberInfo)
         with(binding) {
             //아티스트 정보
-            tvArtist.text = "아티스트 이름:${artist.name}\n${artist.debutDay.month}\n${memberInfo.size}"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tvArtist.text =
+                    "이름:${artist.name}\n 데뷔 일: ${SimpleDateFormat("yyyy-MM-dd").format(artist.debutDay)}\n 인원 수:${memberInfo.size}명"
+            }
 
             //이미지
             artist.imgUri?.let {
@@ -52,13 +54,16 @@ class ArtistDetailFragment :
             } ?: ivArtist.setImageResource(R.drawable.girls_generation_hyoyeon)
 
             //멤버 정보
+            tvMember.text = ""
             memberInfo.forEach {
-                tvMember.text = "${binding.tvMember.text}\n$it"
+                if(tvMember.text.isNotEmpty()){
+                    tvMember.text = "${binding.tvMember.text}\n$it"
+                }else{
+                    tvMember.text = it
+                }
             }
             events = viewModel.getEventFromArtist.value ?: listOf()
-
         }
-
     }
 
     private fun convertMemberInfo(memberInfo: String): List<String> {
@@ -70,12 +75,19 @@ class ArtistDetailFragment :
 
     private fun initView() {
         with(binding) {
-            layoutToolbar.setToolbarMenu("아티스트 상세", true)
+            layoutToolbar.setToolbarMenu("아티스트 상세", true) {
+                artistDetailLayout.changeFragment(this@ArtistDetailFragment, ArtistEditFragment())
+            }
 
             /* Bottom Sheet show*/
             ivChart.setOnAvoidDuplicateClick {
+                val bundle = Bundle()
+                bundle.putInt("artistId", artistId)
+                bundle.putInt("rateId", rateId)
                 val rateBottomSheet = RateBottomSheet()
-                activity?.let { rateBottomSheet.show(it.supportFragmentManager, "dialog") }
+                rateBottomSheet.arguments = bundle
+                childFragmentManager.beginTransaction().add(rateBottomSheet, "Rate")
+                    .commitAllowingStateLoss()
             }
 
             /* viewPager2 */

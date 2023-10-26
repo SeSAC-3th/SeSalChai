@@ -28,8 +28,8 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
-    fun eventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
-    fun eventByName(eventName: String) = eventRepository.getSearchEvent(eventName)
+    fun getEventByID(eventId: Int) = eventRepository.getSearchByEventID(eventId).asLiveData()
+    fun getEventByName(eventName: String) = eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {

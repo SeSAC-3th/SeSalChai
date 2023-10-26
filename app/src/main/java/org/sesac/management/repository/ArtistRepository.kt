@@ -1,6 +1,5 @@
 package org.sesac.management.repository
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
@@ -8,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
@@ -17,20 +15,26 @@ import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
-class ArtistRepository(context: Context) {
-    private var artistDAO: ArtistDAO
-    private val coroutineIOScope = CoroutineScope(IO)
+class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var getAllResult = MutableLiveData<List<Artist>>()
     private var getDetail = MutableLiveData<Artist>()
     private var getTypeResult = MutableLiveData<List<Artist>>()
     private var getEventResult = MutableLiveData<List<Event>>()
+    private var getRateResult = MutableLiveData<MutableList<Rate>>()
     private var insertResult = MutableLiveData<List<Long>>()
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
+    companion object {
+        @Volatile
+        private var instance: ArtistRepository? = null
+        fun getInstance(artistDAO: ArtistDAO) =
+            instance ?: synchronized(this) {
+                instance ?: ArtistRepository(artistDAO).also { instance = it }
+            }
+    }
 
     init {
-        artistDAO = AgencyRoomDB.getInstance(context).generateArtistDAO()
-        coroutineIOScope.launch {
+        ioScope.launch {
             artistDAO.getAllArtist().forEach {
                 Log.d("TAG", it.toString())
             }
@@ -58,7 +62,7 @@ class ArtistRepository(context: Context) {
     }
 
     private suspend fun asyncInsertArtist(artist: Artist): MutableLiveData<List<Long>> {
-        val insertReturn = coroutineIOScope.async(IO) {
+        val insertReturn = ioScope.async(IO) {
             return@async artistDAO.insertArtist(artist)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
@@ -73,7 +77,7 @@ class ArtistRepository(context: Context) {
     }
 
     private suspend fun asyncUpdateArtist(artist: Artist): MutableLiveData<Unit> {
-        val updateReturn = coroutineIOScope.async(IO) {
+        val updateReturn = ioScope.async(IO) {
             return@async artistDAO.updateArtist(artist)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
@@ -82,12 +86,30 @@ class ArtistRepository(context: Context) {
         }.await()
     }
 
+    ///* getAllRate; 모든 Rate객체를 getRateResult에 저장
+    suspend fun getAllRate(): MutableLiveData<MutableList<Rate>> {
+        getRateResult = asyncGetAllRate()
+        return getRateResult
+    }
+
+    suspend fun asyncGetAllRate(): MutableLiveData<MutableList<Rate>> {
+        val getDetailValue = ioScope.async(IO) {
+            return@async artistDAO.getAllArtist()
+        }.await()
+        getDetailValue.forEach { it ->
+            it.rate?.let { it1 -> getRateResult.value?.add(it1) }
+        }
+        return CoroutineScope(Dispatchers.Main).async {
+            getRateResult
+        }.await()
+    }
 
     // Rate용
-    fun insertRate(rate: Rate) = artistDAO.insertRate(rate)
-    fun updateRate(rateId: Int, artistId: Int) = artistDAO.linkRateToArtist(rateId, artistId)
-    fun getAllRate() = artistDAO.getAllRate()
-    fun getRate(rateId: Int) = artistDAO.getRate(rateId)
+    fun insertRateWithArtist(rate: Rate, artistId: Int) {
+        ioScope.launch {
+//            artistDAO.insertRateWithArtist(rate, artistId)
+        }
+    }
 
     suspend fun getArtistById(id: Int): Artist? {
         getDetail = asyncgetArtistById(id)
@@ -95,7 +117,7 @@ class ArtistRepository(context: Context) {
     }
 
     private suspend fun asyncgetArtistById(id: Int): MutableLiveData<Artist> {
-        val getDetailValue = coroutineIOScope.async(IO) {
+        val getDetailValue = ioScope.async(IO) {
             return@async artistDAO.getSearchArtistById(id)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
@@ -104,8 +126,20 @@ class ArtistRepository(context: Context) {
         }.await()
     }
 
-    fun getArtistByName(name: String): List<Artist> {
-        return artistDAO.getSearchArtistByName(name)
+
+    suspend fun getArtistByName(keyword: String): List<Artist>? {
+        getAllResult = asyncgetArtistByName(keyword)
+        return getAllResult.value
+    }
+
+    private suspend fun asyncgetArtistByName(keyword: String): MutableLiveData<List<Artist>> {
+        val searchResult = ioScope.async(IO) {
+            return@async artistDAO.getSearchArtistByName(keyword)
+        }.await()
+        return CoroutineScope(Dispatchers.Main).async {
+            getAllResult.value = searchResult
+            getAllResult
+        }.await()
     }
 
     suspend fun getArtistByType(type: ArtistType): List<Artist>? {
@@ -114,7 +148,7 @@ class ArtistRepository(context: Context) {
     }
 
     private suspend fun asyncgetArtistByType(type: ArtistType): MutableLiveData<List<Artist>> {
-        val updateReturn = coroutineIOScope.async(IO) {
+        val updateReturn = ioScope.async(IO) {
             return@async artistDAO.getArtistByType(type)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
@@ -128,7 +162,7 @@ class ArtistRepository(context: Context) {
     }
 
     private suspend fun asyncDeleteArtist(artist: Artist): MutableLiveData<Unit> {
-        val deleteReturn = coroutineIOScope.async(IO) {
+        val deleteReturn = ioScope.async(IO) {
             return@async artistDAO.deleteArtistWithEvent(artist)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
@@ -137,13 +171,13 @@ class ArtistRepository(context: Context) {
         }.await()
     }
 
-    suspend fun getEventFromArtist(artistId: Int):MutableLiveData<List<Event>>{
+    suspend fun getEventFromArtist(artistId: Int): MutableLiveData<List<Event>> {
         getEventResult = asyncgetEventFromArtist(artistId)
         return getEventResult
     }
 
     private suspend fun asyncgetEventFromArtist(artistId: Int): MutableLiveData<List<Event>> {
-        val eventReturn = coroutineIOScope.async(IO) {
+        val eventReturn = ioScope.async(IO) {
             return@async artistDAO.getEventsFromArtist(artistId)
         }.await()
         return CoroutineScope(Dispatchers.Main).async {
