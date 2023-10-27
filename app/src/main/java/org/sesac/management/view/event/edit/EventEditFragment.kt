@@ -1,7 +1,10 @@
 package org.sesac.management.view.event.edit
 
 import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Build
+import android.text.Editable
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -16,13 +19,13 @@ import org.sesac.management.data.local.Event
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEditBinding
 import org.sesac.management.util.common.ARTIST
+import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
-import java.util.Date
 
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
@@ -60,7 +63,6 @@ class EventEditFragment :
     }
 
     private fun initView() {
-        /* event 데이터 가져오기 */
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.eventDetail.collect { event ->
@@ -69,13 +71,37 @@ class EventEditFragment :
                 }
             }
         }
+
+        with(binding) {
+            layoutInputName.tilLayout.initInFlow(
+                "행사명",
+                "행사명을 입력해주세요"
+            )
+            layoutInputDate.tilLayout.initInFlow(
+                "일시",
+                resources.getString(R.string.artist_debut_helper)
+            )
+            layoutInputPlace.tilLayout.initInFlow(
+                "행사 장소",
+                "장소를 입력해주세요"
+            )
+            layoutInputDescription.tilLayout.initInFlow(
+                "상세 내용",
+                "상세 정보를 입력해주세요"
+            )
+        }
     }
 
     private fun updateUI() {
         with(binding) {
             ivEvent.setImageBitmap(selectedEvent.imgUri)
             layoutInputName.tilEt.setText(selectedEvent.name)
-            layoutInputDate.tilEt.setText(selectedEvent.date.toString())
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                layoutInputDate.tilEt.text = Editable.Factory.getInstance()
+                    .newEditable(SimpleDateFormat("yyyy-MM-dd").format(selectedEvent.date))
+            }
+
             layoutInputPlace.tilEt.setText(selectedEvent.place)
             layoutInputDescription.tilEt.setText(selectedEvent.description)
         }
@@ -88,17 +114,27 @@ class EventEditFragment :
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
         val eventDescription = binding.layoutInputDescription.tilEt.text.toString()
 
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(binding.layoutInputDate.tilEt.text.toString())
+
+        if (bitmap == null) {
+            bitmap = selectedEvent.imgUri
+        }
+
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
-            eventViewModel.updateEvent(
-                Event(
-                    eventName,
-                    eventPlace,
-                    Date(),
-                    eventDescription,
-                    bitmap,
-                    eventViewModel.eventDetail.value!!.eventId
+            ioScope.launch {
+                // TODO : 여기를 updateEvent로 변경
+                eventViewModel.updateEvent(
+                    Event(
+                        eventName,
+                        eventPlace,
+                        date,
+                        eventDescription,
+                        bitmap,
+                        eventViewModel.eventDetail.value!!.eventId
+                    )
                 )
-            )
+            }
             showToastMessage(resources.getString(R.string.event_enroll_success))
             // DB에 저장하고 popBackStack()
             backPress()
@@ -134,13 +170,13 @@ class EventEditFragment :
             layoutInputName.tilLayout.afterTextChangesInFlow(inputName)
             layoutInputName.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputDate)
-            layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
-
-            layoutInputDate.tilLayout.afterTextChangesInFlow(inputPlace)
+            layoutInputDate.tilLayout.afterTextChangesInFlow(inputDate)
             layoutInputDate.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputName)
+            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputPlace)
+            layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
+
+            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputDescription)
             layoutInputDescription.tilLayout.focusChangesInFlow(hasFocus)
         }
 

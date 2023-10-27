@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
+import org.sesac.management.R
 import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.ItemHomeArtistBinding
 
@@ -31,7 +32,7 @@ class HomeArtistAdapter(val artists: List<Artist>) :
             with(binding) {
                 item.imgUri?.let {
                     ivArtist.setImageBitmap(it)
-                }
+                } ?: ivArtist.setImageResource(R.mipmap.ic_launcher)
                 tvArtistName.text = item.name
             }
         }

@@ -52,13 +52,6 @@ class EventDetailFragment
                 }
             }
         }
-//        eventViewModel.eventDetail.observe(viewLifecycleOwner) { event ->
-//            if (event != null) {
-//                eventId = event.eventId
-//                getEventDetail(event)
-//                eventViewModel.getArtistFromEvent(eventId)
-//            }
-//        }
     }
 
     private fun observerSetup() {
@@ -69,7 +62,7 @@ class EventDetailFragment
         }
     }
 
-    private fun updateUI(event: Event) {
+    private fun updateUI(event : Event) {
         with(binding) {
             ivEvent.let {
                 ivEvent.setImageBitmap(event.imgUri)
