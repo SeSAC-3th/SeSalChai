@@ -4,13 +4,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.model.DialogItem
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEditBinding
 import org.sesac.management.util.common.ARTIST
@@ -20,17 +19,13 @@ import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
-import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
-import org.sesac.management.view.event.dialog.DialogDataListener
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class EventEditFragment :
-    BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate),
-    DialogDataListener {
-    val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
-    private var selectedArtists = mutableListOf<DialogItem>()
-    val TAG: String = "로그"
+    BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
+    val eventViewModel: EventViewModel by activityViewModels()
+    private lateinit var selectedEvent : Event
     private var eventDescription: String = ""
 
     /* 선택한 이미지 절대경로 가져오기 */
@@ -47,42 +42,49 @@ class EventEditFragment :
                 }
             }
         }
-    /* 선택한 이미지 Uri 처리 */
 
     override fun onViewCreated() {
-//        getArtistInfo()
+        initView()
         initTextWatcher()
         with(binding) {
-            tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
-                enrollEvent()
+            tbScheduleEnroll.setToolbarMenu("행사 수정", true) {
+                updateEvent()
             }
 
             ivEvent.setOnClickListener {
                 getContent.launch("image/*")
             }
-            /* 참여 아티스트 */
-            with(tvJoinArtist) {
-                setOnAvoidDuplicateClick {
-                    requireActivity().let {
-                        val addDialog = ArtistAddDialogFragment()
-                        addDialog.onDialogDataSelected(this@EventEditFragment)
-                        addDialog.show(childFragmentManager, "artistDialogFragment")
-                    }
-                }
-            }
         }
     }
 
-    private fun enrollEvent() {
+    private fun initView() {
+        eventViewModel.getEventDetail.observe(viewLifecycleOwner) {
+            selectedEvent=it
+            updateUI()
+        }
+    }
+
+    private fun updateUI() {
+        with(binding) {
+            ivEvent.setImageBitmap(selectedEvent.imgUri)
+            layoutInputName.tilEt.setText(selectedEvent.name)
+            layoutInputDate.tilEt.setText(selectedEvent.date.toString())
+            layoutInputPlace.tilEt.setText(selectedEvent.place)
+            layoutInputDescription.tilEt.setText(selectedEvent.description)
+        }
+    }
+
+
+    private fun updateEvent() {
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
+        val eventDescription= binding.layoutInputDescription.tilEt.text.toString()
 
-        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 layoutInputDate 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
                 // TODO : 여기를 updateEvent로 변경
-                eventViewModel.insertEvent(
+                eventViewModel.updateEvent(
                     Event(
                         eventName,
                         eventPlace,
@@ -127,16 +129,19 @@ class EventEditFragment :
             layoutInputName.tilLayout.afterTextChangesInFlow(inputName)
             layoutInputName.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputDebut)
+            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputDate)
             layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputDate.tilLayout.afterTextChangesInFlow(inputMember)
+            layoutInputDate.tilLayout.afterTextChangesInFlow(inputPlace)
             layoutInputDate.tilLayout.focusChangesInFlow(hasFocus)
+
+            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputName)
+            layoutInputDescription.tilLayout.focusChangesInFlow(hasFocus)
         }
 
     }
 
-    private val inputDebut = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+    private val inputDate = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()
         val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
         if (inputText.isEmpty()) {
@@ -162,7 +167,7 @@ class EventEditFragment :
         }
     }
 
-    private val inputMember = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+    private val inputPlace = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()
         if (inputText.isEmpty()) {
             layout.initInFlow(
@@ -171,18 +176,16 @@ class EventEditFragment :
         }
     }
 
+    private val inputDescription = { layout: TextInputLayout, event: AfterTextChangeEvent ->
+        val inputText = event.editable.toString()
+        if (inputText.isEmpty()) {
+            layout.initInFlow(
+                resources.getString(R.string.event_description), ""
+            )
+        }
+    }
+
     private val hasFocus =
         { layout: TextInputLayout, hasFocus: Boolean -> if (hasFocus) layout.error = null }
 
-
-    /**
-     * ArtistAddDialogFragment로 부터 넘겨온 Artist 목록 List
-     *
-     * @param checkedList
-     */
-    override fun onDialogDataSelected(checkedList: MutableList<DialogItem>) {
-        selectedArtists = checkedList
-        val artistNameList: List<String> = selectedArtists.map { it.artistName }
-        eventDescription = artistNameList.joinToString(", ")
-    }
 }

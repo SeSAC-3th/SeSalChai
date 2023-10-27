@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
@@ -15,14 +14,13 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentArtistEnrollBinding
 import org.sesac.management.util.common.ARTIST
-import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
-import java.util.Date
+import java.text.SimpleDateFormat
 
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
@@ -60,21 +58,23 @@ class ArtistEnrollFragment :
             else -> ArtistType.NONE
         }
 
+        val dateFormat =
+            SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(binding.layoutInputDebut.tilEt.text.toString())
+
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
-            ioScope.launch {
-                viewModel.insertArtist(
-                    Artist(
-                        groupName,
-                        memberListString,
-                        Date(),
-                        artistType,
-                        null,
-                        bitmap,
-                        0
-                    )
+            viewModel.insertArtist(
+                Artist(
+                    groupName,
+                    memberListString,
+                    date,
+                    artistType,
+                    null,
+                    bitmap,
+                    0
                 )
-            }
+            )
             showToastMessage(resources.getString(R.string.artist_enroll_success))
             // DB에 저장하고 popBackStack()
             backPress()

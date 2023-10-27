@@ -92,7 +92,7 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
         }
     }
 
-    suspend fun insertArtist(artist: Artist) {
+    fun insertArtist(artist: Artist) {
         CoroutineScope(Dispatchers.Main).launch {
             insertArtist.value = repository.insertArtist(artist)
         }

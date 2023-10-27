@@ -23,8 +23,12 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
     private lateinit var artistAdapter: ArtistRecyclerAdapter
 
     override fun onViewCreated() {
-        getArtistInfo()
         observeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getArtistInfo()
         initView()
     }
 
@@ -34,7 +38,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
 
     private fun observeData() {
         viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-            makeList(artist)
+            if(artist!=null) makeList(artist)
         }
     }
 
@@ -57,6 +61,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 }
             )
             adapter = artistAdapter
+            artistAdapter.notifyDataSetChanged()
         }
     }
 

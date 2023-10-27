@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         artistViewModel.getAllArtist()
         noticeViewModel.getHomeNotice()
+        eventViewModel.getSearch()
 
         if (savedInstanceState == null) { // 화면을 회전했을 경우 savedInstatnceState가 null이 아니다. 즉 내부 코드는 한번만 실행된다.
             supportFragmentManager

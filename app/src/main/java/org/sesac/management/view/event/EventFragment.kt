@@ -1,6 +1,6 @@
 package org.sesac.management.view.event
 
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,12 +18,12 @@ import org.sesac.management.view.event.enroll.EventEnrollFragment
 
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
-    val viewModel: EventViewModel by viewModels() {
+    val viewModel: EventViewModel by activityViewModels() {
         EventViewModel.EventViewModelFactory(getApplicationContext().eventRepository)
     }
 
     override fun onViewCreated() {
-        initView()
+//        initView()
 
         // flow-flow
         /**
@@ -49,6 +49,12 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getSearch()
+        initView()
+    }
+
     private fun initView() {
         with(binding) {
             /* Enroll Button */
@@ -62,7 +68,9 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     if (text.isNotEmpty()) {
                         // livedata-livedata
                         viewModel.eventByName(text).observe(viewLifecycleOwner) {
-                            makeList(it)
+                            if (it != null) {
+                                makeList(it)
+                            }
                         }
                     } else {
                         viewModel.getSearch()
