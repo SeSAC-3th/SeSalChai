@@ -1,7 +1,10 @@
 package org.sesac.management.view.event.edit
 
 import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Build
+import android.text.Editable
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -29,7 +32,7 @@ import java.util.Date
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
     val eventViewModel: EventViewModel by activityViewModels()
-    private lateinit var selectedEvent : Event
+    private lateinit var selectedEvent: Event
     private var eventDescription: String = ""
 
     /* 선택한 이미지 절대경로 가져오기 */
@@ -63,8 +66,27 @@ class EventEditFragment :
 
     private fun initView() {
         eventViewModel.getEventDetail.observe(viewLifecycleOwner) {
-            selectedEvent=it
+            selectedEvent = it
             updateUI()
+        }
+
+        with(binding) {
+            layoutInputName.tilLayout.initInFlow(
+                "행사명",
+                "행사명을 입력해주세요"
+            )
+            layoutInputDate.tilLayout.initInFlow(
+                "일시",
+                resources.getString(R.string.artist_debut_helper)
+            )
+            layoutInputPlace.tilLayout.initInFlow(
+                "행사 장소",
+                "장소를 입력해주세요"
+            )
+            layoutInputDescription.tilLayout.initInFlow(
+                "상세 내용",
+                "상세 정보를 입력해주세요"
+            )
         }
     }
 
@@ -72,7 +94,12 @@ class EventEditFragment :
         with(binding) {
             ivEvent.setImageBitmap(selectedEvent.imgUri)
             layoutInputName.tilEt.setText(selectedEvent.name)
-            layoutInputDate.tilEt.setText(selectedEvent.date.toString())
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                layoutInputDate.tilEt.text = Editable.Factory.getInstance()
+                    .newEditable(SimpleDateFormat("yyyy-MM-dd").format(selectedEvent.date))
+            }
+
             layoutInputPlace.tilEt.setText(selectedEvent.place)
             layoutInputDescription.tilEt.setText(selectedEvent.description)
         }
@@ -83,7 +110,14 @@ class EventEditFragment :
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
-        val eventDescription= binding.layoutInputDescription.tilEt.text.toString()
+        val eventDescription = binding.layoutInputDescription.tilEt.text.toString()
+
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(binding.layoutInputDate.tilEt.text.toString())
+
+        if (bitmap==null) {
+            bitmap=selectedEvent.imgUri
+        }
 
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
@@ -92,7 +126,7 @@ class EventEditFragment :
                     Event(
                         eventName,
                         eventPlace,
-                        Date(),
+                        date,
                         eventDescription,
                         bitmap,
                         eventViewModel.getEventDetail.value!!.eventId
@@ -134,13 +168,13 @@ class EventEditFragment :
             layoutInputName.tilLayout.afterTextChangesInFlow(inputName)
             layoutInputName.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputDate)
-            layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
-
-            layoutInputDate.tilLayout.afterTextChangesInFlow(inputPlace)
+            layoutInputDate.tilLayout.afterTextChangesInFlow(inputDate)
             layoutInputDate.tilLayout.focusChangesInFlow(hasFocus)
 
-            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputName)
+            layoutInputPlace.tilLayout.afterTextChangesInFlow(inputPlace)
+            layoutInputPlace.tilLayout.focusChangesInFlow(hasFocus)
+
+            layoutInputDescription.tilLayout.afterTextChangesInFlow(inputDescription)
             layoutInputDescription.tilLayout.focusChangesInFlow(hasFocus)
         }
 
