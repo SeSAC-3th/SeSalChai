@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">Idol Manage</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Floating eventFragment ActionButton description-->
+    <string name="event_floating_action_button_description">이벤트 등록</string>
+
+    <!--Event Detail Fragment ToolBar Title-->
+    <string name="event_detail_toolbar_text">이벤트</string>
+
+    <!-- Home Frag Text -->
+    <string name="title_home_comp_name">SeSAC Ent</string>
+    <string name="title_home_comp_info">(주) 세살차이 신진혁</string>
+    <string name="home_artist">대표 아티스트</string>
+    <string name="home_notice">공지사항</string>
+    <string name="home_comp_info">회사 소개</string>
+    <string name="home_artist_text">그룹명</string>
+    <string name="home_notice_date">2023-10-13</string>
+    <string name="home_notice_title">대표님께</string>
+    <string name="home_notice_content">대표님 잘생겼어요~~~~~~❤️</string>
+
+    <!-- TextInputLayout -->
+    <string name="hint_text_input">텍스트 인풋 레이아웃</string>
+
+    <!-- ArtistEnroll -->
+    <string name="artist_title">아티스트 등록</string>
+    <string name="artist_debut_date">데뷔일</string>
+    <string name="artist_debut_helper">0000-00-00 형식으로 입력해주세요.</string>
+    <string name="artist_name">그룹 이름</string>
+    <string name="artist_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
+    <string name="artist_member">멤버 (솔로면 아티스트 이름을 입력해주세요.)</string>
+    <string name="artist_member_helper">,로 구분하여 작성해주세요.</string>
+    <string name="none">없음</string>
+    <string name="singer">가수</string>
+    <string name="actor">배우</string>
+    <string name="comedian">코미디언</string>
+    <string name="model">모델</string>
+    <string-array name="artist_types">
+        <item>@string/none</item>
+        <item>@string/singer</item>
+        <item>@string/actor</item>
+        <item>@string/comedian</item>
+        <item>@string/model</item>
+    </string-array>
+
+    <!-- ArtistEdit -->
+    <string name="artist_edit_title">아티스트 수정</string>
+
+    <!-- EventDialog -->
+    <string name="event_select_artist">참여 아티스트 선택</string>
+
+    <!-- EventEnroll -->
+    <string name="event_title">행사 등록</string>
+    <string name="event_date">행사일</string>
+    <string name="event_date_helper">0000-00-00 형식으로 입력해주세요.</string>
+    <string name="event_name">행사명</string>
+    <string name="event_name_helper">솔로면 아티스트 이름을 입력해주세요.</string>
+    <string name="event_place">행사장소</string>
+    <string name="event_description">설명</string>
+    <string name="event_artist">참여 아티스트 +</string>
+
+    <!-- Event Enroll InputLayout -->
+    <string name="event_error_date_empty">행사일을 입력해주세요.</string>
+    <string name="event_error_date_not_valid">행사일 형식이 맞지 않습니다.</string>
+
+    <string name="event_error_name_empty">행사명을 입력해주세요.</string>
+    <string name="event_error_place_empty">행사장소를 입력해주세요.</string>
+    <string name="event_error_discription_empty">행사설명을 입력해주세요.</string>
+
+    <string name="event_enroll_error">행사 정보를 모두 입력해주세요.</string>
+    <string name="event_enroll_success">등록되었습니다.</string>
+
+    <!-- Artist Enroll InputLayout -->
+    <string name="artist_error_debut_empty">데뷔일을 입력해주세요.</string>
+    <string name="artist_error_debut_not_valid">데뷔일 형식이 맞지 않습니다.</string>
+
+    <string name="artist_error_name_empty">그룹명을 입력해주세요.</string>
+    <string name="artist_error_member_empty">멤버를 입력해주세요.</string>
+
+    <string name="artist_enroll_error">아티스트 정보를 모두 입력해주세요.</string>
+    <string name="artist_enroll_success">등록되었습니다.</string>
+    <string name="artist_enroll_update">수정되었습니다.</string>
+    <string name="artist_enroll_fail">등록에 실패했습니다.</string>
+
+    <string name="artist_enroll_rate">이미 평점이 등록된 아티스트 입니다.</string>
+
+    <!-- rate -->
+    <string name="rate_income">수익</string>
+    <string name="rate_popularity">인기도</string>
+    <string name="rate_sing">가창력</string>
+    <string name="rate_dance">춤</string>
+    <string name="rate_performance">연기력</string>
+    <!-- Notice Hint -->
+    <string name="notice_title">제목</string>
+    <string name="notice_content">내용</string>
+
+    <string name="notice_helper_text"> </string>
+
+    <!-- Notice  InputLayout -->
+    <string name="notice_error_title_empty">제목을 입력 하세요</string>
+    <string name="notice_error_content_empty">내용을 입력 하세요</string>
+</resources>

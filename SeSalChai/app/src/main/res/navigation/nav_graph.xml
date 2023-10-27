@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/artistFragment"
+        android:name="org.sesac.management.view.artist.ArtistFragment"
+        android:label="fragment_artist"
+        tools:layout="@layout/fragment_artist" >
+        <action
+            android:id="@+id/action_artistFragment_to_artistDetailFragment"
+            app:destination="@id/artistDetailFragment" />
+        <action
+            android:id="@+id/action_artistFragment_to_artistEnrollFragment"
+            app:destination="@id/artistEnrollFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistDetailFragment"
+        android:name="org.sesac.management.view.artist.detail.ArtistDetailFragment"
+        android:label="fragment_artist_detail"
+        tools:layout="@layout/fragment_artist_detail" />
+    <fragment
+        android:id="@+id/artistEnrollFragment"
+        android:name="org.sesac.management.view.artist.enroll.ArtistEnrollFragment"
+        android:label="fragment_artist_enroll"
+        tools:layout="@layout/fragment_artist_enroll" />
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="org.sesac.management.view.event.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_eventEnrollFragment"
+            app:destination="@id/eventEnrollFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="org.sesac.management.view.event.detail.EventDetailFragment"
+        android:label="fragment_event_detail"
+        tools:layout="@layout/fragment_event_detail" />
+    <fragment
+        android:id="@+id/eventEnrollFragment"
+        android:name="org.sesac.management.view.event.enroll.EventEnrollFragment"
+        android:label="fragment_event_enroll"
+        tools:layout="@layout/fragment_event_enroll" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="org.sesac.management.view.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="org.sesac.management.view.notice.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice" >
+        <action
+            android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
+            app:destination="@id/noticeDetailFragment" />
+        <action
+            android:id="@+id/action_noticeFragment_to_noticeEnrollFragment"
+            app:destination="@id/noticeEnrollFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateFragment"
+        android:name="org.sesac.management.view.rate.RateFragment"
+        android:label="fragment_rate"
+        tools:layout="@layout/fragment_rate" />
+    <fragment
+        android:id="@+id/noticeDetailFragment"
+        android:name="org.sesac.management.view.notice.detail.NoticeDetailFragment"
+        android:label="fragment_notice_detail"
+        tools:layout="@layout/fragment_notice_detail" />
+    <fragment
+        android:id="@+id/noticeEnrollFragment"
+        android:name="org.sesac.management.view.notice.enroll.NoticeEnrollFragment"
+        android:label="fragment_notice_enroll"
+        tools:layout="@layout/fragment_notice_enroll" />
+</navigation>

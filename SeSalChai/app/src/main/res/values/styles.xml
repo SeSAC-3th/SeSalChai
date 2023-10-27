@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 32dp -->
+    <style name="TextHeadLine4" parent="TextAppearance.MaterialComponents.Headline4">
+
+        <item name="android:textSize">32dp</item>
+    </style>
+    <!-- 24dp -->
+    <style name="TextHeadLine5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">24dp</item>
+    </style>
+    <!-- 16dp -->
+    <style name="TextBody1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <!-- 11dp -->
+    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11dp</item>
+    </style>
+
+    <style name="content_textView_style">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">@dimen/content_title_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/content_title_margin_top</item>
+    </style>
+
+    <!-- TextInputLayoutStyle -->
+    <style name="CustomTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">32dp</item>
+        <item name="boxCornerRadiusBottomStart">32dp</item>
+        <item name="boxCornerRadiusTopEnd">32dp</item>
+        <item name="boxCornerRadiusTopStart">32dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeColor">@color/primary2</item>
+        <item name="boxStrokeErrorColor">@color/error</item>
+        <item name="hintTextColor">@color/text_hint</item>
+        <item name="errorTextColor">@color/error</item>
+        <item name="errorEnabled">true</item>
+    </style>
+</resources>

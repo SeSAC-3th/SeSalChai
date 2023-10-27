@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_item_rateRanking"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginVertical="6dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="1"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleIV_artistPicture"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:gravity="center_vertical"
+        android:src="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ranking"
+        app:layout_constraintStart_toEndOf="@id/tv_ranking"
+        app:layout_constraintTop_toTopOf="@id/tv_ranking" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_artistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/circleIV_artistPicture"
+        app:layout_constraintStart_toEndOf="@id/circleIV_artistPicture"
+        app:layout_constraintTop_toTopOf="@id/circleIV_artistPicture" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

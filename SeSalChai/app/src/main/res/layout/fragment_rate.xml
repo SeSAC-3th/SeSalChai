@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_rate_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".view.rate.RateFragment">
+
+    <include
+        android:id="@+id/layout_rate_toolbar"
+        layout="@layout/layout_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/layout_rate_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_rate_toolbar">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup_rate_evaluationItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_average"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="종합"
+                android:checked="true"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_income"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_income"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_popularity"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_popularity"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_sing"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_sing"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_dance"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_dance"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_rate_performance"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_performance"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/primary5"
+                app:chipStrokeColor="@color/primary1"
+                app:chipStrokeWidth="2dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart_rate_compare"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_rate_scroll" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_rate_ranking"
+        android:layout_width="match_parent"
+        android:layout_height="335dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barChart_rate_compare" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
