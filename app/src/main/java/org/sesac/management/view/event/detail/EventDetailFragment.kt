@@ -7,7 +7,6 @@ import android.os.Build
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -36,16 +35,23 @@ class EventDetailFragment
     val TAG: String = "로그"
     private lateinit var viewPager: ViewPager2
     private var bannerPosition = 0
-    private val eventViewModel: EventViewModel by viewModels({ requireParentFragment() })
+    private val eventViewModel: EventViewModel by activityViewModels()
     private val artistViewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistIdList: List<Int>
     private var eventId = 0
     private var artists: List<Artist> = listOf()
 
-//    /* Manager에서 가져오는 걸로 수정 필요 */
-//    private fun getArtistInfo() {
-//        artistViewModel.getAllArtist()
-//    }
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
+    override fun onViewCreated() {
+        observeData()
+        observerSetup()
+
+        with(binding) {
+            tbEvent.setToolbarMenu("행사 상세", true) {
+                eventDetailLayout.changeFragment(this@EventDetailFragment, EventEditFragment())
+            }
+        }
+    }
 
     private fun observeData() {
         /* event 데이터 가져오기 */
@@ -73,19 +79,6 @@ class EventDetailFragment
             tvEventTime.text=event.date.toString()
             tvEventPlace.text=event.place
             tvEventDescription.text=event.description
-        }
-    }
-
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
-    override fun onViewCreated() {
-//        getArtistInfo()
-        observeData()
-        observerSetup()
-
-        with(binding) {
-            tbEvent.setToolbarMenu("행사 상세", true) {
-                eventDetailLayout.changeFragment(this@EventDetailFragment, EventEditFragment())
-            }
         }
     }
 

@@ -37,6 +37,10 @@ class ArtistDetailFragment :
         observeData()
         // 행사 정보
         observeEvents()
+    }
+
+    override fun onStart() {
+        super.onStart()
         initView()
     }
 
