@@ -47,6 +47,9 @@ class EventSelectArtistViewPagerAdapter(
             tvTitle.apply {
                 text = artistInfo.name
             }
+            tvContents.apply {
+                text = artistInfo.memberInfo
+            }
         }
 
     }
