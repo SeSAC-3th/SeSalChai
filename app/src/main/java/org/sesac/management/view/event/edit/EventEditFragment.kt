@@ -5,31 +5,29 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.model.DialogItem
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEditBinding
 import org.sesac.management.util.common.ARTIST
-import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
-import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
-import org.sesac.management.view.event.dialog.DialogDataListener
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
     val eventViewModel: EventViewModel by activityViewModels()
-    private lateinit var selectedEvent : Event
+    private lateinit var selectedEvent: Event
     private var eventDescription: String = ""
 
     /* 선택한 이미지 절대경로 가져오기 */
@@ -62,9 +60,14 @@ class EventEditFragment :
     }
 
     private fun initView() {
-        eventViewModel.getEventDetail.observe(viewLifecycleOwner) {
-            selectedEvent=it
-            updateUI()
+        /* event 데이터 가져오기 */
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                eventViewModel.eventDetail.collect { event ->
+                    selectedEvent = event
+                    updateUI()
+                }
+            }
         }
     }
 
@@ -83,22 +86,19 @@ class EventEditFragment :
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
         val eventDate = binding.layoutInputDate.tilEt.text.toString().split('-')
-        val eventDescription= binding.layoutInputDescription.tilEt.text.toString()
+        val eventDescription = binding.layoutInputDescription.tilEt.text.toString()
 
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
-            ioScope.launch {
-                // TODO : 여기를 updateEvent로 변경
-                eventViewModel.updateEvent(
-                    Event(
-                        eventName,
-                        eventPlace,
-                        Date(),
-                        eventDescription,
-                        bitmap,
-                        eventViewModel.getEventDetail.value!!.eventId
-                    )
+            eventViewModel.updateEvent(
+                Event(
+                    eventName,
+                    eventPlace,
+                    Date(),
+                    eventDescription,
+                    bitmap,
+                    eventViewModel.eventDetail.value!!.eventId
                 )
-            }
+            )
             showToastMessage(resources.getString(R.string.event_enroll_success))
             // DB에 저장하고 popBackStack()
             backPress()
@@ -123,7 +123,7 @@ class EventEditFragment :
         eventName: String,
         eventPlace: String,
         eventDate: List<String>,
-        eventDescription: String
+        eventDescription: String,
     ) =
         !(eventName.isEmpty() || eventPlace.isEmpty() || eventDate.isEmpty() || eventDescription.isEmpty())
 

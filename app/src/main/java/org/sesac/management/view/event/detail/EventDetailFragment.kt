@@ -43,33 +43,41 @@ class EventDetailFragment
 
     private fun observeData() {
         /* event 데이터 가져오기 */
-        eventViewModel.getEventDetail.observe(viewLifecycleOwner) { event ->
-            if (event != null) {
-                eventId = event.eventId
-                getEventDetail(event)
-                eventViewModel.getArtistFromEvent(eventId)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                eventViewModel.eventDetail.collect { event ->
+                    eventId = event.eventId
+                    getEventDetail(event)
+                    eventViewModel.getArtistFromEvent(eventId)
+                }
             }
         }
+//        eventViewModel.eventDetail.observe(viewLifecycleOwner) { event ->
+//            if (event != null) {
+//                eventId = event.eventId
+//                getEventDetail(event)
+//                eventViewModel.getArtistFromEvent(eventId)
+//            }
+//        }
     }
 
     private fun observerSetup() {
         eventViewModel.getArtistFromEvent.observe(viewLifecycleOwner) { artist ->
             artist?.forEach {
-                Log.d(TAG, "참여 아티스트 : $it")
                 getSelectArtist(artist)
             }
         }
     }
 
-    private fun updateUI(event : Event) {
+    private fun updateUI(event: Event) {
         with(binding) {
             ivEvent.let {
                 ivEvent.setImageBitmap(event.imgUri)
             }
-            tvEventTitle.text=event.name
-            tvEventTime.text=event.date.toString()
-            tvEventPlace.text=event.place
-            tvEventDescription.text=event.description
+            tvEventTitle.text = event.name
+            tvEventTime.text = event.date.toString()
+            tvEventPlace.text = event.place
+            tvEventDescription.text = event.description
         }
     }
 
@@ -117,18 +125,15 @@ class EventDetailFragment
             Log.d(TAG, "getSelectArtist: 어댑터 값 $artist")
             val adapter = EventSelectArtistViewPagerAdapter(artist, onClick = {
                 artistViewModel.getArtistById(it)
-                childFragmentManager
-                    .beginTransaction()
-                    //TODO: ArtistDetailFragment로 이동
-                    .add(binding.eventDetailLayout.id, ArtistDetailFragment())
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss()
+                binding.eventDetailLayout.changeFragment(
+                    this@EventDetailFragment,
+                    ArtistDetailFragment()
+                )
             }).apply {
                 notifyDataSetChanged()
             }
             viewPager.adapter = adapter
             viewPager = initialiseViewPager()
-
 
             bannerPosition = Int.MAX_VALUE / 2 - Math.ceil(artists.size.toDouble() / 2).toInt()
             viewPager.setCurrentItem(0, false)
@@ -161,11 +166,7 @@ class EventDetailFragment
         // artistIdListFlow에 새 값을 제공
         artistIdList.forEach {
             var artistId = it
-            lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    eventViewModel.insertManager(Manager(artistId, eventId))
-                }
-            }
+            eventViewModel.insertManager(Manager(artistId, eventId))
         }
         Log.d(TAG, "EventDetailFragment - $artistIdList")
     }
@@ -175,7 +176,7 @@ class EventDetailFragment
             outRect: Rect,
             view: View,
             parent: RecyclerView,
-            state: RecyclerView.State
+            state: RecyclerView.State,
         ) {
             outRect.left = space
             outRect.right = space

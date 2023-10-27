@@ -13,14 +13,15 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.repository.EventRepository
+import org.sesac.management.util.common.defaultDispatcher
+import java.util.Date
 
 
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
-    var getEventDetail = MutableLiveData<Event>()
     var getArtistFromEvent = MutableLiveData<List<Artist>>()
 
     fun insertEvent(event: Event) {
-        viewModelScope.launch {
+        viewModelScope.launch() {
             eventRepository.insertEvent(event)
         }
     }
@@ -43,13 +44,18 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
+    private val _eventDetail = MutableStateFlow<Event>(Event("", "", Date(), ""))
+    val eventDetail: StateFlow<Event> = _eventDetail.asStateFlow()
     fun eventByID(eventId: Int) {
         viewModelScope.launch {
-            getEventDetail.value = eventRepository.getSearchByEventID(eventId)
+            eventRepository.getSearchByEventID(eventId).collect {
+                _eventDetail.value = it
+            }
         }
     }
 
-    fun eventByName(eventName: String): LiveData<List<Event>> = eventRepository.getSearchEvent(eventName)
+    fun eventByName(eventName: String): LiveData<List<Event>> =
+        eventRepository.getSearchEvent(eventName)
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {
@@ -64,8 +70,8 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
     }
 
     fun getArtistFromEvent(eventId: Int) {
-        viewModelScope.launch {
-            getArtistFromEvent = eventRepository.getArtistFromEvent(eventId)
+        viewModelScope.launch(defaultDispatcher) {
+            getArtistFromEvent.postValue(eventRepository.getArtistFromEvent(eventId))
         }
     }
 

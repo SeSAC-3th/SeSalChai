@@ -36,7 +36,7 @@ class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::infl
     val viewModel: ArtistViewModel by activityViewModels()
     override fun onViewCreated() {
         binding.layoutRateToolbar.setToolbarMenu("평가", true) // toolbar 세팅
-        viewModel.getAllArtist() // 아티스트 정보 호출
+//        viewModel.getAllArtist() // 아티스트 정보 호출
         initBarGraph() // 그래프 구성 세팅
         observeArtistRate() // 초기 아티스트 정보를 Rate.Average를 기준으로 정렬한다.
         observeSortedArtistRate() // 정렬된 아티스트 정보를 관찰한다.

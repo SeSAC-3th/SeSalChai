@@ -5,16 +5,13 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEnrollBinding
 import org.sesac.management.util.common.ARTIST
-import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
@@ -66,17 +63,15 @@ class EventEnrollFragment :
 
         // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 layoutInputDate 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
-            ioScope.launch {
-                eventViewModel.insertEvent(
-                    Event(
-                        eventName,
-                        eventPlace,
-                        Date(),
-                        eventDescription,
-                        bitmap
-                    )
+            eventViewModel.insertEvent(
+                Event(
+                    eventName,
+                    eventPlace,
+                    Date(),
+                    eventDescription,
+                    bitmap
                 )
-            }
+            )
             showToastMessage(resources.getString(R.string.event_enroll_success))
             // DB에 저장하고 popBackStack()
             backPress()
