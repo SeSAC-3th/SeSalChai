@@ -23,7 +23,7 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
     }
 
     override fun onViewCreated() {
-//        initView()
+        initView()
 
         // flow-flow
         /**
@@ -47,12 +47,6 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 //            }
 //        }
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getSearch()
-        initView()
     }
 
     private fun initView() {
