@@ -1,13 +1,18 @@
 package org.sesac.management.view.artist
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
@@ -33,8 +38,12 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
     }
 
     private fun observeData() {
-        viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-            makeList(artist)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
+                    makeList(artist)
+                }
+            }
         }
     }
 
@@ -44,7 +53,17 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
             artistAdapter = ArtistRecyclerAdapter(
                 artistList,
                 onDelete = {
-                    viewModel.deleteArtist(it)
+                    AlertDialog.Builder(requireContext()).run {
+                        setMessage("정말로 삭제하시겠습니까?")
+                        setNegativeButton("cancel", null)
+                        setPositiveButton(
+                            "ok",
+                        ) { _, _ ->
+                            viewModel.deleteArtist(it)
+                        }
+                        create()
+                        show()
+                    }
                 },
                 onClick = {
                     viewModel.getArtistById(it)
