@@ -2,17 +2,12 @@ package org.sesac.management.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.data.local.dao.EventDAO
 import org.sesac.management.data.local.dao.ManagerDAO
-import org.sesac.management.util.common.ioScope
 
 class EventRepository(
     private val eventDAO: EventDAO,
@@ -102,20 +97,21 @@ class EventRepository(
      * @param eventId
      * @author 혜원
      */
-    suspend fun getSearchByEventID(eventId: Int): Event {
-        getEventDetail = asyncGetSearchByEventId(eventId)
-        return getEventDetail.value!!
-    }
 
-    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
-        val returnedId = ioScope.async(Dispatchers.IO) {
-            return@async eventDAO.getSearchByEventID(eventId)
-        }.await()
-        return CoroutineScope(Dispatchers.Main).async {
-            getEventDetail.value = returnedId
-            getEventDetail
-        }.await()
-    }
+    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId)
+//    suspend fun getSearchByEventID(eventId: Int): Event {
+//        getEventDetail = asyncGetSearchByEventId(eventId)
+//        return getEventDetail.value!!
+//    }
+//    private suspend fun asyncGetSearchByEventId(eventId: Int): MutableLiveData<Event> {
+//        val returnedId = ioScope.async(Dispatchers.IO) {
+//            return@async eventDAO.getSearchByEventID(eventId)
+//        }.await()
+//        return CoroutineScope(Dispatchers.Main).async {
+//            getEventDetail.value = returnedId
+//            getEventDetail
+//        }.await()
+//    }
 
 
     /**
@@ -124,20 +120,20 @@ class EventRepository(
      * @param artistId
      * @author 혜원
      */
-    suspend fun getArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
-        getArtistResult = asyncGetArtistFromEvent(eventId)
-        return getArtistResult
-    }
-
-    private suspend fun asyncGetArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
-        val eventReturn = ioScope.async(Dispatchers.IO) {
-            return@async eventDAO.getEventsFromArtist(eventId)
-        }.await()
-        return CoroutineScope(Dispatchers.Main).async {
-            getArtistResult.value = eventReturn
-            getArtistResult
-        }.await()
-    }
+    suspend fun getArtistFromEvent(eventId: Int) = eventDAO.getEventsFromArtist(eventId)
+//    suspend fun getArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
+//        getArtistResult = asyncGetArtistFromEvent(eventId)
+//        return getArtistResult
+//    }
+//    private suspend fun asyncGetArtistFromEvent(eventId: Int): MutableLiveData<List<Artist>> {
+//        val eventReturn = ioScope.async(Dispatchers.IO) {
+//            return@async eventDAO.getEventsFromArtist(eventId)
+//        }.await()
+//        return CoroutineScope(Dispatchers.Main).async {
+//            getArtistResult.value = eventReturn
+//            getArtistResult
+//        }.await()
+//    }
 
 //
 //    /**

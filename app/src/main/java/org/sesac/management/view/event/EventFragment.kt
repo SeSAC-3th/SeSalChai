@@ -1,7 +1,6 @@
 package org.sesac.management.view.event
 
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -63,7 +62,9 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
                     if (text.isNotEmpty()) {
                         // livedata-livedata
                         viewModel.eventByName(text).observe(viewLifecycleOwner) {
-                            makeList(it)
+                            if (it != null) {
+                                makeList(it)
+                            }
                         }
                     } else {
                         viewModel.getSearch()

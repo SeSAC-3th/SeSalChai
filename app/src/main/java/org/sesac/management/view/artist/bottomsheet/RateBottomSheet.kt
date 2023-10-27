@@ -44,10 +44,11 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                     val dance = sliderDance.value.toInt()
                     val performance = sliderPerform.value.toInt()
                     val sing = sliderSing.value.toInt()
+                    val average = (earnings + popularity + dance + performance + sing) / 5f
 
                     viewModel.insertRateWithArtist(
                         Rate(
-                            0f,
+                            average,
                             earnings,
                             popularity,
                             sing,

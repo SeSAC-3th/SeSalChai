@@ -38,12 +38,8 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
     }
 
     private fun observeData() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-                    makeList(artist)
-                }
-            }
+        viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
+            if(artist!=null) makeList(artist)
         }
     }
 
@@ -76,6 +72,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                 }
             )
             adapter = artistAdapter
+            artistAdapter.notifyDataSetChanged()
         }
     }
 

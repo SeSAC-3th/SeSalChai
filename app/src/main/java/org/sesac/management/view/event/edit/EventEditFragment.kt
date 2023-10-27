@@ -8,13 +8,14 @@ import android.text.Editable
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.sesac.management.R
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Event
-import org.sesac.management.data.model.DialogItem
 import org.sesac.management.data.util.convertUriToBitmap
 import org.sesac.management.databinding.FragmentEventEditBinding
 import org.sesac.management.util.common.ARTIST
@@ -24,10 +25,7 @@ import org.sesac.management.util.extension.afterTextChangesInFlow
 import org.sesac.management.util.extension.focusChangesInFlow
 import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
-import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
-import org.sesac.management.view.event.dialog.DialogDataListener
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
-import java.util.Date
 
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
@@ -65,9 +63,13 @@ class EventEditFragment :
     }
 
     private fun initView() {
-        eventViewModel.getEventDetail.observe(viewLifecycleOwner) {
-            selectedEvent = it
-            updateUI()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                eventViewModel.eventDetail.collect { event ->
+                    selectedEvent = event
+                    updateUI()
+                }
+            }
         }
 
         with(binding) {
@@ -115,8 +117,8 @@ class EventEditFragment :
         val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd")
         val date = dateFormat.parse(binding.layoutInputDate.tilEt.text.toString())
 
-        if (bitmap==null) {
-            bitmap=selectedEvent.imgUri
+        if (bitmap == null) {
+            bitmap = selectedEvent.imgUri
         }
 
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
@@ -129,7 +131,7 @@ class EventEditFragment :
                         date,
                         eventDescription,
                         bitmap,
-                        eventViewModel.getEventDetail.value!!.eventId
+                        eventViewModel.eventDetail.value!!.eventId
                     )
                 )
             }
@@ -157,7 +159,7 @@ class EventEditFragment :
         eventName: String,
         eventPlace: String,
         eventDate: List<String>,
-        eventDescription: String
+        eventDescription: String,
     ) =
         !(eventName.isEmpty() || eventPlace.isEmpty() || eventDate.isEmpty() || eventDescription.isEmpty())
 

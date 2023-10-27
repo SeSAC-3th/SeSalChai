@@ -32,7 +32,7 @@ interface EventDAO {
      * @return event
      */
     @Query("""SELECT * FROM artist WHERE artist_id=:artistId""")
-    fun getSearchByArtistID(artistId: Int): Artist
+    suspend fun getSearchByArtistID(artistId: Int): Artist
 
     /**
      * R: eventId로 참여중인 artist 반환하기
@@ -56,7 +56,7 @@ interface EventDAO {
      * @return event
      */
     @Query("""SELECT * FROM event WHERE event_id=:eventId""")
-    fun getSearchByEventID(eventId: Int): Event
+    fun getSearchByEventID(eventId: Int): Flow<Event>
 
     /**
      * R: event table에 있는 객체중, 이름이 일치하는 event를 반환하는 함수
