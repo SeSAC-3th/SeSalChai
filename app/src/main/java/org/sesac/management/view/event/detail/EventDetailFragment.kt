@@ -29,6 +29,12 @@ import org.sesac.management.view.event.dialog.ArtistAddDialogFragment
 import org.sesac.management.view.event.dialog.DialogDataListener
 import org.sesac.management.view.event.edit.EventEditFragment
 
+/**
+ * Event detail fragment
+ *
+ * @constructor Create empty Event detail fragment
+ * @author 혜원
+ */
 class EventDetailFragment
     : BaseFragment<FragmentEventDetailBinding>(FragmentEventDetailBinding::inflate),
     DialogDataListener {

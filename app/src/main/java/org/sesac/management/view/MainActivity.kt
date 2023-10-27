@@ -25,6 +25,12 @@ import org.sesac.management.view.home.HomeFragment
 import org.sesac.management.view.notice.NoticeViewModel
 import org.sesac.management.view.rate.RateFragment
 
+/**
+ * Main activity
+ *
+ * @constructor Create empty Main activity
+ * @author 진혁
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
      val artistViewModel: ArtistViewModel by viewModels() {
@@ -140,6 +146,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * 키보드 위 빈 공간을 터치하면 키보드가 사라지도록 한다
+     * @author 우빈
      */
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val focusView: View? = currentFocus

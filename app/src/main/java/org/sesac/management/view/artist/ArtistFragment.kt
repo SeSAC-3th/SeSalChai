@@ -4,15 +4,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.launch
 import org.sesac.management.base.BaseFragment
 import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.ArtistType
@@ -23,6 +17,12 @@ import org.sesac.management.view.adapter.recyclerview.ArtistRecyclerAdapter
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 import org.sesac.management.view.artist.enroll.ArtistEnrollFragment
 
+/**
+ * Artist fragment
+ *
+ * @constructor Create empty Artist fragment
+ * @author 우빈
+ */
 class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()
     private lateinit var artistAdapter: ArtistRecyclerAdapter
@@ -43,6 +43,12 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         }
     }
 
+    /**
+     * Make list
+     *
+     * @param artistList
+     * @author 민서
+     */
     private fun makeList(artistList: List<Artist>) {
         with(binding.rvArtist) {
             layoutManager = GridLayoutManager(activity, 2)
@@ -135,21 +141,6 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
                         isRefreshing = false
                     }, 1000L)
                 }
-            }
-        }
-    }
-
-
-    private val debutTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-        override fun afterTextChanged(s: Editable?) {
-            if(!s.toString().isEmpty()){
-                viewModel.getSearchResult(s.toString())
-            }else{
-                viewModel.getAllArtist()
             }
         }
     }

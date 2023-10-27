@@ -11,6 +11,12 @@ import org.sesac.management.data.local.ArtistType
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 
+/**
+ * Artist dao
+ *
+ * @constructor Create empty Artist dao
+ * @author 민서
+ */
 @Dao
 interface ArtistDAO {
 

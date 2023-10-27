@@ -23,6 +23,12 @@ import org.sesac.management.view.artist.edit.ArtistEditFragment
 import org.sesac.management.view.event.EventViewModel
 import org.sesac.management.view.event.detail.EventDetailFragment
 
+/**
+ * Artist detail fragment
+ *
+ * @constructor Create empty Artist detail fragment
+ * @author 민서
+ */
 class ArtistDetailFragment :
     BaseFragment<FragmentArtistDetailBinding>(FragmentArtistDetailBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()
@@ -178,6 +184,7 @@ class ArtistDetailFragment :
     /**
      * MPAndroidChart Settings Method
      * rate 항목에 맞게 라벨을 추가하였습니다.
+     * @author 혜원
      */
     private fun chartSettings(artist: Artist) {
         with(binding) {

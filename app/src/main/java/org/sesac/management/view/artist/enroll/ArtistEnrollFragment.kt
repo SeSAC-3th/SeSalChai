@@ -22,6 +22,12 @@ import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.text.SimpleDateFormat
 
+/**
+ * Artist enroll fragment
+ *
+ * @constructor Create empty Artist enroll fragment
+ * @author 우빈
+ */
 class ArtistEnrollFragment :
     BaseFragment<FragmentArtistEnrollBinding>(FragmentArtistEnrollBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()

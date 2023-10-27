@@ -3,7 +3,6 @@ package org.sesac.management.view.home
 import android.graphics.Rect
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
@@ -18,6 +17,12 @@ import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.notice.NoticeFragment
 import org.sesac.management.view.notice.NoticeViewModel
 
+/**
+ * Home fragment
+ *
+ * @constructor Create empty Home fragment
+ * @author 우빈, 종혁
+ */
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val artistViewModel: ArtistViewModel by activityViewModels()
@@ -89,6 +94,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.includedLayoutHomeNotice.rvNotice.adapter = noticeAdapter
     }
 
+    /**
+     * Space item decoration
+     *
+     * @property space
+     * @constructor Create empty Space item decoration
+     * @author 종혁
+     */
     inner class SpaceItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
         override fun getItemOffsets(
             outRect: Rect,

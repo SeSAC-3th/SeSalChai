@@ -27,12 +27,22 @@ import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
+/**
+ * Event edit fragment
+ *
+ * @constructor Create empty Event edit fragment
+ * @author 종혁
+ */
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
     val eventViewModel: EventViewModel by activityViewModels()
     private lateinit var selectedEvent: Event
     private var eventDescription: String = ""
 
+    /**
+     * Bitmap
+     * @author 민서
+     */
     /* 선택한 이미지 절대경로 가져오기 */
     //* bitmap을 insert할때 넘겨주면 됩니다
     private var bitmap: Bitmap? = null

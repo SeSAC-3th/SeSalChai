@@ -11,6 +11,12 @@ import org.sesac.management.data.local.Artist
 import org.sesac.management.data.local.Event
 import org.sesac.management.data.local.Manager
 
+/**
+ * Event dao
+ *
+ * @constructor Create empty Event dao
+ * @author 혜원
+ */
 @Dao
 interface EventDAO {
 
@@ -41,11 +47,11 @@ interface EventDAO {
     fun searchAllArtistByEvent(eventId: Int): List<Manager>
     @Transaction
     suspend fun getEventsFromArtist(eventId: Int): MutableList<Artist> {
-        var managerList: List<Manager> = searchAllArtistByEvent(eventId)
-        var tmpEventList: MutableList<Artist> = mutableListOf()
-        managerList.forEach { manager ->
-            var events: Artist = getSearchByArtistID(manager.artistId)
-            tmpEventList.add(events)
+        var managerList: List<Manager> = searchAllArtistByEvent(eventId)//
+        var tmpEventList: MutableList<Artist> = mutableListOf()//
+        managerList.forEach { manager ->//
+            var events: Artist = getSearchByArtistID(manager.artistId)//
+            tmpEventList.add(events)//
         }
         return tmpEventList
     }

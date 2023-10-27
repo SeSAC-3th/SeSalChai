@@ -26,6 +26,12 @@ import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.artist.ArtistViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
+/**
+ * Artist edit fragment
+ *
+ * @constructor Create empty Artist edit fragment
+ * @author 우빈
+ */
 class ArtistEditFragment :
     BaseFragment<FragmentArtistEditBinding>(FragmentArtistEditBinding::inflate) {
     private val viewModel: ArtistViewModel by activityViewModels()

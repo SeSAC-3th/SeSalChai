@@ -8,6 +8,14 @@ import org.sesac.management.data.model.DialogItem
 import org.sesac.management.databinding.ItemEventEnrollAddArtistBinding
 import org.sesac.management.view.event.dialog.CustomDialogListener
 
+/**
+ * Dialog adapter
+ *
+ * @property itemList
+ * @property customDialogListener
+ * @constructor Create empty Dialog adapter
+ * @author 혜원
+ */
 class DialogAdapter(private val itemList: List<DialogItem>, private val customDialogListener: CustomDialogListener) : RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     private val checkedItems = mutableListOf<Boolean>()
     val TAG: String = "로그"

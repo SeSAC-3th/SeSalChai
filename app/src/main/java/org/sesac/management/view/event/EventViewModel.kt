@@ -16,7 +16,13 @@ import org.sesac.management.repository.EventRepository
 import org.sesac.management.util.common.defaultDispatcher
 import java.util.Date
 
-
+/**
+ * Event view model
+ *
+ * @property eventRepository
+ * @constructor Create empty Event view model
+ * @author 혜원, 진혁
+ */
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     var getArtistFromEvent = MutableLiveData<List<Artist>>()
 

@@ -1,13 +1,18 @@
 package org.sesac.management.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.launch
-import org.sesac.management.data.local.AgencyRoomDB
 import org.sesac.management.data.local.Notice
 import org.sesac.management.data.local.dao.NoticeDAO
 import org.sesac.management.util.common.ioScope
 
+/**
+ * Notice repository
+ *
+ * @property noticeDao
+ * @constructor Create empty Notice repository
+ * @author 종혁
+ */
 class NoticeRepository(private val noticeDao: NoticeDAO) {
     val allNotices: LiveData<List<Notice>>?
     val homeNotices: LiveData<List<Notice>>?

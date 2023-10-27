@@ -1,11 +1,15 @@
 package org.sesac.management.data.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.Query
 import org.sesac.management.data.local.Manager
 
+/**
+ * Manager dao
+ *
+ * @constructor Create empty Manager d a o
+ * @author 민서
+ */
 @Dao
 interface ManagerDAO {
     /**

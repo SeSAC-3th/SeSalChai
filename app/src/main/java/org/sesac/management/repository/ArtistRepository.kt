@@ -15,6 +15,13 @@ import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.util.common.ioScope
 import org.sesac.management.util.common.mainScope
 
+/**
+ * Artist repository
+ *
+ * @property artistDAO
+ * @constructor Create empty Artist repository
+ * @author 민서, 우빈
+ */
 class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var getAllResult = MutableLiveData<List<Artist>>()
     private val coroutineIOScope = CoroutineScope(IO)

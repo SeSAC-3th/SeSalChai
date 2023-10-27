@@ -9,6 +9,15 @@ import org.sesac.management.data.local.dao.ArtistDAO
 import org.sesac.management.data.local.dao.EventDAO
 import org.sesac.management.data.local.dao.ManagerDAO
 
+/**
+ * Event repository
+ *
+ * @property eventDAO
+ * @property manageDAO
+ * @property artistDAO
+ * @constructor Create empty Event repository
+ * @author 진혁, 혜원
+ */
 class EventRepository(
     private val eventDAO: EventDAO,
     private val manageDAO: ManagerDAO,
