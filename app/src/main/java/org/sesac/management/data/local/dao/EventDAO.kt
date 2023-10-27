@@ -45,13 +45,14 @@ interface EventDAO {
      */
     @Query("""SELECT * FROM manager WHERE :eventId==manager.event_id""")
     fun searchAllArtistByEvent(eventId: Int): List<Manager>
+
     @Transaction
     suspend fun getEventsFromArtist(eventId: Int): MutableList<Artist> {
-        var managerList: List<Manager> = searchAllArtistByEvent(eventId)//
-        var tmpEventList: MutableList<Artist> = mutableListOf()//
-        managerList.forEach { manager ->//
-            var events: Artist = getSearchByArtistID(manager.artistId)//
-            tmpEventList.add(events)//
+        val managerList: List<Manager> = searchAllArtistByEvent(eventId) // eventId에 해당하는 manager 객체를 모두 조회
+        val tmpEventList: MutableList<Artist> = mutableListOf() // artistId 값만 저장하기 위해 tmpEventList를 선언
+        managerList.forEach { manager -> // 가져온 List<Manager>의 사이즈만큼 반복문을 실행
+            var events: Artist = getSearchByArtistID(manager.artistId) // artistId 값을 조회하고
+            tmpEventList.add(events) // events에 가져온 artistId 값만 추가한다.
         }
         return tmpEventList
     }
@@ -79,7 +80,7 @@ interface EventDAO {
     fun getMostRecentEvent(): Event?
 
     /**
-     * U: Event 객체를 기존 속성을 복사하여, 객체르 만들고 변경하고자 하는 속성만 수정한후,
+     * U: Event 객체를 기존 속성을 복사하여, 객체를 만들고 변경하고자 하는 속성만 수정한후,
      * 해당 함수로 넘겨준다
      * @return event
      */

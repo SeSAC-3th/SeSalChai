@@ -26,6 +26,7 @@ import java.util.Date
 class EventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     var getArtistFromEvent = MutableLiveData<List<Artist>>()
 
+    /* C : 이벤트 등록 메서드 */
     fun insertEvent(event: Event) {
         viewModelScope.launch() {
             eventRepository.insertEvent(event)
@@ -41,7 +42,8 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
 
     private val _event = MutableStateFlow<List<Event>>(emptyList())
     val event: StateFlow<List<Event>> = _event.asStateFlow()
-
+    
+    /* R : 이벤트 전체 조회 메서드 */
     fun getSearch() {
         viewModelScope.launch {
             eventRepository.getAllEvent().collect {
@@ -49,9 +51,11 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
             }
         }
     }
-
+    
     private val _eventDetail = MutableStateFlow<Event>(Event("", "", Date(), ""))
     val eventDetail: StateFlow<Event> = _eventDetail.asStateFlow()
+    
+    /* R : 해당하는 이벤트 ID로 조회하는 메서드 */
     fun eventByID(eventId: Int) {
         viewModelScope.launch {
             eventRepository.getSearchByEventID(eventId).collect {
@@ -59,25 +63,29 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
             }
         }
     }
-
+    
+    /* R : 해당하는 이벤트 Name으로 조회하는 메서드 */
     fun eventByName(eventName: String): LiveData<List<Event>> =
         eventRepository.getSearchEvent(eventName)
 
+    /* R : Manager에서 해당하는 이벤트 Id 값과 일치하는 데이터의 아티스트 Id 값을 조회하는 메서드 */
+    fun getArtistFromEvent(eventId: Int) {
+        viewModelScope.launch(defaultDispatcher) {
+            getArtistFromEvent.postValue(eventRepository.getArtistFromEvent(eventId))
+        }
+    }
+
+    /* U : 이벤트 수정 메서드 */
     fun updateEvent(event: Event) {
         viewModelScope.launch {
             eventRepository.updateEvent(event)
         }
     }
-
+    
+    /* D : 이벤트 삭제 메서드 */
     fun deleteEvent(eventId: Int) {
         viewModelScope.launch {
             eventRepository.deleteEvent(eventId)
-        }
-    }
-
-    fun getArtistFromEvent(eventId: Int) {
-        viewModelScope.launch(defaultDispatcher) {
-            getArtistFromEvent.postValue(eventRepository.getArtistFromEvent(eventId))
         }
     }
 

@@ -49,15 +49,4 @@ class ArtistEventViewPagerAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-//    class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-//        fun bind(event: Event) {
-//            view.findViewById<ImageView>(R.id.iv_event).apply {
-//                setImageResource((event.imgUri ?: R.drawable.ic_launcher_background) as Int)
-//            }
-//            view.findViewById<TextView>(R.id.tv_title).apply {
-//                text = event.name
-//            }
-//        }
-//    }
 }

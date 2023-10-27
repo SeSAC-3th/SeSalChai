@@ -1,16 +1,13 @@
 package org.sesac.management.view.event.detail
 
 import android.annotation.SuppressLint
-import android.graphics.Rect
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.util.Log
-import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.coroutines.launch
 import org.sesac.management.R
@@ -47,8 +44,8 @@ class EventDetailFragment
     private var eventId = 0
     private var artists: List<Artist> = listOf()
 
+    /* event 데이터 가져오기 */
     private fun observeData() {
-        /* event 데이터 가져오기 */
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.eventDetail.collect { event ->
@@ -60,6 +57,7 @@ class EventDetailFragment
         }
     }
 
+    /* 가져온 event 데이터 중 eventId 값을 이용하여 manager에서 일치하는 eventId의 artistId를 가져오기 */
     private fun observerSetup() {
         eventViewModel.getArtistFromEvent.observe(viewLifecycleOwner) { artist ->
             artist?.forEach {
@@ -68,17 +66,17 @@ class EventDetailFragment
         }
     }
 
-    private fun updateUI(event : Event) {
-        with(binding) {
-            ivEvent.let {
-                ivEvent.setImageBitmap(event.imgUri)
-            }
-            tvEventTitle.text = event.name
-            tvEventTime.text = event.date.toString()
-            tvEventPlace.text = event.place
-            tvEventDescription.text = event.description
-        }
-    }
+//    private fun updateUI(event: Event) {
+//        with(binding) {
+//            ivEvent.let {
+//                ivEvent.setImageBitmap(event.imgUri)
+//            }
+//            tvEventTitle.text = event.name
+//            tvEventTime.text = event.date.toString()
+//            tvEventPlace.text = event.place
+//            tvEventDescription.text = event.description
+//        }
+//    }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated() {
@@ -87,11 +85,11 @@ class EventDetailFragment
                 eventDetailLayout.changeFragment(this@EventDetailFragment, EventEditFragment())
             }
         }
-
         observeData()
         observerSetup()
     }
 
+    /* 가져온 event에 대한 정보를 binding */
     private fun getEventDetail(event: Event) {
         with(binding) {
             //행사 정보
@@ -117,6 +115,7 @@ class EventDetailFragment
         }
     }
 
+    /* 참여 아티스트 목록을 조회하는 메서드 */
     private fun getSelectArtist(artist: List<Artist>) {
         /* viewPager2 */
         with(binding) {
@@ -134,7 +133,8 @@ class EventDetailFragment
             viewPager.adapter = adapter
             viewPager = initialiseViewPager()
 
-            bannerPosition = Int.MAX_VALUE / 2 - Math.ceil(artists.size.toDouble() / 2).toInt()
+            bannerPosition = Int.MAX_VALUE / 2 - Math.ceil(artists.size.toDouble() / 2)
+                .toInt() // viewPager의 position을 설정
             viewPager.setCurrentItem(0, false)
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(
@@ -159,27 +159,15 @@ class EventDetailFragment
      * ArtistAddDialogFragment로 부터 넘겨온 Artist 목록 List를 받아
      * Manager에 등록한다.
      * @param checkedList
+     * @author 혜원
      */
     override fun onDialogDataSelected(checkedList: MutableList<DialogItem>) {
         artistIdList = checkedList.map { it.artistId }
         // artistIdListFlow에 새 값을 제공
         artistIdList.forEach {
-            var artistId = it
-            eventViewModel.insertManager(Manager(artistId, eventId))
+            eventViewModel.insertManager(Manager(it, eventId))
         }
         Log.d(TAG, "EventDetailFragment - $artistIdList")
-    }
-
-    inner class SpaceItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State,
-        ) {
-            outRect.left = space
-            outRect.right = space
-        }
     }
 
     /* viewpager2 adapter 연결 및 margin 설정 */

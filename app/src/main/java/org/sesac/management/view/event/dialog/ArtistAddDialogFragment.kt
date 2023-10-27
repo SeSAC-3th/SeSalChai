@@ -20,7 +20,8 @@ import org.sesac.management.view.artist.ArtistViewModel
 
 /**
  * Artist add dialog fragment
- *
+ * EventDetailFragment에서 참여 아티스트 추가를 클릭할 때,
+ * 화면에 보여지는 DialogFragment를 구현한 class 입니다.
  * @constructor Create empty Artist add dialog fragment
  * @author 혜원
  */
@@ -38,7 +39,7 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
      * setView 영역에 RecyclerView를 연결하여
      * 전체 아티스트 목록을 출력할 수 있도록 구현하였습니다.
      * CheckBox 클릭시, interface를 통해 EventEnroll 또는 EventEdit으로
-     * 선택한 아티스트의 데이터 값을 넘겨줍니다.
+     * 선택한 아티스트의 데이터 값을 넘겨준다.
      * @author 혜원
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -53,7 +54,7 @@ class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
         rvArtist.layoutManager = LinearLayoutManager(requireContext())
         // artists를 DialogItem으로 변환
         val dialogItems = allArtist?.map { artist ->
-            DialogItem(artist.name , artist.artistId, selectedItems.contains(artist.name))
+            DialogItem(artist.name, artist.artistId, selectedItems.contains(artist.name))
         }
 
         val adapter = dialogItems?.let { DialogAdapter(it, this) }

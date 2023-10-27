@@ -23,7 +23,6 @@ import org.sesac.management.view.event.enroll.EventEnrollFragment
  * @author 혜원
  */
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
-    val TAG: String = "로그"
     val viewModel: EventViewModel by activityViewModels() {
         EventViewModel.EventViewModelFactory(getApplicationContext().eventRepository)
     }
@@ -55,6 +54,11 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 
     }
 
+    /**
+     * Init view
+     * EventFragment의 View를 설정한다.
+     * @author 혜원
+     */
     private fun initView() {
         with(binding) {
             /* Enroll Button */
@@ -81,6 +85,11 @@ class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::i
 
     }
 
+    /**
+     * Make list
+     * event 데이터를 EventRecyclerViewAdapter에 넣는다.
+     * @param eventList
+     */
     private fun makeList(eventList: List<Event>) {
         /* RecyclerView */
         with(binding.rvEvent) {

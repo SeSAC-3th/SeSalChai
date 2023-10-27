@@ -27,7 +27,7 @@ import java.util.Date
  * @author 혜원
  */
 class EventEnrollFragment :
-    BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate){
+    BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate) {
     val eventViewModel: EventViewModel by activityViewModels()
     val TAG: String = "로그"
 
@@ -48,7 +48,6 @@ class EventEnrollFragment :
     /* 선택한 이미지 Uri 처리 */
 
     override fun onViewCreated() {
-//        getArtistInfo()
         initTextWatcher()
         with(binding) {
             tbScheduleEnroll.setToolbarMenu("행사 등록", true) {
@@ -61,6 +60,13 @@ class EventEnrollFragment :
         }
     }
 
+    /**
+     * Enroll event
+     * 이벤트 등록 메서드
+     * 우측 상단 버튼을 누를 때, 실행되는 메서드이다.
+     * layoutInputData의 유효성을 검사한 후, 입력한 데이터를 insert한다.
+     * @author 혜원
+     */
     private fun enrollEvent() {
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
