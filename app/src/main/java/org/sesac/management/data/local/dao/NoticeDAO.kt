@@ -2,12 +2,17 @@ package org.sesac.management.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import org.sesac.management.data.local.Notice
 
+/**
+ * Notice dao
+ *
+ * @constructor Create empty Notice dao
+ * @author 종혁
+ */
 @Dao
 interface NoticeDAO {
 

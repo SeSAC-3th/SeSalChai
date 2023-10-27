@@ -16,6 +16,13 @@ import org.sesac.management.repository.ArtistRepository
 import org.sesac.management.util.common.Referecne
 import org.sesac.management.util.common.defaultDispatcher
 
+/**
+ * Artist view model
+ *
+ * @property repository
+ * @constructor Create empty Artist view model
+ * @author 민서, 우빈, 진혁
+ */
 class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
 
     var getAllArtist = MutableLiveData<List<Artist>>()

@@ -16,6 +16,12 @@ import org.sesac.management.view.adapter.recyclerview.EventRecyclerAdapter
 import org.sesac.management.view.event.detail.EventDetailFragment
 import org.sesac.management.view.event.enroll.EventEnrollFragment
 
+/**
+ * Event fragment
+ *
+ * @constructor Create empty Event fragment
+ * @author 혜원
+ */
 class EventFragment : BaseFragment<FragmentEventBinding>(FragmentEventBinding::inflate) {
     val TAG: String = "로그"
     val viewModel: EventViewModel by activityViewModels() {

@@ -15,6 +15,12 @@ import org.sesac.management.util.common.showToastMessage
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
 import org.sesac.management.view.artist.ArtistViewModel
 
+/**
+ * Rate bottom sheet
+ *
+ * @constructor Create empty Rate bottom sheet
+ * @author 우빈
+ */
 class RateBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentRateBottomSheetBinding
     private val viewModel: ArtistViewModel by activityViewModels()

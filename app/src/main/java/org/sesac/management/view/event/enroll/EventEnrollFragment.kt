@@ -20,6 +20,12 @@ import org.sesac.management.view.event.EventViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 import java.util.Date
 
+/**
+ * Event enroll fragment
+ *
+ * @constructor Create empty Event enroll fragment
+ * @author 혜원
+ */
 class EventEnrollFragment :
     BaseFragment<FragmentEventEnrollBinding>(FragmentEventEnrollBinding::inflate){
     val eventViewModel: EventViewModel by activityViewModels()

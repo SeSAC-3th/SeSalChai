@@ -11,7 +11,18 @@ import androidx.room.TypeConverters
 import org.sesac.management.data.util.CustomConverter
 import java.util.Date
 
-
+/**
+ * AgencySchema
+ *
+ * @property chief
+ * @property type
+ * @property description
+ * @property imgUri
+ * @property noticeId
+ * @property name
+ * @constructor Create empty Company
+ * @author 민서
+ */
 @Entity(
     tableName = "company", foreignKeys = [
         ForeignKey(

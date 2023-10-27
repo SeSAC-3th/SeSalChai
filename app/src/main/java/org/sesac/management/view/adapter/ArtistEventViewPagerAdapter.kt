@@ -6,6 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.ItemArtistEventBinding
 
+/**
+ * Artist event view pager adapter
+ *
+ * @property items
+ * @property onClick
+ * @constructor Create empty Artist event view pager adapter
+ * @author 혜원
+ */
 class ArtistEventViewPagerAdapter(
     private val items: List<Event>,
     private val onClick: (Int) -> Unit

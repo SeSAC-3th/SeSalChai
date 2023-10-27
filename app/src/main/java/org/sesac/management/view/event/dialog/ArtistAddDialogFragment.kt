@@ -18,6 +18,12 @@ import org.sesac.management.databinding.FragmentArtistAddDialogBinding
 import org.sesac.management.view.adapter.DialogAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 
+/**
+ * Artist add dialog fragment
+ *
+ * @constructor Create empty Artist add dialog fragment
+ * @author 혜원
+ */
 class ArtistAddDialogFragment : DialogFragment(), CustomDialogListener {
     private val viewModel: ArtistViewModel by activityViewModels()
     private val selectedItems = mutableListOf<String>()

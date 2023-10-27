@@ -30,6 +30,11 @@ data class ArtistThumbnail(
     val content: String,
 )
 
+/**
+ * To model artist
+ *@author 우빈
+ */
+
 fun Artist.toModelArtist() = org.sesac.management.data.model.Artist(
     artistId = artistId,
     name = name,

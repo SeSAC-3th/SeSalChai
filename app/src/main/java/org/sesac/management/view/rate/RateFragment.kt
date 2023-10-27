@@ -28,10 +28,16 @@ import org.sesac.management.util.common.Referecne.SING
 import org.sesac.management.util.common.defaultDispatcher
 import org.sesac.management.util.extension.changeFragment
 import org.sesac.management.util.extension.setOnAvoidDuplicateClickFlow
-import org.sesac.management.view.adapter.RateAdapter
+import org.sesac.management.view.adapter.recyclerview.RateAdapter
 import org.sesac.management.view.artist.ArtistViewModel
 import org.sesac.management.view.artist.detail.ArtistDetailFragment
 
+/**
+ * Rate fragment
+ *
+ * @constructor Create empty Rate fragment
+ * @author 진혁
+ */
 class RateFragment : BaseFragment<FragmentRateBinding>(FragmentRateBinding::inflate) {
     val viewModel: ArtistViewModel by activityViewModels()
     override fun onViewCreated() {

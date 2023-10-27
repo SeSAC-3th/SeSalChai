@@ -13,11 +13,10 @@ import org.sesac.management.data.util.CustomConverter
 
 /**
  * RoomDB 클래스
- * @author kimwest00
+ * @author 민서
  */
 @Database(
     entities = [Artist::class, Company::class, Event::class, Notice::class, Manager::class],
-//    entities = [Notice::class],
     version = 1
 )
 @TypeConverters(CustomConverter::class)
