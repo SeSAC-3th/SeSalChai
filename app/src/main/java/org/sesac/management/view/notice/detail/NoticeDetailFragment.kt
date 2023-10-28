@@ -24,6 +24,7 @@ class NoticeDetailFragment() :
             }
         }
 
+        // LiveData 관찰
         noticeViewModel.selectedNotice?.observe(
             viewLifecycleOwner
         ) { notice ->
@@ -33,6 +34,11 @@ class NoticeDetailFragment() :
         }
     }
 
+    /**
+     * Update ui
+     * LiveData로 관찰된 공지 사항의 내용을 띄우는 메서드
+     * @param notice : 선택된 공지 사항
+     */
     private fun updateUI(notice: Notice) {
         with(binding) {
             tvNoticeTitle.text = notice.title

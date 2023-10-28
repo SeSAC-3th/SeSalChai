@@ -27,12 +27,7 @@ import org.sesac.management.util.extension.initInFlow
 import org.sesac.management.view.event.EventViewModel
 import reactivecircus.flowbinding.android.widget.AfterTextChangeEvent
 
-/**
- * Event edit fragment
- *
- * @constructor Create empty Event edit fragment
- * @author 종혁
- */
+
 class EventEditFragment :
     BaseFragment<FragmentEventEditBinding>(FragmentEventEditBinding::inflate) {
     val eventViewModel: EventViewModel by activityViewModels()
@@ -72,11 +67,16 @@ class EventEditFragment :
         }
     }
 
+    /**
+     * Init view
+     * 초기화면 setting (선택된 Event의 데이터 + TexitInput Layout 가이드)
+     */
     private fun initView() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.eventDetail.collect { event ->
                     selectedEvent = event
+                    // 선택된 이벤트 내용을 채우는 메서드
                     updateUI()
                 }
             }
@@ -117,7 +117,10 @@ class EventEditFragment :
         }
     }
 
-
+    /**
+     * Update event
+     * 입력한 Data로 데이터를 갱신하는 메서드
+     */
     private fun updateEvent() {
         val eventName = binding.layoutInputName.tilEt.text.toString()
         val eventPlace = binding.layoutInputPlace.tilEt.text.toString()
@@ -131,6 +134,7 @@ class EventEditFragment :
             bitmap = selectedEvent.imgUri
         }
 
+        // 입력 형태에 대한 유효성 검사
         if (checkValidationAndEnroll(eventName, eventPlace, eventDate, eventDescription)) {
             ioScope.launch {
                 // TODO : 여기를 updateEvent로 변경
@@ -189,8 +193,8 @@ class EventEditFragment :
             layoutInputDescription.tilLayout.afterTextChangesInFlow(inputDescription)
             layoutInputDescription.tilLayout.focusChangesInFlow(hasFocus)
         }
-
     }
+
 
     private val inputDate = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()

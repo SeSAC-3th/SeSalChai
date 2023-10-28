@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Locale
 
-class HomeNoticeAdapter(val notices: List<Notice>) :
+class HomeNoticeAdapter(private val notices: List<Notice>) :
     RecyclerView.Adapter<HomeNoticeAdapter.NoticeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {

@@ -16,19 +16,27 @@ import org.sesac.management.data.local.Notice
 @Dao
 interface NoticeDAO {
 
+
     /**
-     * C: notice를 등록하는 함수
+     * Insert notice
+     * 등록
+     * @param notice : 등록 할 공지 사항
      */
     @Insert
     fun insertNotice(notice: Notice)
 
     /**
-     * R: notice table에 있는 모든 객체를 return하는 함수
+     * R: 모든 공지 목록을 반환 (LiveData 사용)
      * @return all notice
      */
     @Query("SELECT * FROM notice")
     fun getAllNotice(): LiveData<List<Notice>>
 
+    /**
+     * Get home notice
+     * Home 화면에 보여줄 공지를 반환 하는 메서드
+     * @return 생성일 기준 최신 순으로 10개
+     */
     @Query("""SELECT * FROM notice ORDER BY created_at DESC LIMIT 10 """)
     fun getHomeNotice(): LiveData<List<Notice>>
 
@@ -42,15 +50,15 @@ interface NoticeDAO {
     /**
      * Update notice
      * 갱신
-     * @param notice : 추가할 공지사항
+     * @param notice : 갱신 할 공지 사항
      */
     @Update
     fun updateNotice(notice: Notice)
 
     /**
      * Delete notice
-     * 공지사항 삭제
-     * @param noticeId : 삭제 할 공지 사항
+     * 삭제
+     * @param noticeId : 삭제 할 공지 사항의 ID 값
      */
     @Query("DELETE FROM notice WHERE notice_id= :noticeId")
     fun deleteNotice(noticeId: Int)

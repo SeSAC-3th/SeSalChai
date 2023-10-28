@@ -45,6 +45,10 @@ class NoticeEnrollFragment() :
         }
     }
 
+    /**
+     * Initview
+     * TextInput Layout의 가이드를 위한 메서드
+     */
     private fun initView() {
         with(binding) {
             layoutInputTitle.tilLayout.initInFlow(
@@ -59,6 +63,11 @@ class NoticeEnrollFragment() :
         }
     }
 
+    /**
+     * CheckInput
+     * 제목과 내용을 모두 입력 했는지 확인 하는 메서드
+     * @return : 모두 입력 했을 시 false 반환
+     */
     private fun checkInput(): Boolean {
         val flag = binding.layoutInputTitle.tilEt.text.toString().isEmpty() ||
                 binding.layoutInputContent.tilEt.text.toString().isEmpty()
