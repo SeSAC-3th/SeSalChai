@@ -66,6 +66,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    /**
+     * Observe Set Up
+     * 아티스트와 공지사항 데이터 관찰
+     */
     private fun observeSetUp() {
         noticeViewModel.getHomeNotice()?.observe(
             viewLifecycleOwner
@@ -84,11 +88,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    // 아티스트 목록 띄우기 위한 메서드
     private fun updateArtistUI(artists: List<Artist>) {
         artistAdapter = HomeArtistAdapter((artists))
         binding.includedLayoutHomeArtist.rvHomeArtist.adapter = artistAdapter
     }
 
+    // 공지사항 띄우기 위한 메서드
     private fun updateNoticeUI(notices: List<Notice>) {
         noticeAdapter = HomeNoticeAdapter(notices)
         binding.includedLayoutHomeNotice.rvNotice.adapter = noticeAdapter
@@ -96,9 +102,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     /**
      * Space item decoration
-     *
-     * @property space
-     * @constructor Create empty Space item decoration
+     * RecyclerView Item 간격을 조정 하기 위한 메서드
+     * @property space : 원하는 간격
+     * RecyclerView의 addItemDecoration 메서드의 파라미터로 들어간다
      * @author 종혁
      */
     inner class SpaceItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {

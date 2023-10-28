@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
          ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
      }
 
+    // Notice 와 관련하여 모든 Fragment에서 공유 할 하나의 ViewModel을 Actitivty에 정의
     val noticeViewModel : NoticeViewModel by viewModels() {
         NoticeViewModel.NoticeViewModelFactory(ApplicationClass.getApplicationContext().noticeRepository)
     }

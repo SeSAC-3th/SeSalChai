@@ -42,6 +42,7 @@ class NoticeEditFragment
                 }
             }
 
+            // 선택된 공지 사항 관찰
             noticeViewModel.selectedNotice?.observe(
                 viewLifecycleOwner
             ) { notice ->
@@ -53,6 +54,10 @@ class NoticeEditFragment
         }
     }
 
+    /**
+     * Update ui
+     * 이전 상세 내용 에서 선택된 공지 사항의 내용을 채우는 메서드
+     */
     private fun updateUI() {
         with(binding) {
             layoutInputTitle.tilEt.setText(selectedNotice.title)
@@ -60,6 +65,10 @@ class NoticeEditFragment
         }
     }
 
+    /**
+     * InitView
+     * textInput layout의 가이드를 설정 하는 메서드
+     */
     private fun initView() {
         with(binding) {
             layoutInputTitle.tilLayout.initInFlow(
@@ -74,6 +83,11 @@ class NoticeEditFragment
         }
     }
 
+    /**
+     * Check input
+     * 공지 사항의 제목과 내용을 모두  입력 했는지 확인 하는 메서드
+     * @return : 모두 입력 했을 때 false 값 반환
+     */
     private fun checkInput(): Boolean {
         val flag = binding.layoutInputTitle.tilEt.text.toString().isEmpty() ||
                 binding.layoutInputContent.tilEt.text.toString().isEmpty()

@@ -8,7 +8,7 @@ import org.sesac.management.R
 import org.sesac.management.data.local.Artist
 import org.sesac.management.databinding.ItemHomeArtistBinding
 
-class HomeArtistAdapter(val artists: List<Artist>) :
+class HomeArtistAdapter(private val artists: List<Artist>) :
     RecyclerView.Adapter<HomeArtistAdapter.ArtistViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
