@@ -33,6 +33,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     private var updateResult = MutableLiveData<Unit>()
     private var deleteResult = MutableLiveData<Unit>()
 
+    //Singleton으로 객체 생성
     companion object {
         @Volatile
         private var instance: ArtistRepository? = null
@@ -119,12 +120,18 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }
     }
 
-
+    /**
+     * R: artist table에 있는 객체중, ID가 일치하는 artist를 반환하는 함수
+     * artist 상세페이지 접근시 사용
+     * @return artist
+     */
+    //asycn 함수에서 받아온 결과값을 repository 내부 변수에 업데이트
     suspend fun getArtistById(id: Int): Artist? {
         getDetail = asyncgetArtistById(id)
         return getDetail.value
     }
-
+    //async 함수를 통해 DAO로 부터 검색결과를 얻어내고
+    //Main scope에서 getDetail에 해당 결과를 업데이트 해준다
     private suspend fun asyncgetArtistById(id: Int): MutableLiveData<Artist> {
         val getDetailValue = coroutineIOScope.async(IO) {
             return@async artistDAO.getSearchArtistById(id)
@@ -135,7 +142,11 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
-
+    /**
+     * R: artist 검색시 사용
+     * 모두 일치해야 검색가능
+     * @return artist
+     */
     suspend fun getArtistByName(keyword: String): List<Artist>? {
         getAllResult = asyncgetArtistByName(keyword)
         return getAllResult.value
@@ -150,7 +161,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
             getAllResult
         }.await()
     }
-
+    /**
+     * R: artist type을 비교하여 반환
+     * @return artist
+     */
     suspend fun getArtistByType(type: ArtistType): List<Artist>? {
         getTypeResult = asyncgetArtistByType(type)
         return getTypeResult.value
@@ -165,7 +179,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
             getTypeResult
         }.await()
     }
-
+    /**
+     * D: artist 객체 삭제
+     * @return artist
+     */
     suspend fun deleteArtist(artist: Artist) {
         deleteResult = asyncDeleteArtist(artist)
     }
@@ -180,6 +197,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
+    /**
+     * R: artist가 참여하는 Event List 반환
+     * @return List<Event>
+     */
     suspend fun getEventFromArtist(artistId: Int): MutableLiveData<List<Event>> {
         getEventResult = asyncgetEventFromArtist(artistId)
         return getEventResult
