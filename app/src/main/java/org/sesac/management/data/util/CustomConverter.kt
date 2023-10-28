@@ -24,6 +24,17 @@ class CustomConverter {
             Date(it)
         }
     }
+    @TypeConverter
+    fun fromIntList(value: List<Int>?): String? {
+        // List<Int>를 문자열로 변환
+        return value?.joinToString(",")
+    }
+
+    @TypeConverter
+    fun toIntList(value: String?): List<Int>? {
+        // 문자열을 List<Int>로 변환
+        return value?.split(",")?.map { it.toInt() }
+    }
 
     // Bitmap -> ByteArray 변환
     @TypeConverter
