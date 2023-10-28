@@ -32,6 +32,7 @@ data class ArtistThumbnail(
 
 /**
  * To model artist
+ * Room에서 가져온 Artist를 로컬에서 필요한 데이터로 변환해주기 위한 확장함수
  *@author 우빈
  */
 

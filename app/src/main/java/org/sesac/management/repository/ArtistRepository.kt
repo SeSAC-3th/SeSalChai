@@ -51,6 +51,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }
     }
 
+    /**
+     * 아티스트 전체 조회를 하기 위한 함수
+     * @author 우빈
+     */
     suspend fun getAllArtist(): List<Artist> {
         getAllResult = asyncGetAllArtist()
         return getAllResult.value as List<Artist>
@@ -66,6 +70,11 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
+    /**
+     * 아티스트를 등록하기 위한 함수
+     * @param Artist 객체
+     * @author 우빈
+     */
     suspend fun insertArtist(artist: Artist): List<Long> {
         insertResult = asyncInsertArtist(artist)
         return insertResult.value as List<Long>
@@ -81,6 +90,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         }.await()
     }
 
+    /**
+     * 아티스트에 대한 정보를 수정했을 때 Room에 해당 아티스트의 정보를 업데이트 하기 위한 함수
+     * @author 우빈
+     */
     fun updateArtist(artist: Artist) {
         ioScope.launch {
             artistDAO.updateArtist(artist)
@@ -106,6 +119,10 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
     }
 
     // Rate용
+    /**
+     * 아티스트 등록 후 아티스트 상세 페이지에서 아티스트에 대한 평점을 등록하기 위한 함수
+     * @author 우빈
+     */
     fun insertRateWithArtist(rate: Rate, artistId: Int) {
         ioScope.launch {
             artistDAO.insertRateWithArtist(
@@ -130,6 +147,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
         getDetail = asyncgetArtistById(id)
         return getDetail.value
     }
+
     //async 함수를 통해 DAO로 부터 검색결과를 얻어내고
     //Main scope에서 getDetail에 해당 결과를 업데이트 해준다
     private suspend fun asyncgetArtistById(id: Int): MutableLiveData<Artist> {
@@ -161,6 +179,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
             getAllResult
         }.await()
     }
+
     /**
      * R: artist type을 비교하여 반환
      * @return artist
@@ -179,6 +198,7 @@ class ArtistRepository(private val artistDAO: ArtistDAO) {
             getTypeResult
         }.await()
     }
+
     /**
      * D: artist 객체 삭제
      * @return artist

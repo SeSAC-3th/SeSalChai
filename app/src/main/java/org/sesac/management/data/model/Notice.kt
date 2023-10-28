@@ -7,5 +7,5 @@ data class Notice(
     var noticeId: Int,
     val title: String,
     val content: String,
-    val createdAt : Date,
+    val createdAt: Date,
 )

@@ -117,7 +117,8 @@ class ArtistDetailFragment :
                 if (viewModel.getArtistDetail.value?.rate == null) {
                     RateBottomSheet().show(
                         childFragmentManager,
-                        "artistDialogFragment")
+                        "artistDialogFragment"
+                    )
                 } else {
                     showToastMessage(resources.getString(R.string.artist_enroll_rate))
                 }

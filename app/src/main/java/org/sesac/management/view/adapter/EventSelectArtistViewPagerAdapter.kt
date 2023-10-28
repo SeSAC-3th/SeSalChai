@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.sesac.management.R
 import org.sesac.management.data.local.Artist
-import org.sesac.management.data.local.Event
 import org.sesac.management.databinding.ItemArtistEventBinding
 
 /**

@@ -29,6 +29,7 @@ class NoticeRepository(private val noticeDao: NoticeDAO) {
             noticeDao.insertNotice(notice)
         }
     }
+
     // READ
     fun getNotice(noticeId: Int): LiveData<Notice> = noticeDao.getNoticeById(noticeId)
 
@@ -38,6 +39,7 @@ class NoticeRepository(private val noticeDao: NoticeDAO) {
             noticeDao.updateNotice(notice)
         }
     }
+
     // DELETE
     fun deleteNotice(noticeId: Int) {
         ioScope.launch {

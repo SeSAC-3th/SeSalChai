@@ -21,7 +21,8 @@ class NoticeRecyclerAdapter(
             with(itemBinding) {
                 tvTitle.text = item.title
                 tvDate.text = SimpleDateFormat(
-                    "yyyy년 MMM dd일", Locale.KOREA).format(item.createdAt)
+                    "yyyy년 MMM dd일", Locale.KOREA
+                ).format(item.createdAt)
 
                 root.setOnAvoidDuplicateClickFlow {
                     onClick(item.noticeId)
