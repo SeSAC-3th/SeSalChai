@@ -33,6 +33,7 @@ import org.sesac.management.view.rate.RateFragment
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    // 모든 fragment에서 공유할 viewmodel을 하나씩 만든다.
      val artistViewModel: ArtistViewModel by viewModels() {
          ArtistViewModel.ArtistViewModelFactory(ApplicationClass.getApplicationContext().artistRepository)
      }

@@ -34,12 +34,14 @@ class ArtistEnrollFragment :
 
     private var insertValue = emptyList<Long>()
     private var bitmap: Bitmap? = null
+
     /**
      * getContet의 image/*를 호출하고 callback 재정의
      * uri로부터 binding을 초기화해주고
      * [converUriToBitmap] 함수로 Bitmap 변환후 RoomDB에 저장
      * 저장하는 변수는 bitmap
-     */
+     * @author 민서
+    */ */
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {

@@ -50,21 +50,15 @@ class EventRepository(
      * 3가지 버전으로 구현
      * @author 진혁
      */
-    // flow - flow
-
-    // livedata - flow
-
-    // livedata - livedata
-
     /* R : 이벤트 전체 조회 메서드 */
-    fun getAllEvent() = eventDAO.getAllEvent()
+    fun getAllEvent() = eventDAO.getAllEvent()  // flow - flow
 
     /* R : 해당하는 이벤트 ID로 조회하는 메서드 */
-    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId)
+    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId)     // livedata - flow
 
     /* R : 해당하는 이벤트 Name으로 조회하는 메서드 */
     fun getSearchEvent(eventName: String): LiveData<List<Event>> =
-        eventDAO.getSearchEvent(eventName)
+        eventDAO.getSearchEvent(eventName)  // livedata - livedata
 
     /* R: EventDetail에서 보여주는 참여 아티스트 */
     suspend fun getArtistFromEvent(eventId: Int) = eventDAO.getEventsFromArtist(eventId)
