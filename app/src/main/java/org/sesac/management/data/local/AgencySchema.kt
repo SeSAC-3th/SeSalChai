@@ -34,7 +34,6 @@ import java.util.Date
     ]
 )
 data class Company(
-
     var chief: String,
     var type: String,
     var description: String,

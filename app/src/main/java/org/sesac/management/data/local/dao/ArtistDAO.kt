@@ -13,8 +13,8 @@ import org.sesac.management.data.local.Manager
 
 /**
  * Artist dao
- *
- * @constructor Create empty Artist dao
+ * Aritst CRUD
+ * Rate C,R
  * @author 민서
  */
 @Dao

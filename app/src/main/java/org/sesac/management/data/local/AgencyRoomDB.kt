@@ -13,6 +13,7 @@ import org.sesac.management.data.util.CustomConverter
 
 /**
  * RoomDB 클래스
+ * Entity 정의및 DAO, DB 초기화 class
  * @author 민서
  */
 @Database(

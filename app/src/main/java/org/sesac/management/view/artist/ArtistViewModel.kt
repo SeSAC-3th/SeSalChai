@@ -113,6 +113,9 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
         repository.updateArtist(artist)
     }
 
+    /**
+     * R: MainScope에서 repository의 메소드를 실행
+     */
     fun getSearchResult(keyword: String) {
         CoroutineScope(Dispatchers.Main).launch {
             getAllArtist.value = repository.getArtistByName(keyword)
