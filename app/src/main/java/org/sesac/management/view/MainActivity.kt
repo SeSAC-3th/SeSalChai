@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
      * @author 진혁
      */
     private fun clickBottomNavigationView() {
+
         binding.secondBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> { // 첫 번째 fragment
