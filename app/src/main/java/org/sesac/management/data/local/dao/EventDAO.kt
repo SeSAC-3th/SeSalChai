@@ -48,8 +48,10 @@ interface EventDAO {
 
     @Transaction
     suspend fun getEventsFromArtist(eventId: Int): MutableList<Artist> {
-        val managerList: List<Manager> = searchAllArtistByEvent(eventId) // eventId에 해당하는 manager 객체를 모두 조회
-        val tmpEventList: MutableList<Artist> = mutableListOf() // artistId 값만 저장하기 위해 tmpEventList를 선언
+        val managerList: List<Manager> =
+            searchAllArtistByEvent(eventId) // eventId에 해당하는 manager 객체를 모두 조회
+        val tmpEventList: MutableList<Artist> =
+            mutableListOf() // artistId 값만 저장하기 위해 tmpEventList를 선언
         managerList.forEach { manager -> // 가져온 List<Manager>의 사이즈만큼 반복문을 실행
             var events: Artist = getSearchByArtistID(manager.artistId) // artistId 값을 조회하고
             tmpEventList.add(events) // events에 가져온 artistId 값만 추가한다.

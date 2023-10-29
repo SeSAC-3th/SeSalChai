@@ -99,16 +99,28 @@ class ArtistViewModel(private val repository: ArtistRepository) : ViewModel() {
         }
     }
 
+    /**
+     * 아티스트 등록
+     * @author 우빈
+     */
     fun insertArtist(artist: Artist) {
         CoroutineScope(Dispatchers.Main).launch {
             insertArtist.value = repository.insertArtist(artist)
         }
     }
 
+    /**
+     * 아티스트의 평점을 아티스트에 등록
+     * @author 우빈
+     */
     fun insertRateWithArtist(rate: Rate, artistId: Int) = viewModelScope.launch {
         repository.insertRateWithArtist(rate, artistId)
     }
 
+    /**
+     * 아티스트에 대한 정보 수정
+     * @author 우빈
+     */
     fun updateArtist(artist: Artist) {
         repository.updateArtist(artist)
     }

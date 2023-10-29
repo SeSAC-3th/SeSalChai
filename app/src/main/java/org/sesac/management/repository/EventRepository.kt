@@ -54,7 +54,8 @@ class EventRepository(
     fun getAllEvent() = eventDAO.getAllEvent()  // flow - flow
 
     /* R : 해당하는 이벤트 ID로 조회하는 메서드 */
-    fun getSearchByEventID(eventId: Int) = eventDAO.getSearchByEventID(eventId)     // livedata - flow
+    fun getSearchByEventID(eventId: Int) =
+        eventDAO.getSearchByEventID(eventId)     // livedata - flow
 
     /* R : 해당하는 이벤트 Name으로 조회하는 메서드 */
     fun getSearchEvent(eventName: String): LiveData<List<Event>> =

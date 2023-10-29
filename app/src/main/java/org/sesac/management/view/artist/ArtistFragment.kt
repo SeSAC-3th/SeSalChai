@@ -33,13 +33,17 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
         initView()
     }
 
+    /**
+     * 아티스트에 대한 정보 불러옴
+     * @author 우빈
+     */
     private fun getArtistInfo() {
         viewModel.getAllArtist()
     }
 
     private fun observeData() {
         viewModel.getAllArtist.observe(viewLifecycleOwner) { artist ->
-            if(artist!=null) makeList(artist)
+            if (artist != null) makeList(artist)
         }
     }
 
@@ -116,14 +120,18 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>(FragmentArtistBinding
 
             with(tbArtist) {
                 etSearch.setOnFinishInputFlow {
-                    if(it.isNotEmpty()){
+                    if (it.isNotEmpty()) {
                         viewModel.getSearchResult(it)
-                    }else{
+                    } else {
                         viewModel.getAllArtist()
                     }
                 }
             }
 
+            /**
+             * 아티스트에 대한 정보 새로고침
+             * @author 우빈
+             */
             with(swipeRefresh) {
                 setSize(SwipeRefreshLayout.MEASURED_STATE_TOO_SMALL)
                 setColorSchemeColors(

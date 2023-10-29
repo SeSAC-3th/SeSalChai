@@ -1,6 +1,5 @@
 package org.sesac.management.data.model
 
-import org.sesac.management.R
 import java.util.Date
 
 data class Event(

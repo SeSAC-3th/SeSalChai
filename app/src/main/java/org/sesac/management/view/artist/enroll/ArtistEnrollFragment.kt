@@ -76,7 +76,10 @@ class ArtistEnrollFragment :
             SimpleDateFormat("yyyy-MM-dd")
         val date = dateFormat.parse(binding.layoutInputDebut.tilEt.text.toString())
 
-        // '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
+        /**
+         * '저장'버튼 클릭시 각각의 입력값에 대한 유효성 검사
+         * @author 우빈
+         */
         if (checkValidationAndEnroll(debutDate, groupName, memberListString, artistType)) {
             viewModel.insertArtist(
                 Artist(
@@ -111,7 +114,10 @@ class ArtistEnrollFragment :
         }
     }
 
-    // 각각의 입력값이 비어있거나 기본 값이면 false 반환
+    /**
+     * 각각의 입력값이 비어있거나 기본 값이면 false 반환
+     * @author 우빈
+     */
     private fun checkValidationAndEnroll(
         debutDate: List<String>,
         groupName: String,
@@ -127,6 +133,10 @@ class ArtistEnrollFragment :
         }
     }
 
+    /**
+     * 초기 View 세팅하는 함수
+     * @author 우빈
+     */
     private fun initView() {
         with(binding) {
             /* toolbar 아이콘, 텍스트 설정 */
@@ -179,6 +189,10 @@ class ArtistEnrollFragment :
 
     }
 
+    /**
+     * 각각의 TextInputLayout들에 대해 TextWatcher와 정규식을 적용
+     * @author 우빈
+     */
     private val inputDebut = { layout: TextInputLayout, event: AfterTextChangeEvent ->
         val inputText = event.editable.toString()
         val dateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"

@@ -34,6 +34,11 @@ class RateBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    /**
+     * artistId: 평점을 등록할 대상을 전달하기 위한 변수
+     * rateId: 해당 아티스트에 대한 평점이 이미 존재 하는지에 대한 변수
+     * @author 우빈
+     */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

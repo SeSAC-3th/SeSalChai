@@ -16,11 +16,17 @@ import org.sesac.management.view.event.dialog.CustomDialogListener
  * @constructor Create empty Dialog adapter
  * @author 혜원
  */
-class DialogAdapter(private val itemList: List<DialogItem>, private val customDialogListener: CustomDialogListener) : RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
+class DialogAdapter(
+    private val itemList: List<DialogItem>,
+    private val customDialogListener: CustomDialogListener
+) : RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     private val checkedItems = mutableListOf<Boolean>()
     val TAG: String = "로그"
-    inner class DialogViewHolder(val binding: ItemEventEnrollAddArtistBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class DialogViewHolder(val binding: ItemEventEnrollAddArtistBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val checkBox: CheckBox = binding.cbArtist
+
         init {
             // 체크박스 상태 변경 시 리스너 등록
             checkBox.setOnCheckedChangeListener { _, isChecked ->
@@ -30,7 +36,11 @@ class DialogAdapter(private val itemList: List<DialogItem>, private val customDi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
-        val binding = ItemEventEnrollAddArtistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemEventEnrollAddArtistBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return DialogViewHolder(binding)
     }
 
@@ -48,6 +58,7 @@ class DialogAdapter(private val itemList: List<DialogItem>, private val customDi
             }
         }
     }
+
     override fun getItemCount() = itemList.size
 }
 

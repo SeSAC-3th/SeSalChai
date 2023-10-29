@@ -7,5 +7,5 @@ data class Company(
     val type: String,
     val description: String,
     val imgUri: String,
-    val noticeId : List<Int>,
+    val noticeId: List<Int>,
 )
